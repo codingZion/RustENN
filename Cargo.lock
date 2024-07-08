@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "RustNeat"
+name = "rust_neat"
 version = "0.1.0"
