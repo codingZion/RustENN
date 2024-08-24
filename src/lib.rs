@@ -1,1 +1,2 @@
-pub mod nim_bot;
+pub mod nim;
+pub mod neat;

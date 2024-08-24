@@ -1,5 +1,5 @@
 
-use rust_neat::nim_bot::dp;
+use rust_neat::nim::dp;
 fn main() {
     let nim_heaps = vec![3, 4, 5, 6, 7];
     //let mut dp = ndarray::ArrayD::<Vec<i32>>::default(ndarray::IxDyn(&[3, 4, 5]));
