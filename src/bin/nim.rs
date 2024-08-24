@@ -8,11 +8,11 @@ fn main() {
     let mut nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
 
-    let mut population = Population::new(100, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 20usize));
+    let mut population = Population::new(10000, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
 
     for i in 0..10000 {
         println!("generation: {}", i);
-        population.competition(&nim_config);
+        population.competition(&nim_config, 50);
         population.rank_agents();
 
         // Limit the scope of the immutable borrow
@@ -21,12 +21,12 @@ fn main() {
             agents_lock[0].clone()
         };
 
+
+        let res = population.compete_best_agents(&nim_config, &best_agent);
         println!("best fitness: {}", best_agent.fitness);
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
         println!("edge_count: {}", best_agent.nn.edge_count);
-
-        let res = population.compete_best_agents(&nim_config, &best_agent);
         //print the competition results in green if 2, in white if 1 and in red if 0
         print!("Competition results: ");
         for i in res.iter() {
@@ -46,7 +46,7 @@ fn main() {
         population.evolve();  // Now you can mutate population
     }
 
-    population.competition(&nim_config);
+    population.competition(&nim_config, 50);
     population.rank_agents();
 
     let best_agent = {

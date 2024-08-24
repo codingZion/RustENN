@@ -18,7 +18,7 @@ impl Nim {
         }
     }
     
-    pub fn run_nim(&self, agents: Vec<&Agent>) -> Vec<u32> {
+    pub fn run_nim(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
         let mut state = self.initial_state.clone();
         let mut turn = 0;
         while state.iter().sum::<u32>() > 0 {
@@ -28,11 +28,14 @@ impl Nim {
             let output = agent.nn.predict(input);
             let agent_move = Self::get_output(output, state.clone());
             //println!("agent_move: {:?}", agent_move);
-            //println!("state: {:?}, agent_move: {:?}", state, agent_move);
+            if print_game {
+                println!("turn: {}, agent: {}", turn, turn % agents.len());
+                println!("state: {:?}, agent_move: {:?}", state, agent_move);
+            }
             state[agent_move[0]] -= agent_move[1] as u32;
             turn += 1;
             if turn > 500 {
-                println!("turns exceeded 500");
+                println!("turns exceeded 500!");
                 return vec![0; agents.len()];
             }
         }

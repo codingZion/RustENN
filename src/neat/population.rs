@@ -1,6 +1,7 @@
 use crate::neat::agent::Agent;
 use std::sync::{Arc, Mutex};
 use std::thread;
+use indicatif::ProgressBar;
 
 pub struct Population<T: Send + Sync + 'static> {
     pub size: u32,
@@ -8,13 +9,13 @@ pub struct Population<T: Send + Sync + 'static> {
     pub agents: Arc<Mutex<Vec<Agent>>>,
     pub inputs: usize,
     pub outputs: usize,
-    pub run_game: fn(&T, Vec<&Agent>) -> Vec<u32>,  // Function pointer in the Population struct
+    pub run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>,  // Function pointer in the Population struct
     pub mutation_rate_range: (usize, usize),
     pub best_agents: Vec<Agent>,
 }
 
 impl<T: Send + Sync + 'static + Clone> Population<T> {
-    pub fn new(size: u32, inputs: usize, outputs: usize, run_game: fn(&T, Vec<&Agent>) -> Vec<u32>, mutation_rate_range: (usize, usize)) -> Population<T> {
+    pub fn new(size: u32, inputs: usize, outputs: usize, run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>, mutation_rate_range: (usize, usize)) -> Population<T> {
         let mut agents = Vec::new();
         for _ in 0..size {
             agents.push(Agent::new(inputs, outputs));
@@ -42,8 +43,16 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             print!("{}: {}, ", i, agents[i].fitness);
         }*/
     }
+    
+    pub fn circular_pairing(&mut self, distance: usize) -> Vec<[usize; 2]> {
+        let mut res = Vec::new();
+        for i in 0..self.size as usize {
+            res.push([i , (i + distance) % self.size as usize]);
+        }
+        res
+    }
 
-    pub fn competition(&mut self, game: &T) {
+    pub fn competition(&mut self, game: &T, games: usize) {
         // Reset fitness for all agents
         for agent in self.agents.lock().unwrap().iter_mut() {
             agent.fitness = 0.0;
@@ -54,25 +63,21 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
         let mut handles = vec![]; // Vector to store thread handles
 
-        for i in 0..self.size as usize {
-            for j in i + 1..self.size as usize {
+        let step = (self.size as usize / games) + 1;
+        let offset = rand::random::<u32>() as usize % (step);
+        let bar = ProgressBar::new(games as u64);
+        for i in 0..games {
+            bar.inc(1);
+            for j in self.circular_pairing(i * step + offset) {
                 let agents = Arc::clone(&agents);
                 let game = game.clone(); // Clone game for each thread
                 let handle = thread::spawn(move || {
-                    let mut res = (0, 0);
-                    for _ in 0..2 {
-                        let agents_lock = agents.lock().unwrap();
-                        let agents_slice = vec![&agents_lock[i], &agents_lock[j]];
-                        let game_res = run_game(&game, agents_slice);  // Use the run_game function pointer
-                        res.0 += game_res[0];
-                        res.1 += game_res[1];
-                    }
-
                     let mut agents_lock = agents.lock().unwrap();
-                    agents_lock[i].fitness += res.0 as f64;
-                    agents_lock[j].fitness += res.1 as f64;
+                    let agents_slice = vec![&agents_lock[j[0]], &agents_lock[j[1]]];
+                    let game_res = run_game(&game, agents_slice, false);  // Use the run_game function pointer
+                    agents_lock[j[0]].fitness += game_res[0] as f64;
+                    agents_lock[j[1]].fitness += game_res[1] as f64;
                 });
-
                 handles.push(handle); // Store the handle
             }
         }
@@ -85,16 +90,31 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
     pub fn compete_best_agents(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
         let mut res = vec![0; self.best_agents.len()];
+        let print_agent = rand::random::<u32>() % (if self.best_agents.len() > 0 {self.best_agents.len()} else {1}) as u32;
         for i in 0..self.best_agents.len() {
             let mut agents = Vec::new();
             agents.push(agent);
             agents.push(&self.best_agents[i]);
-            let game_res = (self.run_game)(game, agents);
+            let game_res;
+            if i == print_agent as usize {
+                println!("best_agent vs agent: {}", i);
+                game_res = (self.run_game)(game, agents, true);
+                println!("game_res: {:?}", game_res);
+            } else {
+                game_res = (self.run_game)(game, agents, false);
+            }
             res[i] = game_res[0];
             let mut agents = Vec::new();
             agents.push(&self.best_agents[i]);
             agents.push(agent);
-            let game_res = (self.run_game)(game, agents);
+            let game_res;
+            if i == print_agent as usize {
+                println!("agent: {} vs best_agent", i);
+                game_res = (self.run_game)(game, agents, true);
+                println!("game_res: {:?}", game_res);
+            } else {
+                game_res = (self.run_game)(game, agents, false);
+            }
             res[i] += game_res[1];
         }
         res
@@ -104,7 +124,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let mut new_agents = Vec::new();
         let mut i = 0;
         while new_agents.len() < self.size as usize {
-            for _ in 0..((self.size as usize - new_agents.len()) / 3).max(1) {
+            for _ in 0..((self.size as usize - new_agents.len()) / 7).max(1) {
                 let agents_lock = self.agents.lock().unwrap();
                 new_agents.push(
                     agents_lock[i].clone().mutate(
