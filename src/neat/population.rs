@@ -122,6 +122,20 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
     pub fn evolve(&mut self) {
         let mut new_agents = Vec::new();
+        //add old best agents to new population
+        let mut best_agents = self.best_agents.clone();
+        for _ in 0..self.size / 10 {
+            if !best_agents.is_empty() {
+                let i = rand::random::<u64>() as usize % best_agents.len();
+                new_agents.push(best_agents.remove(i).clone());
+            }
+        }
+    
+    
+        //add random agents to new population
+        for _ in 0..self.size / 10 {
+            new_agents.push(Agent::new(self.inputs, self.outputs));
+        }
         let mut i = 0;
         while new_agents.len() < self.size as usize {
             for _ in 0..((self.size as usize - new_agents.len()) / 7).max(1) {
