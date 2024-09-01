@@ -1,5 +1,6 @@
 -[x] strict grading
--[ ] objective grading with NimBot
--[ ] simple nim
+-[ ] better survival distribution
 -[ ] data saving (also 3d csv)
+-[ ] simple nim
+-[ ] objective grading with NimBot
 -[ ] data plotter
