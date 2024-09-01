@@ -55,7 +55,7 @@ impl Nim {
             let output = agent.nn.predict(input);
             let agent_move = Self::get_output_raw(output, state.clone());
             //println!("agent_move: {:?}", agent_move);
-            if print_game {
+            if true {
                 println!("turn: {}, agent: {}", turn, turn % agents.len());
                 println!("state: {:?}, agent_move: {:?}", state, agent_move);
             }
@@ -96,9 +96,10 @@ impl Nim {
         }
         for i in size..output.len() {
             if output[i] > output[res[1]] {
-                res[1] = i - size + 1;
+                res[1] = i;
             }
         }
+        res[1] -= size - 1;
         res[1] = res[1].min(state[res[0]] as usize);
         res
     }
@@ -113,9 +114,10 @@ impl Nim {
         }
         for i in size..output.len() {
             if output[i] > output[res[1]] {
-                res[1] = i - size + 1;
+                res[1] = i;
             }
         }
+        res[1] -= size - 1;
         res
     }
 }
