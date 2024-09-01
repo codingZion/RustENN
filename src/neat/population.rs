@@ -1,7 +1,11 @@
+use std::fs::OpenOptions;
 use crate::neat::agent::Agent;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use indicatif::ProgressBar;
+// import csv library
+use csv;
+use csv::Error;
 
 pub struct Population<T: Send + Sync + 'static> {
     pub size: u32,
@@ -11,7 +15,9 @@ pub struct Population<T: Send + Sync + 'static> {
     pub outputs: usize,
     pub run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>,  // Function pointer in the Population struct
     pub mutation_rate_range: (usize, usize),
-    pub best_agents: Vec<Agent>,
+    pub best_agents: Arc<Mutex<Vec<Agent>>>,
+    pub best_agents_comp_res: Vec<u32>,
+    pub best_agents_won_games: u32,
 }
 
 impl<T: Send + Sync + 'static + Clone> Population<T> {
@@ -28,7 +34,9 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             outputs,
             run_game,
             mutation_rate_range,
-            best_agents: Vec::new(),
+            best_agents: Arc::new(Mutex::new(Vec::new())),
+            best_agents_comp_res: Vec::new(),
+            best_agents_won_games: 0,
         }
     }
 
@@ -89,12 +97,13 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     pub fn compete_best_agents(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
-        let mut res = vec![0; self.best_agents.len()];
-        let print_agent = rand::random::<u32>() % (if self.best_agents.len() > 0 {self.best_agents.len()} else {1}) as u32;
-        for i in 0..self.best_agents.len() {
+        let best_agents = self.best_agents.lock().unwrap();
+        let mut res = vec![0; best_agents.len()];
+        let print_agent = rand::random::<u32>() % (if best_agents.len() > 0 {best_agents.len()} else {1}) as u32;
+        for i in 0..best_agents.len() {
             let mut agents = Vec::new();
             agents.push(agent);
-            agents.push(&self.best_agents[i]);
+            agents.push(&best_agents[i]);
             let game_res;
             if i == print_agent as usize {
                 println!("best_agent vs agent: {}", i);
@@ -105,7 +114,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             }
             res[i] = game_res[0];
             let mut agents = Vec::new();
-            agents.push(&self.best_agents[i]);
+            agents.push(&best_agents[i]);
             agents.push(agent);
             let game_res;
             if i == print_agent as usize {
@@ -117,13 +126,74 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             }
             res[i] += game_res[1];
         }
+        self.best_agents_comp_res = res.clone();
+        self.best_agents_won_games = res.iter().sum();
         res
+    }
+    
+    //compete_best_agents() but multithreaded
+    pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
+        let best_agents = Arc::clone(&self.best_agents);
+        let res = Arc::new(Mutex::new(vec![0; best_agents.lock().unwrap().len()]));
+        let print_agent = rand::random::<u32>() % (if best_agents.lock().unwrap().len() > 0 {best_agents.lock().unwrap().len()} else {1}) as u32;
+        let run_game = self.run_game;
+        let mut handles = vec![];
+
+        if best_agents.lock().unwrap().len() == 0 {
+            return vec![0; 0];
+        }
+        for i in 0..best_agents.lock().unwrap().len() {
+            let game = game.clone();
+            let agent = agent.clone();
+            let res = Arc::clone(&res);
+            let best_agents = Arc::clone(&best_agents);
+
+            let handle = thread::spawn(move || {
+                let best_agents_lock = best_agents.lock().unwrap();
+                let mut agents = vec![&agent, &best_agents_lock[i]];
+
+                let mut game_res;
+                if i == print_agent as usize {
+                    println!("best_agent vs agent: {}", i);
+                    game_res = run_game(&game, agents, true);
+                    println!("game_res: {:?}", game_res);
+                } else {
+                    game_res = run_game(&game, agents, false);
+                }
+                let mut res_lock = res.lock().unwrap();
+                res_lock[i] = game_res[0];
+
+                let mut agents = vec![&best_agents_lock[i], &agent];
+
+                if i == print_agent as usize {
+                    println!("agent: {} vs best_agent", i);
+                    game_res = run_game(&game, agents, true);
+                    println!("game_res: {:?}", game_res);
+                } else {
+                    game_res = run_game(&game, agents, false);
+                }
+                res_lock[i] += game_res[1];
+
+            });
+
+            handles.push(handle);
+        }
+
+        for handle in handles {
+            handle.join().unwrap();
+        }
+        
+        self.best_agents_comp_res = res.lock().unwrap().clone();
+        self.best_agents_won_games = self.best_agents_comp_res.iter().sum();
+
+        // Return the result by unwrapping the Arc and Mutex
+        Arc::try_unwrap(res).unwrap().into_inner().unwrap()
     }
 
     pub fn evolve(&mut self) {
         let mut new_agents = Vec::new();
         //add old best agents to new population
-        let mut best_agents = self.best_agents.clone();
+        let mut best_agents = self.best_agents.lock().unwrap().clone();
         for _ in 0..self.size / 10 {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
@@ -153,5 +223,65 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
         self.agents.lock().unwrap().clone_from(&new_agents);
         self.cycle += 1;
+    }
+
+    pub fn create_stats_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
+        let writer_result = csv::Writer::from_path(filename);
+        let mut wtr = match writer_result {
+            Ok(writer) => writer,
+            Err(err) => return Err(Box::new(err)),
+        };
+
+        match wtr.write_record(&["fitness", "layer_sizes", "edge_count"]) {
+            Ok(_) => Ok(()),
+            Err(err) => return Err(Box::new(err)),
+        }
+    }
+    
+    pub fn save_stats_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
+        let file = OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open(filename)
+            .unwrap();
+        let mut wtr = csv::Writer::from_writer(file);
+        let agents = self.agents.lock().unwrap();
+        for agent in agents.iter() {
+            wtr.write_record(&[agent.fitness.to_string(), agent.nn.layer_sizes.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(","), agent.nn.edge_count.to_string()]).unwrap();
+        }
+        Ok(())
+    }
+    pub fn create_best_agent_tournament_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
+        let writer_result = csv::Writer::from_path(filename);
+        let mut wtr = match writer_result {
+            Ok(writer) => writer,
+            Err(err) => return Err(Box::new(err)),
+        };
+
+        match wtr.write_record(&["won_games", "percentage", "competition_results"]) {
+            Ok(_) => Ok(()),
+            Err(err) => return Err(Box::new(err)),
+        }
+    }
+    pub fn save_best_agent_tournament_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
+        let file = OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open(filename)
+            .unwrap();
+        let mut wtr = csv::Writer::from_writer(file);
+        
+
+        let mut comp_res = String::new();
+        if self.best_agents_comp_res.len() > 0 {
+            for i in self.best_agents_comp_res.iter() {
+                comp_res.push_str(&i.to_string());
+            }
+        }
+        else {
+            comp_res.push_str("No competition");
+        }
+        wtr.write_record(&[self.best_agents_won_games.to_string(), (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
+        Ok(())
     }
 }

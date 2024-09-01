@@ -7,10 +7,13 @@ use std::sync::Mutex;
 fn main() {
     let mut nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
-
+    
     //start timer
     let now = std::time::Instant::now();
-    let mut population = Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
+    //let mut population = Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
+    let mut population = Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
+    population.create_best_agent_tournament_csv("best_agent_tournament.csv");
+    population.create_stats_csv("stats.csv");
 
     for i in 0..10000 {
         println!("generation: {}", i);
@@ -24,7 +27,7 @@ fn main() {
         };
 
 
-        let res = population.compete_best_agents(&nim_config, &best_agent);
+        let res = population.compete_best_agents_mt(&nim_config, &best_agent);
         println!("best fitness: {}", best_agent.fitness);
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
@@ -44,22 +47,10 @@ fn main() {
         //println!("Competition results: {:?}", res);
         println!("Wins: {:?} -> {:?}%", res.iter().sum::<u32>(), res.iter().sum::<u32>() as f64 / res.len() as f64 * 50.);
         println!("Time elapsed: {:?}", now.elapsed());
-        population.best_agents.push(best_agent.clone());
+        population.save_best_agent_tournament_csv("best_agent_tournament.csv");
+        population.save_stats_csv("stats.csv");
+        population.best_agents.lock().unwrap().push(best_agent.clone());
         population.evolve();  // Now you can mutate population
     }
 
-    population.competition(&nim_config, 100);
-    population.rank_agents();
-
-    let best_agent = {
-        let agents_lock = population.agents.lock().unwrap();
-        agents_lock[0].clone()
-    };
-
-    population.best_agents.push(best_agent.clone());
-    println!("best fitness: {}", best_agent.fitness);
-    println!("best agent: {:?}", best_agent);
-    println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
-    println!("edge_count: {}", best_agent.nn.edge_count);
-    println!("Time elapsed: {:?}", now.elapsed());
 }
