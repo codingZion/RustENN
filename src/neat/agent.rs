@@ -50,6 +50,9 @@ struct Edge {
 }
 
 impl NeuralNetwork {
+    pub fn rand_wb() -> f64 {
+        rand::random::<f64>() * 2. - 1.
+    }
     pub fn new(input_nodes: usize, output_nodes: usize) -> Self {
         //create the simplest topology network
         //create input and output nodes
@@ -63,7 +66,7 @@ impl NeuralNetwork {
         }
         for _ in 0..output_nodes {
             nodes[1].push(Node {
-                bias: rand::random::<f64>(),
+                bias: Self::rand_wb(),
                 incoming_edges: Vec::new(),
                 outgoing_edges: Vec::new(),
             });
@@ -74,7 +77,7 @@ impl NeuralNetwork {
                 nodes[0][i].outgoing_edges.push(Edge {
                     input: [0usize, i],
                     out: [1usize, j],
-                    weight: rand::random::<f64>(),
+                    weight: Self::rand_wb(),
                 });
                 let edge = nodes[0][i].outgoing_edges.last().unwrap().clone();
                 nodes[1][j].incoming_edges.push(edge);
@@ -176,7 +179,7 @@ impl NeuralNetwork {
             out = temp;
         }
         //add connection between two nodes
-        let weight = rand::random::<f64>();
+        let weight = Self::rand_wb();
         self.nodes[input[0]][input[1]].outgoing_edges.push(Edge {
             weight: weight,
             input: input,
@@ -214,7 +217,7 @@ impl NeuralNetwork {
         }
         //add new node
         self.nodes[layer].push(Node {
-            bias: rand::random::<f64>(),
+            bias: Self::rand_wb(),
             incoming_edges: Vec::new(),
             outgoing_edges: Vec::new(),
         });
@@ -245,7 +248,7 @@ impl NeuralNetwork {
             }
         }
         //add edges between the new node and the two nodes
-        let weight = rand::random::<f64>();
+        let weight = Self::rand_wb();
         let new_node = [layer, self.nodes[layer].len() - 1];
         self.nodes[edge[0]][edge[1]].outgoing_edges.push(Edge {
             weight: weight,
@@ -257,7 +260,7 @@ impl NeuralNetwork {
             input: [edge[0], edge[1]],
             out: new_node,
         });
-        let weight = rand::random::<f64>();
+        let weight = Self::rand_wb();
         self.nodes[layer][new_node[1]].outgoing_edges.push(Edge {
             weight: weight,
             input: new_node,
@@ -283,7 +286,7 @@ impl NeuralNetwork {
 
     pub fn change_weight(&mut self, edge: [usize; 4]) {
         //change the weight of an edge
-        let weight = rand::random::<f64>();
+        let weight = Self::rand_wb();
         //println!("{:?}", self.nodes[edge[0]][edge[1]].outgoing_edges);
         //println!("{:?}", self.nodes[edge[2]][edge[3]].incoming_edges);
         self.nodes[edge[0]][edge[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge[2], edge[3]]).unwrap().weight = weight;
@@ -299,7 +302,7 @@ impl NeuralNetwork {
 
     pub fn change_bias(&mut self, node: [usize; 2]) {
         //change the bias of a node
-        let bias = rand::random::<f64>();
+        let bias = Self::rand_wb();
         self.nodes[node[0]][node[1]].bias = bias;
     }
     pub fn shift(value: f64) -> f64 {
@@ -349,15 +352,15 @@ impl Agent {
         let mut mutation_types = Vec::new();
         mutation_types.push(MutationType {
             mutation: NeuralNetwork::add_connection_rand,
-            weight: 1.,
+            weight: 5.,
         });
         mutation_types.push(MutationType {
             mutation: NeuralNetwork::add_node_rand,
-            weight: 0.5,
+            weight: 2.5,
         });
         mutation_types.push(MutationType {
             mutation: NeuralNetwork::change_weight_rand,
-            weight: 3.,
+            weight: 7.5,
         });
         mutation_types.push(MutationType {
             mutation: NeuralNetwork::change_bias_rand,
@@ -369,7 +372,7 @@ impl Agent {
         });
         mutation_types.push(MutationType {
             mutation: NeuralNetwork::shift_bias_rand,
-            weight: 20.,
+            weight: 7.5,
         });
         for _ in 0..mutations {
             let mut rng = rand::thread_rng();

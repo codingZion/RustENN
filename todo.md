@@ -1,5 +1,5 @@
 -[x] strict grading
 -[ ] objective grading with NimBot
 -[ ] simple nim
--[ ] data saving
+-[ ] data saving (also 3d csv)
 -[ ] data plotter

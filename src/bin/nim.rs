@@ -10,8 +10,8 @@ fn main() {
     
     //start timer
     let now = std::time::Instant::now();
-    //let mut population = Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
-    let mut population = Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
+    let mut population = Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim_strict, (1usize, 5usize));
+    //let mut population = Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     population.create_best_agent_tournament_csv("best_agent_tournament.csv");
     population.create_stats_csv("stats.csv");
 

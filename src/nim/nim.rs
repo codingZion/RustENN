@@ -55,7 +55,7 @@ impl Nim {
             let output = agent.nn.predict(input);
             let agent_move = Self::get_output_raw(output, state.clone());
             //println!("agent_move: {:?}", agent_move);
-            if true {
+            if print_game {
                 println!("turn: {}, agent: {}", turn, turn % agents.len());
                 println!("state: {:?}, agent_move: {:?}", state, agent_move);
             }
