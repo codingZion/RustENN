@@ -3,4 +3,5 @@
 -[ ] data saving (also 3d csv)
 -[ ] simple nim
 -[ ] objective grading with NimBot
+-[ ] egui
 -[ ] data plotter

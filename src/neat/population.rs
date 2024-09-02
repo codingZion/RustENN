@@ -61,6 +61,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     pub fn competition(&mut self, game: &T, games: usize) {
+        let game_arc = Arc::new(game.clone());
         // Reset fitness for all agents
         for agent in self.agents.lock().unwrap().iter_mut() {
             agent.fitness = 0.0;
@@ -78,7 +79,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             bar.inc(1);
             for j in self.circular_pairing(i * step + offset) {
                 let agents = Arc::clone(&agents);
-                let game = game.clone(); // Clone game for each thread
+                let game = Arc::clone(&game_arc);
                 let handle = thread::spawn(move || {
                     let mut agents_lock = agents.lock().unwrap();
                     let agents_slice = vec![&agents_lock[j[0]], &agents_lock[j[1]]];
@@ -133,6 +134,8 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     
     //compete_best_agents() but multithreaded
     pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
+        let game = Arc::new(game.clone());
+        let agent = Arc::new(agent.clone());
         let best_agents = Arc::clone(&self.best_agents);
         let res = Arc::new(Mutex::new(vec![0; best_agents.lock().unwrap().len()]));
         let print_agent = rand::random::<u32>() % (if best_agents.lock().unwrap().len() > 0 {best_agents.lock().unwrap().len()} else {1}) as u32;
@@ -143,8 +146,8 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             return vec![0; 0];
         }
         for i in 0..best_agents.lock().unwrap().len() {
-            let game = game.clone();
-            let agent = agent.clone();
+            let game = Arc::clone(&game);
+            let agent = Arc::clone(&agent);
             let res = Arc::clone(&res);
             let best_agents = Arc::clone(&best_agents);
 
@@ -182,7 +185,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         for handle in handles {
             handle.join().unwrap();
         }
-        
+
         self.best_agents_comp_res = res.lock().unwrap().clone();
         self.best_agents_won_games = self.best_agents_comp_res.iter().sum();
 
@@ -237,7 +240,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             Err(err) => return Err(Box::new(err)),
         }
     }
-    
+
     pub fn save_stats_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
         let file = OpenOptions::new()
             .write(true)
@@ -270,7 +273,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             .open(filename)
             .unwrap();
         let mut wtr = csv::Writer::from_writer(file);
-        
+
 
         let mut comp_res = String::new();
         if self.best_agents_comp_res.len() > 0 {
