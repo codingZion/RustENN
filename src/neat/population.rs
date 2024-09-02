@@ -7,10 +7,12 @@ use indicatif::ProgressBar;
 use csv;
 use csv::Error;
 
+macro_rules! noop { () => (); }
+
 pub struct Population<T: Send + Sync + 'static> {
     pub size: u32,
     pub cycle: u32,
-    pub agents: Arc<Mutex<Vec<Agent>>>,
+    pub agents: Vec<Agent>,
     pub inputs: usize,
     pub outputs: usize,
     pub run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>,  // Function pointer in the Population struct
@@ -29,7 +31,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         Population {
             size,
             cycle: 0,
-            agents: Arc::new(Mutex::new(agents)),
+            agents,
             inputs,
             outputs,
             run_game,
@@ -41,7 +43,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     pub fn rank_agents(&mut self) {
-        let mut agents = self.agents.lock().unwrap();
+        let mut agents = &mut self.agents;
         agents.sort_by(|a, b| b.fitness.total_cmp(&a.fitness));
         for i in 0..self.size as usize {
             agents[i].rank = i as isize;
@@ -63,11 +65,11 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     pub fn competition(&mut self, game: &T, games: usize) {
         let game_arc = Arc::new(game.clone());
         // Reset fitness for all agents
-        for agent in self.agents.lock().unwrap().iter_mut() {
+        for agent in self.agents.iter_mut() {
             agent.fitness = 0.0;
         }
 
-        let agents = Arc::clone(&self.agents);
+        let agents = Arc::new(self.agents.clone());
         let run_game = self.run_game; // Capture the run_game function pointer from the struct
 
         let mut handles = vec![]; // Vector to store thread handles
@@ -81,19 +83,31 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 let agents = Arc::clone(&agents);
                 let game = Arc::clone(&game_arc);
                 let handle = thread::spawn(move || {
-                    let mut agents_lock = agents.lock().unwrap();
-                    let agents_slice = vec![&agents_lock[j[0]], &agents_lock[j[1]]];
+                    let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
                     let game_res = run_game(&game, agents_slice, false);  // Use the run_game function pointer
-                    agents_lock[j[0]].fitness += game_res[0] as f64;
-                    agents_lock[j[1]].fitness += game_res[1] as f64;
+                    [(j[0], game_res[0]), (j[1], game_res[1])]
                 });
                 handles.push(handle); // Store the handle
+                while handles.len() >= 6 {
+                    let mut i = 0;
+                    while i < handles.len() {
+                        if handles[i].is_finished() {
+                            let res = handles.remove(i).join().unwrap();
+                            self.agents[res[0].0].fitness += res[0].1 as f64;
+                            self.agents[res[1].0].fitness += res[1].1 as f64;
+                        } else {
+                            i += 1;
+                        }
+                    }
+                }
             }
         }
 
         // Wait for all threads to finish
         for handle in handles {
-            handle.join().unwrap();
+            let res = handle.join().unwrap();
+            self.agents[res[0].0].fitness += res[0].1 as f64;
+            self.agents[res[1].0].fitness += res[1].1 as f64;
         }
     }
 
@@ -212,7 +226,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let mut i = 0;
         while new_agents.len() < self.size as usize {
             for _ in 0..((self.size as usize - new_agents.len()) / 7).max(1) {
-                let agents_lock = self.agents.lock().unwrap();
+                let agents_lock = &self.agents;
                 new_agents.push(
                     agents_lock[i].clone().mutate(
                         rand::random::<u64>() as usize % (self.mutation_rate_range.1 - self.mutation_rate_range.0) + self.mutation_rate_range.0
@@ -224,7 +238,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             }
             i += 1;
         }
-        self.agents.lock().unwrap().clone_from(&new_agents);
+        self.agents.clone_from(&new_agents);
         self.cycle += 1;
     }
 
@@ -248,7 +262,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             .open(filename)
             .unwrap();
         let mut wtr = csv::Writer::from_writer(file);
-        let agents = self.agents.lock().unwrap();
+        let agents = &self.agents;
         for agent in agents.iter() {
             wtr.write_record(&[agent.fitness.to_string(), agent.nn.layer_sizes.iter().map(|x| x.to_string()).collect::<Vec<String>>().join(","), agent.nn.edge_count.to_string()]).unwrap();
         }

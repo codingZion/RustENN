@@ -10,6 +10,7 @@ fn main() {
     
     //start timer
     let now = std::time::Instant::now();
+    let mut last = now.clone();
     let mut population = Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim_strict, (1usize, 5usize));
     //let mut population = Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     population.create_best_agent_tournament_csv("best_agent_tournament.csv");
@@ -22,8 +23,7 @@ fn main() {
 
         // Limit the scope of the immutable borrow
         let best_agent = {
-            let agents_lock = population.agents.lock().unwrap();
-            agents_lock[0].clone()
+            population.agents[0].clone()
         };
 
 
@@ -47,6 +47,8 @@ fn main() {
         //println!("Competition results: {:?}", res);
         println!("Wins: {:?} -> {:?}%", res.iter().sum::<u32>(), res.iter().sum::<u32>() as f64 / res.len() as f64 * 50.);
         println!("Time elapsed: {:?}", now.elapsed());
+        println!("Time since last: {:?}", last.elapsed());
+        last = std::time::Instant::now();
         population.save_best_agent_tournament_csv("best_agent_tournament.csv");
         population.save_stats_csv("stats.csv");
         population.best_agents.lock().unwrap().push(best_agent.clone());
