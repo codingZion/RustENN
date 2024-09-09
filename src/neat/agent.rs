@@ -1,13 +1,14 @@
 use rand::Rng;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Agent {
     pub fitness: f64,
     pub nn: NeuralNetwork,
     pub rank: isize,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct NeuralNetwork {
     pub input_nodes: usize,
     pub layer_sizes: Vec<usize>,
@@ -34,7 +35,7 @@ struct MutationType {
     pub mutation: fn(&mut NeuralNetwork) -> bool,
     pub weight: f64,
 }
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Node {
     pub bias: f64,
     //edges stored in an adjacency list
@@ -42,7 +43,7 @@ pub struct Node {
     pub outgoing_edges: Vec<Edge>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Edge {
     input: [usize; 2],
     out: [usize; 2],

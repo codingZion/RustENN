@@ -1,6 +1,8 @@
 use std::time::Instant;
+use std::thread::available_parallelism;
 
 fn main() {
+    println!("Available parallelism: {}", available_parallelism().unwrap().get());
     let test_size = 1000000000;
     let start = Instant::now();
     let mut a = 0;

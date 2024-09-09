@@ -6,20 +6,32 @@ use indicatif::ProgressBar;
 // import csv library
 use csv;
 use csv::Error;
+use serde::{Deserialize, Serialize};
+use std::thread::{available_parallelism, JoinHandle};
 
 macro_rules! noop { () => (); }
 
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
     pub size: u32,
     pub cycle: u32,
     pub agents: Vec<Agent>,
     pub inputs: usize,
     pub outputs: usize,
+    // serde ignore
+    #[serde(skip, default = "default_fn")]
     pub run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>,  // Function pointer in the Population struct
     pub mutation_rate_range: (usize, usize),
-    pub best_agents: Arc<Mutex<Vec<Agent>>>,
+    pub best_agents: Vec<Agent>,
     pub best_agents_comp_res: Vec<u32>,
     pub best_agents_won_games: u32,
+}
+
+fn default_fn<T: Send + Sync + 'static>() -> fn(&T, Vec<&Agent>, bool) -> Vec<u32> {
+    default_game
+}
+fn default_game<T: Send + Sync + 'static>(_: &T, _: Vec<&Agent>, _: bool) -> Vec<u32> {
+    vec![]
 }
 
 impl<T: Send + Sync + 'static + Clone> Population<T> {
@@ -36,7 +48,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             outputs,
             run_game,
             mutation_rate_range,
-            best_agents: Arc::new(Mutex::new(Vec::new())),
+            best_agents: Vec::new(),
             best_agents_comp_res: Vec::new(),
             best_agents_won_games: 0,
         }
@@ -77,6 +89,9 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let step = (self.size as usize / games) + 1;
         let offset = rand::random::<u32>() as usize % (step);
         let bar = ProgressBar::new(games as u64);
+        
+        let threads = available_parallelism().unwrap().get() * 2;
+        
         for i in 0..games {
             bar.inc(1);
             for j in self.circular_pairing(i * step + offset) {
@@ -88,7 +103,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                     [(j[0], game_res[0]), (j[1], game_res[1])]
                 });
                 handles.push(handle); // Store the handle
-                while handles.len() >= 6 {
+                while handles.len() >= threads {
                     let mut i = 0;
                     while i < handles.len() {
                         if handles[i].is_finished() {
@@ -110,107 +125,79 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             self.agents[res[1].0].fitness += res[1].1 as f64;
         }
     }
-
-    pub fn compete_best_agents(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
-        let best_agents = self.best_agents.lock().unwrap();
-        let mut res = vec![0; best_agents.len()];
-        let print_agent = rand::random::<u32>() % (if best_agents.len() > 0 {best_agents.len()} else {1}) as u32;
-        for i in 0..best_agents.len() {
-            let mut agents = Vec::new();
-            agents.push(agent);
-            agents.push(&best_agents[i]);
-            let game_res;
-            if i == print_agent as usize {
-                println!("best_agent vs agent: {}", i);
-                game_res = (self.run_game)(game, agents, true);
-                println!("game_res: {:?}", game_res);
-            } else {
-                game_res = (self.run_game)(game, agents, false);
-            }
-            res[i] = game_res[0];
-            let mut agents = Vec::new();
-            agents.push(&best_agents[i]);
-            agents.push(agent);
-            let game_res;
-            if i == print_agent as usize {
-                println!("agent: {} vs best_agent", i);
-                game_res = (self.run_game)(game, agents, true);
-                println!("game_res: {:?}", game_res);
-            } else {
-                game_res = (self.run_game)(game, agents, false);
-            }
-            res[i] += game_res[1];
-        }
-        self.best_agents_comp_res = res.clone();
-        self.best_agents_won_games = res.iter().sum();
-        res
-    }
     
     //compete_best_agents() but multithreaded
     pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
         let game = Arc::new(game.clone());
-        let agent = Arc::new(agent.clone());
-        let best_agents = Arc::clone(&self.best_agents);
-        let res = Arc::new(Mutex::new(vec![0; best_agents.lock().unwrap().len()]));
-        let print_agent = rand::random::<u32>() % (if best_agents.lock().unwrap().len() > 0 {best_agents.lock().unwrap().len()} else {1}) as u32;
+        //let agent = Arc::new(agent.clone());
+        let best_agents = Arc::new(&self.best_agents);
+        let print_agent = rand::random::<u32>() % (if best_agents.len() > 0 {best_agents.len()} else {1}) as u32;
         let run_game = self.run_game;
         let mut handles = vec![];
+        self.best_agents_comp_res = vec![0; best_agents.len()];
+        
+        let threads = available_parallelism().unwrap().get() * 2;
 
-        if best_agents.lock().unwrap().len() == 0 {
+        if best_agents.len() == 0 {
             return vec![0; 0];
         }
-        for i in 0..best_agents.lock().unwrap().len() {
-            let game = Arc::clone(&game);
-            let agent = Arc::clone(&agent);
-            let res = Arc::clone(&res);
+        for i in 0..best_agents.len() {
             let best_agents = Arc::clone(&best_agents);
-
-            let handle = thread::spawn(move || {
-                let best_agents_lock = best_agents.lock().unwrap();
-                let mut agents = vec![&agent, &best_agents_lock[i]];
-
-                let mut game_res;
-                if i == print_agent as usize {
-                    println!("best_agent vs agent: {}", i);
-                    game_res = run_game(&game, agents, true);
-                    println!("game_res: {:?}", game_res);
-                } else {
-                    game_res = run_game(&game, agents, false);
+            for j in 0..2 {
+                let best_agents = Arc::clone(&best_agents);
+                //let agent = Arc::clone(&agent);
+                let game = Arc::clone(&game);
+                let mut agents = vec![agent.clone(), best_agents[i].clone()];
+                if j == 1 {
+                    agents.reverse();
                 }
-                let mut res_lock = res.lock().unwrap();
-                res_lock[i] = game_res[0];
-
-                let mut agents = vec![&best_agents_lock[i], &agent];
-
-                if i == print_agent as usize {
-                    println!("agent: {} vs best_agent", i);
-                    game_res = run_game(&game, agents, true);
-                    println!("game_res: {:?}", game_res);
+                
+                let handle = if i == print_agent as usize || i == best_agents.len() - 1 {
+                    thread::spawn(move || {
+                        let agents = vec![&agents[0], &agents[1]];
+                        println!("best_agent vs agent: {}", i);
+                        let agents = vec![agents[0], agents[1]];
+                        let game_res = run_game(&game, agents, true);
+                        println!("game_res: {:?}", game_res);
+                        game_res
+                    })
                 } else {
-                    game_res = run_game(&game, agents, false);
+                    thread::spawn(move || {
+                        let agents = vec![&agents[0], &agents[1]];
+                        run_game(&game, agents, false)
+                    })
+                };
+                handles.push((i, j, handle));
+                if handles.len() >= threads {
+                    let mut j = 0;
+                    while j < handles.len() {
+                        if handles[j].2.is_finished() {
+                            let handle = handles.remove(j);
+                            let res = handle.2.join().unwrap();
+                            self.best_agents_comp_res[handle.0] += if handle.1 == 0 {res[0]} else {res[1]};
+                        } else {
+                            j += 1;
+                        }
+                    }
                 }
-                res_lock[i] += game_res[1];
-
-            });
-
-            handles.push(handle);
+            }
         }
 
-        for handle in handles {
-            handle.join().unwrap();
+        for handle in handles{
+            let res = handle.2.join().unwrap();
+            self.best_agents_comp_res[handle.0] += if handle.1 == 0 {res[0]} else {res[1]};
         }
 
-        self.best_agents_comp_res = res.lock().unwrap().clone();
         self.best_agents_won_games = self.best_agents_comp_res.iter().sum();
 
         // Return the result by unwrapping the Arc and Mutex
-        Arc::try_unwrap(res).unwrap().into_inner().unwrap()
+        self.best_agents_comp_res.clone()
     }
 
     pub fn evolve(&mut self) {
         let mut new_agents = Vec::new();
         //add old best agents to new population
-        let mut best_agents = self.best_agents.lock().unwrap().clone();
+        let mut best_agents = self.best_agents.clone();
         for _ in 0..self.size / 10 {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
@@ -300,5 +287,29 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
         wtr.write_record(&[self.best_agents_won_games.to_string(), (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
         Ok(())
+    }
+
+    // function that saves itself to a bincode file with serde and bincode crate
+    pub fn save_population(&self, filename: &str) -> JoinHandle<Result<(), Box<std::io::Error>>> {
+        let filename = filename.to_string();
+        let population = self.clone();
+        thread::spawn(move || {
+            let file = OpenOptions::new()
+                .write(true)
+                .create(true)
+                .open(filename)
+                .unwrap();
+            bincode::serialize_into(file, &population).unwrap();
+            Ok(())
+        })
+    }
+
+    pub fn load_population(filename: &str) -> Result<Population<T>, Box<std::io::Error>> {
+        let file = OpenOptions::new()
+            .read(true)
+            .open(filename)
+            .unwrap();
+        let res: Population<T> = bincode::deserialize_from(file).unwrap();
+        Ok(res)
     }
 }

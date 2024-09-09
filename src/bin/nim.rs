@@ -3,6 +3,7 @@ use rust_neat::neat::agent::Agent;
 use rust_neat::nim::nim::Nim;
 use std::sync::Arc;
 use std::sync::Mutex;
+use std::thread;
 
 fn main() {
     let mut nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
@@ -15,8 +16,12 @@ fn main() {
     //let mut population = Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     population.create_best_agent_tournament_csv("best_agent_tournament.csv");
     population.create_stats_csv("stats.csv");
-
+    let mut saver= thread::spawn(|| {Ok(())});
     for i in 0..10000 {
+        saver.join().unwrap();
+        //let mut population = Population::load_population("population.bin").unwrap();
+        //population.run_game = Nim::run_nim_strict;
+        
         println!("generation: {}", i);
         population.competition(&nim_config, 75);
         population.rank_agents();
@@ -28,6 +33,7 @@ fn main() {
 
 
         let res = population.compete_best_agents_mt(&nim_config, &best_agent);
+        saver = population.save_population("population.bin");
         println!("best fitness: {}", best_agent.fitness);
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
@@ -51,7 +57,7 @@ fn main() {
         last = std::time::Instant::now();
         population.save_best_agent_tournament_csv("best_agent_tournament.csv");
         population.save_stats_csv("stats.csv");
-        population.best_agents.lock().unwrap().push(best_agent.clone());
+        population.best_agents.push(best_agent.clone());
         population.evolve();  // Now you can mutate population
     }
 
