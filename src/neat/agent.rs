@@ -35,7 +35,7 @@ struct MutationType {
     pub weight: f64,
 }
 #[derive(Clone, Debug)]
-struct Node {
+pub struct Node {
     pub bias: f64,
     //edges stored in an adjacency list
     pub incoming_edges: Vec<Edge>,
@@ -43,7 +43,7 @@ struct Node {
 }
 
 #[derive(Clone, Debug)]
-struct Edge {
+pub struct Edge {
     input: [usize; 2],
     out: [usize; 2],
     weight: f64,
@@ -85,7 +85,7 @@ impl NeuralNetwork {
         }
         Self {
             input_nodes,
-            layer_sizes: vec![input_nodes as usize, output_nodes as usize],
+            layer_sizes: vec![input_nodes, output_nodes],
             output_nodes,
             edge_count: input_nodes * output_nodes,
             nodes,
@@ -349,31 +349,31 @@ impl Agent {
     }
     
     pub fn mutate(&mut self, mutations: usize) -> Self {
-        let mut mutation_types = Vec::new();
-        mutation_types.push(MutationType {
-            mutation: NeuralNetwork::add_connection_rand,
-            weight: 5.,
-        });
-        mutation_types.push(MutationType {
-            mutation: NeuralNetwork::add_node_rand,
-            weight: 2.5,
-        });
-        mutation_types.push(MutationType {
-            mutation: NeuralNetwork::change_weight_rand,
-            weight: 7.5,
-        });
-        mutation_types.push(MutationType {
-            mutation: NeuralNetwork::change_bias_rand,
-            weight: 3.,
-        });
-        mutation_types.push(MutationType {
-            mutation: NeuralNetwork::shift_weight_rand,
-            weight: 20.,
-        });
-        mutation_types.push(MutationType {
-            mutation: NeuralNetwork::shift_bias_rand,
-            weight: 7.5,
-        });
+        let mutation_types = [
+            MutationType {
+                mutation: NeuralNetwork::add_connection_rand,
+                weight: 5.,
+            },
+            MutationType {
+                mutation: NeuralNetwork::add_node_rand,
+                weight: 2.5,
+            },
+            MutationType {
+                mutation: NeuralNetwork::change_weight_rand,
+                weight: 7.5,
+            },
+            MutationType {
+                mutation: NeuralNetwork::change_bias_rand,
+                weight: 3.,
+            },
+            MutationType {
+                mutation: NeuralNetwork::shift_weight_rand,
+                weight: 20.,
+            },
+            MutationType {
+                mutation: NeuralNetwork::shift_bias_rand,
+                weight: 7.5,
+            }];
         for _ in 0..mutations {
             let mut rng = rand::thread_rng();
             let mut sum = 0.0;
