@@ -8,6 +8,8 @@ use csv;
 use csv::Error;
 use serde::{Deserialize, Serialize};
 use std::thread::{available_parallelism, JoinHandle};
+use rayon::prelude::*; // For parallel iterators
+use rand::Rng; // For random number generation
 
 macro_rules! noop { () => (); }
 
@@ -74,6 +76,55 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         res
     }
 
+    pub fn competition_rayon(&mut self, game: &T, games: usize) {
+        let game_arc = Arc::new(game.clone());
+
+        // Reset fitness for all agents
+        for agent in self.agents.iter_mut() {
+            agent.fitness = 0.0;
+        }
+
+        let agents = Arc::new(self.agents.clone());
+        let run_game = self.run_game; // Capture the run_game function pointer from the struct
+        let bar = ProgressBar::new(games as u64);
+
+        let step = (self.size as usize / games) + 1;
+        let offset = rand::thread_rng().gen_range(0..step); // Optimized random offset generation
+
+        // Precompute pairings outside the parallel loop to avoid mutating `self`
+        let pairings: Vec<_> = (0..games)
+            .map(|i| self.circular_pairing(i * step + offset))
+            .collect();
+
+        // Mutex for safe concurrent updates of agent fitness
+        let fitness_updates = Arc::new(Mutex::new(vec![0.0; self.agents.len()]));
+
+        // Use `rayon`'s thread pool to run games in parallel
+        pairings.into_par_iter().for_each(|pairing| {
+            bar.inc(1);
+            for j in pairing {
+                let agents = Arc::clone(&agents); // Only clone if needed
+                let game = Arc::clone(&game_arc); // Only clone if needed
+                let fitness_updates = Arc::clone(&fitness_updates); // Clone fitness mutex
+
+                // Run the game and get the results
+                let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
+                let game_res = run_game(&game, agents_slice, false);
+
+                // Update fitness in a critical section
+                let mut fitness_lock = fitness_updates.lock().unwrap();
+                fitness_lock[j[0]] += game_res[0] as f64;
+                fitness_lock[j[1]] += game_res[1] as f64;
+            }
+        });
+
+        // After all threads finish, update the agents' fitness from the results
+        let fitness_lock = fitness_updates.lock().unwrap();
+        for (i, agent) in self.agents.iter_mut().enumerate() {
+            agent.fitness = fitness_lock[i];
+        }
+    }
+    
     pub fn competition(&mut self, game: &T, games: usize) {
         let game_arc = Arc::new(game.clone());
         // Reset fitness for all agents
@@ -127,72 +178,67 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
     
     //compete_best_agents() but multithreaded
-    pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
-        let game = Arc::new(game.clone());
-        //let agent = Arc::new(agent.clone());
-        let best_agents = Arc::new(&self.best_agents);
-        let print_agent = rand::random::<u32>() % (if best_agents.len() > 0 {best_agents.len()} else {1}) as u32;
+   pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
+        let game_arc = Arc::new(game.clone());
+        let best_agents_arc = Arc::new(self.best_agents.clone()); // Clone `self.best_agents` into the `Arc`
+
+        if best_agents_arc.len() == 0 {
+            return vec![];
+        }
+
+        let print_agent = rand::thread_rng().gen_range(0..best_agents_arc.len());
         let run_game = self.run_game;
-        let mut handles = vec![];
-        self.best_agents_comp_res = vec![0; best_agents.len()];
-        
-        let threads = available_parallelism().unwrap().get() * 2;
 
-        if best_agents.len() == 0 {
-            return vec![0; 0];
-        }
-        for i in 0..best_agents.len() {
-            let best_agents = Arc::clone(&best_agents);
-            for j in 0..2 {
-                let best_agents = Arc::clone(&best_agents);
-                //let agent = Arc::clone(&agent);
-                let game = Arc::clone(&game);
-                let mut agents = vec![agent.clone(), best_agents[i].clone()];
-                if j == 1 {
-                    agents.reverse();
-                }
-                
-                let handle = if i == print_agent as usize || i == best_agents.len() - 1 {
-                    thread::spawn(move || {
-                        let agents = vec![&agents[0], &agents[1]];
-                        println!("best_agent vs agent: {}", i);
-                        let agents = vec![agents[0], agents[1]];
-                        let game_res = run_game(&game, agents, true);
-                        println!("game_res: {:?}", game_res);
-                        game_res
-                    })
-                } else {
-                    thread::spawn(move || {
-                        let agents = vec![&agents[0], &agents[1]];
-                        run_game(&game, agents, false)
-                    })
-                };
-                handles.push((i, j, handle));
-                if handles.len() >= threads {
-                    let mut j = 0;
-                    while j < handles.len() {
-                        if handles[j].2.is_finished() {
-                            let handle = handles.remove(j);
-                            let res = handle.2.join().unwrap();
-                            self.best_agents_comp_res[handle.0] += if handle.1 == 0 {res[0]} else {res[1]};
-                        } else {
-                            j += 1;
-                        }
+        self.best_agents_comp_res = vec![0; best_agents_arc.len()];
+
+        // Mutex to protect the shared results
+        let results_mutex = Arc::new(Mutex::new(vec![0; best_agents_arc.len()]));
+
+        // Prepare pairings upfront for easier parallel processing
+        let pairings: Vec<_> = (0..best_agents_arc.len())
+            .flat_map(|i| {
+                let best_agents = Arc::clone(&best_agents_arc); // Clone the `Arc` to use inside the closure
+                (0..2).map(move |j| {
+                    // Dereference `best_agents` and clone the required agents from the underlying Vec
+                    let mut agents = vec![agent.clone(), best_agents[i].clone()];
+                    if j == 1 {
+                        agents.reverse();
                     }
-                }
-            }
-        }
+                    (i, j, agents)
+                })
+            })
+            .collect();
 
-        for handle in handles{
-            let res = handle.2.join().unwrap();
-            self.best_agents_comp_res[handle.0] += if handle.1 == 0 {res[0]} else {res[1]};
-        }
+        // Use `rayon` for parallel execution
+        pairings.into_par_iter().for_each(|(i, j, agents)| {
+            let game = Arc::clone(&game_arc);
+            let results_mutex = Arc::clone(&results_mutex);
 
+            // Decide whether to print or not
+            let result = if i == print_agent || i == best_agents_arc.len() - 1 {
+                let agents_ref = vec![&agents[0], &agents[1]];
+                println!("best_agent vs agent: {}", i);
+                let res = run_game(&game, agents_ref, true);
+                println!("game_res: {:?}", res);
+                res
+            } else {
+                let agents_ref = vec![&agents[0], &agents[1]];
+                run_game(&game, agents_ref, false)
+            };
+
+            // Update the results safely
+            let mut results_lock = results_mutex.lock().unwrap();
+            results_lock[i] += if j == 0 { result[0] } else { result[1] };
+        });
+
+        // Retrieve the final results from the mutex
+        let final_results = results_mutex.lock().unwrap().clone();
+        self.best_agents_comp_res = final_results.clone();
         self.best_agents_won_games = self.best_agents_comp_res.iter().sum();
 
-        // Return the result by unwrapping the Arc and Mutex
-        self.best_agents_comp_res.clone()
+        final_results
     }
+
 
     pub fn evolve(&mut self) {
         let mut new_agents = Vec::new();

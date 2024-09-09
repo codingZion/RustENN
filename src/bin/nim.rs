@@ -22,7 +22,7 @@ fn main() {
         //population.run_game = Nim::run_nim_strict;
         
         println!("generation: {}", i);
-        population.competition(&nim_config, 75);
+        population.competition_rayon(&nim_config, 75);
         population.rank_agents();
 
         // Limit the scope of the immutable borrow
@@ -31,9 +31,12 @@ fn main() {
         };
 
 
-        saver.join().unwrap();
+        //saver.join().unwrap();
         let res = population.compete_best_agents_mt(&nim_config, &best_agent);
-        saver = population.save_population("population.bin");
+        if i % 20 == 0 {
+            saver.join().unwrap();
+            saver = population.save_population("population.bin")
+        }
         println!("best fitness: {}", best_agent.fitness);
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
