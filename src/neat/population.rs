@@ -1,4 +1,5 @@
 use std::fs::OpenOptions;
+use std::ops::Add;
 use crate::neat::agent::Agent;
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -327,25 +328,27 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             for i in self.best_agents_comp_res.iter() {
                 comp_res.push_str(&i.to_string());
             }
+            wtr.write_record(&[self.best_agents_won_games.to_string(), (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
         }
         else {
-            comp_res.push_str("No competition");
+            println!("Can't save best agent tournament csv, best_agents_comp_res is empty!");
         }
-        wtr.write_record(&[self.best_agents_won_games.to_string(), (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
         Ok(())
     }
 
     // function that saves itself to a bincode file with serde and bincode crate
     pub fn save_population(&self, filename: &str) -> JoinHandle<Result<(), Box<std::io::Error>>> {
         let filename = filename.to_string();
+        let temp_file = filename.clone().add(".tmp");
         let population = self.clone();
         thread::spawn(move || {
             let file = OpenOptions::new()
                 .write(true)
                 .create(true)
-                .open(filename)
+                .open(&temp_file)
                 .unwrap();
             bincode::serialize_into(file, &population).unwrap();
+            std::fs::rename(temp_file, filename).unwrap();
             Ok(())
         })
     }

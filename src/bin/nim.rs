@@ -5,6 +5,8 @@ use std::sync::Arc;
 use std::sync::Mutex;
 use std::thread;
 
+const USE_BIN: bool = false;
+
 fn main() {
     let mut nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
@@ -12,16 +14,24 @@ fn main() {
     //start timer
     let now = std::time::Instant::now();
     let mut last = now.clone();
-    let mut population = Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim_strict, (1usize, 5usize));
-    //let mut population = Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
-    population.create_best_agent_tournament_csv("best_agent_tournament.csv");
-    population.create_stats_csv("stats.csv");
+    let mut population = if USE_BIN {
+        Population::load_population("population.bin").unwrap()
+    } else {
+        Population::new(20000, nim_config.input_size, nim_config.output_size, Nim::run_nim_strict, (1usize, 5usize))
+        //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
+    }; 
+    if USE_BIN {
+        population.run_game = Nim::run_nim_strict;
+    } else {
+        population.create_best_agent_tournament_csv("best_agent_tournament.csv");
+        population.create_stats_csv("stats.csv");
+    }
     let mut saver= thread::spawn(|| {Ok(())});
-    for i in 0..10000 {
+    for _ in 0..10000 {
         //let mut population = Population::load_population("population.bin").unwrap();
         //population.run_game = Nim::run_nim_strict;
         
-        println!("generation: {}", i);
+        println!("generation: {}", population.cycle);
         population.competition_rayon(&nim_config, 75);
         population.rank_agents();
 
@@ -33,9 +43,10 @@ fn main() {
 
         //saver.join().unwrap();
         let res = population.compete_best_agents_mt(&nim_config, &best_agent);
-        if i % 20 == 0 {
+        if saver.is_finished() {
             saver.join().unwrap();
-            saver = population.save_population("population.bin")
+            saver = population.save_population("population.bin");
+            println!("Saving population {}!", population.cycle);
         }
         println!("best fitness: {}", best_agent.fitness);
         //println!("best agent: {:?}", best_agent);
