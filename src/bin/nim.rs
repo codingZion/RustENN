@@ -18,7 +18,6 @@ fn main() {
     population.create_stats_csv("stats.csv");
     let mut saver= thread::spawn(|| {Ok(())});
     for i in 0..10000 {
-        saver.join().unwrap();
         //let mut population = Population::load_population("population.bin").unwrap();
         //population.run_game = Nim::run_nim_strict;
         
@@ -32,6 +31,7 @@ fn main() {
         };
 
 
+        saver.join().unwrap();
         let res = population.compete_best_agents_mt(&nim_config, &best_agent);
         saver = population.save_population("population.bin");
         println!("best fitness: {}", best_agent.fitness);
