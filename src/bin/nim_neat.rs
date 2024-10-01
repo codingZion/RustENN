@@ -1,14 +1,11 @@
 use rust_neat::neat::population::Population;
-use rust_neat::neat::agent::Agent;
 use rust_neat::nim::nim::Nim;
-use std::sync::Arc;
-use std::sync::Mutex;
 use std::thread;
 
 const USE_BIN: bool = false;
 
 fn main() {
-    let mut nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
+    let nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
     
     //start timer
@@ -32,7 +29,7 @@ fn main() {
         //population.run_game = Nim::run_nim_strict;
         
         println!("generation: {}", population.cycle);
-        population.competition_rayon(&nim_config, 75);
+        population.competition(&nim_config, 75);
         population.rank_agents();
 
         // Limit the scope of the immutable borrow

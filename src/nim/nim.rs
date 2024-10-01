@@ -72,7 +72,7 @@ impl Nim {
                 return vec![0; agents.len()];
             }
         }
-        let winner = (turn - 2) % agents.len();
+        let winner = (turn as isize - 2).abs() as usize % agents.len();
         let mut res = vec![0; agents.len()];
         res[winner] = 1;
         res

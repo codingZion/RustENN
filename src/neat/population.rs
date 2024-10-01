@@ -6,13 +6,10 @@ use std::thread;
 use indicatif::ProgressBar;
 // import csv library
 use csv;
-use csv::Error;
 use serde::{Deserialize, Serialize};
-use std::thread::{available_parallelism, JoinHandle};
+use std::thread::JoinHandle;
 use rayon::prelude::*; // For parallel iterators
 use rand::Rng; // For random number generation
-
-macro_rules! noop { () => (); }
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
@@ -77,7 +74,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         res
     }
 
-    pub fn competition_rayon(&mut self, game: &T, games: usize) {
+    pub fn competition(&mut self, game: &T, games: usize) {
         let game_arc = Arc::new(game.clone());
 
         // Reset fitness for all agents
@@ -123,58 +120,6 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let fitness_lock = fitness_updates.lock().unwrap();
         for (i, agent) in self.agents.iter_mut().enumerate() {
             agent.fitness = fitness_lock[i];
-        }
-    }
-    
-    pub fn competition(&mut self, game: &T, games: usize) {
-        let game_arc = Arc::new(game.clone());
-        // Reset fitness for all agents
-        for agent in self.agents.iter_mut() {
-            agent.fitness = 0.0;
-        }
-
-        let agents = Arc::new(self.agents.clone());
-        let run_game = self.run_game; // Capture the run_game function pointer from the struct
-
-        let mut handles = vec![]; // Vector to store thread handles
-
-        let step = (self.size as usize / games) + 1;
-        let offset = rand::random::<u32>() as usize % (step);
-        let bar = ProgressBar::new(games as u64);
-        
-        let threads = available_parallelism().unwrap().get() * 2;
-        
-        for i in 0..games {
-            bar.inc(1);
-            for j in self.circular_pairing(i * step + offset) {
-                let agents = Arc::clone(&agents);
-                let game = Arc::clone(&game_arc);
-                let handle = thread::spawn(move || {
-                    let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
-                    let game_res = run_game(&game, agents_slice, false);  // Use the run_game function pointer
-                    [(j[0], game_res[0]), (j[1], game_res[1])]
-                });
-                handles.push(handle); // Store the handle
-                while handles.len() >= threads {
-                    let mut i = 0;
-                    while i < handles.len() {
-                        if handles[i].is_finished() {
-                            let res = handles.remove(i).join().unwrap();
-                            self.agents[res[0].0].fitness += res[0].1 as f64;
-                            self.agents[res[1].0].fitness += res[1].1 as f64;
-                        } else {
-                            i += 1;
-                        }
-                    }
-                }
-            }
-        }
-
-        // Wait for all threads to finish
-        for handle in handles {
-            let res = handle.join().unwrap();
-            self.agents[res[0].0].fitness += res[0].1 as f64;
-            self.agents[res[1].0].fitness += res[1].1 as f64;
         }
     }
     
