@@ -9,7 +9,11 @@ use csv;
 use serde::{Deserialize, Serialize};
 use std::thread::JoinHandle;
 use rayon::prelude::*; // For parallel iterators
-use rand::Rng; // For random number generation
+use rand::Rng;
+use serde::__private::de::Content::String;
+// For random number generation
+
+pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>);
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
@@ -20,22 +24,22 @@ pub struct Population<T: Send + Sync + 'static> {
     pub outputs: usize,
     // serde ignore
     #[serde(skip, default = "default_fn")]
-    pub run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>,  // Function pointer in the Population struct
+    pub run_game: fn(&T, Vec<&Agent>, bool) -> GameResLog,  // Function pointer in the Population struct
     pub mutation_rate_range: (usize, usize),
     pub best_agents: Vec<Agent>,
     pub best_agents_comp_res: Vec<u32>,
     pub best_agents_won_games: u32,
 }
 
-fn default_fn<T: Send + Sync + 'static>() -> fn(&T, Vec<&Agent>, bool) -> Vec<u32> {
+fn default_fn<T: Send + Sync + 'static>() -> fn(&T, Vec<&Agent>, bool) -> GameResLog {
     default_game
 }
-fn default_game<T: Send + Sync + 'static>(_: &T, _: Vec<&Agent>, _: bool) -> Vec<u32> {
-    vec![]
+fn default_game<T: Send + Sync + 'static>(_: &T, _: Vec<&Agent>, _: bool) -> GameResLog {
+    (vec![], vec![])
 }
 
 impl<T: Send + Sync + 'static + Clone> Population<T> {
-    pub fn new(size: u32, inputs: usize, outputs: usize, run_game: fn(&T, Vec<&Agent>, bool) -> Vec<u32>, mutation_rate_range: (usize, usize)) -> Population<T> {
+    pub fn new(size: u32, inputs: usize, outputs: usize, run_game: fn(&T, Vec<&Agent>, bool) -> GameResLog, mutation_rate_range: (usize, usize)) -> Population<T> {
         let mut agents = Vec::new();
         for _ in 0..size {
             agents.push(Agent::new(inputs, outputs));
@@ -107,7 +111,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
                 // Run the game and get the results
                 let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
-                let game_res = run_game(&game, agents_slice, false);
+                let game_res = run_game(&game, agents_slice, false).0;
 
                 // Update fitness in a critical section
                 let mut fitness_lock = fitness_updates.lock().unwrap();
@@ -161,20 +165,26 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             let results_mutex = Arc::clone(&results_mutex);
 
             // Decide whether to print or not
-            let result = if i == print_agent || i == best_agents_arc.len() - 1 {
+            let game_res_log = if i == print_agent || i == best_agents_arc.len() - 1 {
                 let agents_ref = vec![&agents[0], &agents[1]];
                 println!("best_agent vs agent: {}", i);
                 let res = run_game(&game, agents_ref, true);
-                println!("game_res: {:?}", res);
+                for i in 0..res.1.len() {
+                    let (state, agent_move) = res.1[i].clone();
+                    println!("Turn {}: state: {:?}, agent_move: {:?}", i, state, agent_move);
+                }
+                println!("game_res: {:?}", res.0);
                 res
             } else {
                 let agents_ref = vec![&agents[0], &agents[1]];
                 run_game(&game, agents_ref, false)
             };
+            
+            let game_res = game_res_log.0;
 
             // Update the results safely
             let mut results_lock = results_mutex.lock().unwrap();
-            results_lock[i] += if j == 0 { result[0] } else { result[1] };
+            results_lock[i] += if j == 0 { game_res[0] } else { game_res[1] };
         });
 
         // Retrieve the final results from the mutex

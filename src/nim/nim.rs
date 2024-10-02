@@ -1,5 +1,5 @@
-use std::num::FpCategory::Zero;
 use crate::neat::agent::Agent;
+use crate::neat::population::GameResLog;
 
 #[derive(Clone)]
 pub struct Nim {
@@ -19,9 +19,10 @@ impl Nim {
         }
     }
     
-    pub fn run_nim(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+    pub fn run_nim(&self, agents: Vec<&Agent>, print_game: bool) -> GameResLog {
         let mut state = self.initial_state.clone();
         let mut turn = 0;
+        let mut history = Vec::new();
         while state.iter().sum::<u32>() > 0 {
             //println!("state: {:?}, turn: {}", state, turn);
             let input = Self::get_input(state.clone());
@@ -30,24 +31,26 @@ impl Nim {
             let agent_move = Self::get_output(output, state.clone());
             //println!("agent_move: {:?}", agent_move);
             if print_game {
-                println!("turn: {}, agent: {}", turn, turn % agents.len());
-                println!("state: {:?}, agent_move: {:?}", state, agent_move);
+                //println!("turn: {}, agent: {}", turn, turn % agents.len());
+                //println!("state: {:?}, agent_move: {:?}", state, agent_move);
+                history.push((state.clone(), agent_move));
             }
             state[agent_move[0]] -= agent_move[1] as u32;
             turn += 1;
             if turn > 500 {
-                println!("turns exceeded 500!");
-                return vec![0; agents.len()];
+                //println!("turns exceeded 500!");
+                return (vec![0; agents.len()], history);
             }
         }
         let winner = (turn - 2) % agents.len();
         let mut res = vec![0; agents.len()];
         res[winner] = 1;
-        res
+        (res, history)
     }
     
-    pub fn run_nim_strict_state(&self, agents: Vec<&Agent>, print_game: bool, state: &mut Vec<u32>) -> Vec<u32> {
+    pub fn run_nim_strict_state(&self, agents: Vec<&Agent>, print_game: bool, state: &mut Vec<u32>) -> GameResLog {
         let mut turn = 0;
+        let mut history = Vec::new();
         while state.iter().sum::<u32>() > 0 {
             //println!("state: {:?}, turn: {}", state, turn);
             let input = Self::get_input(state.clone());
@@ -56,33 +59,34 @@ impl Nim {
             let agent_move = Self::get_output_raw(output, state.clone());
             //println!("agent_move: {:?}", agent_move);
             if print_game {
-                println!("turn: {}, agent: {}", turn, turn % agents.len());
-                println!("state: {:?}, agent_move: {:?}", state, agent_move);
+                //println!("turn: {}, agent: {}", turn, turn % agents.len());
+                //println!("state: {:?}, agent_move: {:?}", state, agent_move);
+                history.push((state.clone(), agent_move));
             }
             turn += 1;
             if state[agent_move[0]] < agent_move[1] as u32 {
                 if print_game {
-                    println!("invalid move!");
+                    //println!("invalid move!");
                 }
                 break;
             }
             state[agent_move[0]] -= agent_move[1] as u32;
             if turn > 500 {
-                println!("turns exceeded 500!");
-                return vec![0; agents.len()];
+                //println!("turns exceeded 500!");
+                return (vec![0; agents.len()], history);
             }
         }
         let winner = (turn as isize - 2).abs() as usize % agents.len();
         let mut res = vec![0; agents.len()];
         res[winner] = 1;
-        res
+        (res, history)
     }
     
-    pub fn run_nim_strict(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+    pub fn run_nim_strict(&self, agents: Vec<&Agent>, print_game: bool) -> GameResLog {
         return self.run_nim_strict_state(agents, print_game, &mut self.initial_state.clone());
     }
     
-    pub fn run_nim_strict_random(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+    pub fn run_nim_strict_random(&self, agents: Vec<&Agent>, print_game: bool) -> GameResLog {
         let mut state = self.initial_state.clone();
         let max_states = state.clone();
         for i in state.iter_mut() {
@@ -93,7 +97,7 @@ impl Nim {
         self.run_nim_strict_state(agents, print_game, &mut state)
     }
     
-    pub fn run_nim_strict_single(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+    pub fn run_nim_strict_single(&self, agents: Vec<&Agent>, print_game: bool) -> GameResLog {
         let mut state = vec![0; self.initial_state.len()];
         let i = rand::random::<u32>() as usize % state.len();
         state[i] = rand::random::<u32>() % (self.initial_state[i] + 1);
