@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 use std::thread::JoinHandle;
 use rayon::prelude::*; // For parallel iterators
 use rand::Rng;
-use serde::__private::de::Content::String;
+use std::string::String;
 // For random number generation
 
 pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>);
