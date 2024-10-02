@@ -1,3 +1,4 @@
+use std::num::FpCategory::Zero;
 use crate::neat::agent::Agent;
 
 #[derive(Clone)]
@@ -44,9 +45,8 @@ impl Nim {
         res[winner] = 1;
         res
     }
-
-    pub fn run_nim_strict(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
-        let mut state = self.initial_state.clone();
+    
+    pub fn run_nim_strict_state(&self, agents: Vec<&Agent>, print_game: bool, state: &mut Vec<u32>) -> Vec<u32> {
         let mut turn = 0;
         while state.iter().sum::<u32>() > 0 {
             //println!("state: {:?}, turn: {}", state, turn);
@@ -76,6 +76,28 @@ impl Nim {
         let mut res = vec![0; agents.len()];
         res[winner] = 1;
         res
+    }
+    
+    pub fn run_nim_strict(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+        return self.run_nim_strict_state(agents, print_game, &mut self.initial_state.clone());
+    }
+    
+    pub fn run_nim_strict_random(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+        let mut state = self.initial_state.clone();
+        let max_states = state.clone();
+        for i in state.iter_mut() {
+            if max_states.iter().sum::<u32>() > 0 {
+                *i = rand::random::<u32>() % (*i + 1);
+            }
+        }
+        self.run_nim_strict_state(agents, print_game, &mut state)
+    }
+    
+    pub fn run_nim_strict_single(&self, agents: Vec<&Agent>, print_game: bool) -> Vec<u32> {
+        let mut state = vec![0; self.initial_state.len()];
+        let i = rand::random::<u32>() as usize % state.len();
+        state[i] = rand::random::<u32>() % (self.initial_state[i] + 1);
+        self.run_nim_strict_state(agents, print_game, &mut state)
     }
     
     fn get_input(state: Vec<u32>) -> Vec<f64> {
