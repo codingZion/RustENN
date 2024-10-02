@@ -291,6 +291,43 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         Ok(())
     }
 
+    pub fn create_best_agent_games_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
+        let writer_result = csv::Writer::from_path(filename);
+        let mut wtr = match writer_result {
+            Ok(writer) => writer,
+            Err(err) => return Err(Box::new(err)),
+        };
+
+        match wtr.write_record(&["opponent", "game1", "game2", "game1_last", "game2_last"]) {
+            Ok(_) => Ok(()),
+            Err(err) => return Err(Box::new(err)),
+        }
+    }
+    pub fn save_best_agent_games_csv(&self, filename: &str, opponent: usize, games: Vec<GameResLog>) -> Result<(), Box<csv::Error>> {
+        let file = OpenOptions::new()
+            .write(true)
+            .append(true)
+            .open(filename)
+            .unwrap();
+        let mut wtr = csv::Writer::from_writer(file);
+
+
+        //let mut comp_res = String::new();
+        if self.best_agents_comp_res.len() > 0 {
+            //let res_logs = Vec::new();
+            for i in 0..games.len() {
+                //let mut res_log = String(new);
+                //res_log.push(format!("{} vs {}", games[i].0));
+                //res_logs.push(res_log);
+            }
+            //wtr.write_record(&[opponent, (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
+        }
+        else {
+            println!("Can't save best agent tournament csv, best_agents_comp_res is empty!");
+        }
+        Ok(())
+    }
+
     // function that saves itself to a bincode file with serde and bincode crate
     pub fn save_population(&self, filename: &str) -> JoinHandle<Result<(), Box<std::io::Error>>> {
         let filename = filename.to_string();
