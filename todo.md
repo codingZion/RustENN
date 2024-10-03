@@ -1,8 +1,8 @@
 - [x] strict grading
 - [ ] better survival distribution
 - [ ] data saving (also 3d csv, save time)
-- [ ] simple nim
+- [x] simple nim
 - [ ] objective grading with NimBot
 - [ ] BLAS
 - [ ] egui
-- [ ] data plotter
+- [x] data plotter
