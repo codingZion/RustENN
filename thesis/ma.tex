@@ -1,0 +1,121 @@
+\documentclass[11pt, a4paper, notitlepage]{report}
+%\usepackage[german]{babel}
+\usepackage{listings}
+
+%Math Library
+\usepackage{amsmath}
+
+%Images Library
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%General Layout
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=20mm,
+    right=20mm,
+    top=20mm,
+    bottom=20mm
+}
+
+
+%Background image
+\usepackage[pages=some]{background}
+
+%Liks of TOC
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\usepackage{lstmisc}
+\hypersetup{
+    colorlinks=false, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+}
+
+
+\backgroundsetup{
+scale=1,
+color=black,
+opacity=1,
+angle=0,
+contents={%
+\hspace*{13.5cm}\includegraphics[width=3\paperwidth,height=\paperheight]{abstract_neurons3}
+  }%
+}
+
+
+\begin{document}
+    \pagenumbering{gobble}
+    \begin{titelpage}
+        \BgThispage
+            \color{white} {
+                \begin{center}
+                    \Large \textsc{Matura Thesis}\\Kantonsschule Hohe Promenade\\
+                    \rule[0.1cm]{15.8cm}{0.1mm}\\
+                    \vspace{3cm}
+                    \Huge \textbf{ \textsc{How can you develop \\Evolutionary Neural Networks which \\learn to play Board Games?}}\\
+                    \vspace{0.8cm}
+                    \Large \textit {Implementation \& Study \\of Evolutionary Neural Networks \\using the NEAT Algorithm}\\
+                \end{center}
+                \vspace{3cm}
+                \rule[0.1cm]{15.8cm}{0.1mm}\\
+                \vspace{7cm}\\
+                \begin{minipage}[t]{0.47\textwidth}
+                \large\textbf {Thesis By:}\\
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+                \large\textbf {Lucien Kissling 6e}\\
+                \end{minipage}
+                \begin{minipage}[t]{0.47\textwidth}
+                \large \textbf {Year:}\\
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+                \large \textbf {2025}\\
+                \end{minipage}
+                \begin{minipage}[t]{0.47\textwidth}
+                \large \textbf {Supervisor:}\\
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+                \large \textbf {Timo Schenk}\\
+                \end{minipage}
+                \begin{minipage}[t]{0.47\textwidth}
+                \large \textbf {Co Examiner:}\\
+                \end{minipage}
+                \hfill
+                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+                \large \textbf {Dr. Arno Liegmann}\\
+                \end{minipage}
+                \vfill
+            }
+        \clearpage
+    \end{titelpage}
+    \pagenumbering{arabic}
+    \setcounter{page}{2}
+    \tableofcontents
+    \chapter{Introduction}
+        \section{Motivation}
+        \section{Thesis Statement}
+    \chapter{Background}
+        \section{Neural Networks (NNs)}
+        \section{Evolutionary Competition (EC) \& Genetic Algorithms (GAs)}
+        \section{Neuroevolution of Augmenting Topologies (NEAT)}
+        \section{Related Work}
+    \chapter{Building my NEAT}
+        \section{Beta Program}
+        \section{First Findings}
+            \subsection{Simple Nim}
+            \subsection{Nim}
+        \section{Complexification}
+    \chapter{Wrapping Up}
+        \section{Auto Review}
+        \section{Future Work}
+    \chapter{Appendix}
+        \section{Code}
+        \section{Data}
+        \section{Documentation}
+        \section{References}
+\end{document}
