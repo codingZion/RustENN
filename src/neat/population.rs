@@ -1,4 +1,6 @@
 use std::fs::OpenOptions;
+use std::io::Write;
+use std::fmt::Write as FmtWrite;
 use std::ops::Add;
 use crate::neat::agent::Agent;
 use std::sync::{Arc, Mutex};
@@ -13,7 +15,7 @@ use rand::Rng;
 use std::string::String;
 // For random number generation
 
-pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>);
+pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>);
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
@@ -24,22 +26,22 @@ pub struct Population<T: Send + Sync + 'static> {
     pub outputs: usize,
     // serde ignore
     #[serde(skip, default = "default_fn")]
-    pub run_game: fn(&T, Vec<&Agent>, bool) -> GameResLog,  // Function pointer in the Population struct
+    pub run_game: fn(&T, Vec<&Agent>, bool, bool) -> GameResLog,  // Function pointer in the Population struct
     pub mutation_rate_range: (usize, usize),
     pub best_agents: Vec<Agent>,
     pub best_agents_comp_res: Vec<u32>,
     pub best_agents_won_games: u32,
 }
 
-fn default_fn<T: Send + Sync + 'static>() -> fn(&T, Vec<&Agent>, bool) -> GameResLog {
+fn default_fn<T: Send + Sync + 'static>() -> fn(&T, Vec<&Agent>, bool, bool) -> GameResLog {
     default_game
 }
-fn default_game<T: Send + Sync + 'static>(_: &T, _: Vec<&Agent>, _: bool) -> GameResLog {
-    (vec![], vec![])
+fn default_game<T: Send + Sync + 'static>(_: &T, _: Vec<&Agent>, _: bool, _: bool) -> GameResLog {
+    (vec![], vec![], vec![], vec![])
 }
 
 impl<T: Send + Sync + 'static + Clone> Population<T> {
-    pub fn new(size: u32, inputs: usize, outputs: usize, run_game: fn(&T, Vec<&Agent>, bool) -> GameResLog, mutation_rate_range: (usize, usize)) -> Population<T> {
+    pub fn new(size: u32, inputs: usize, outputs: usize, run_game: fn(&T, Vec<&Agent>, bool, bool) -> GameResLog, mutation_rate_range: (usize, usize)) -> Population<T> {
         let mut agents = Vec::new();
         for _ in 0..size {
             agents.push(Agent::new(inputs, outputs));
@@ -111,7 +113,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
                 // Run the game and get the results
                 let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
-                let game_res = run_game(&game, agents_slice, false).0;
+                let game_res = run_game(&game, agents_slice, false, false).0;
 
                 // Update fitness in a critical section
                 let mut fitness_lock = fitness_updates.lock().unwrap();
@@ -128,12 +130,13 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
     
     //compete_best_agents() but multithreaded
-   pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> Vec<u32> {
+   pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> (Vec<u32>, Vec<(usize, usize, GameResLog)>) {
         let game_arc = Arc::new(game.clone());
         let best_agents_arc = Arc::new(self.best_agents.clone()); // Clone `self.best_agents` into the `Arc`
+        let print_games_mutex = Arc::new(Mutex::new(Vec::new()));
 
         if best_agents_arc.len() == 0 {
-            return vec![];
+            return (vec![], vec![]);
         }
 
         let print_agent = rand::thread_rng().gen_range(0..best_agents_arc.len());
@@ -163,21 +166,28 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         pairings.into_par_iter().for_each(|(i, j, agents)| {
             let game = Arc::clone(&game_arc);
             let results_mutex = Arc::clone(&results_mutex);
+            let print_games_mutex = Arc::clone(&print_games_mutex);
 
             // Decide whether to print or not
             let game_res_log = if i == print_agent || i == best_agents_arc.len() - 1 {
                 let agents_ref = vec![&agents[0], &agents[1]];
-                println!("best_agent vs agent: {}", i);
-                let res = run_game(&game, agents_ref, true);
+                let mut str = String::new();
+                if j == 0 {
+                    writeln!(&mut str, "best_agent vs agent: {}", i).unwrap();
+                } else { 
+                    writeln!(&mut str, "agent: {} vs best_agent", i).unwrap();
+                }
+                let res = run_game(&game, agents_ref, true, true);
                 for i in 0..res.1.len() {
                     let (state, agent_move) = res.1[i].clone();
-                    println!("Turn {}: state: {:?}, agent_move: {:?}", i, state, agent_move);
+                    writeln!(&mut str, "Turn {}: state: {:?}, agent_move: {:?}", i, state, agent_move).unwrap();
                 }
-                println!("game_res: {:?}", res.0);
+                writeln!(&mut str, "game_res: {:?}", res.0).unwrap();
+                println!("{}", str);
                 res
             } else {
                 let agents_ref = vec![&agents[0], &agents[1]];
-                run_game(&game, agents_ref, false)
+                run_game(&game, agents_ref, false, true)
             };
             
             let game_res = game_res_log.0;
@@ -185,14 +195,23 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             // Update the results safely
             let mut results_lock = results_mutex.lock().unwrap();
             results_lock[i] += if j == 0 { game_res[0] } else { game_res[1] };
+            if i == print_agent || i == best_agents_arc.len() - 1 {
+                let mut print_games_lock = print_games_mutex.lock().unwrap();
+                if j == 0 {
+                    print_games_lock.push((self.cycle as usize, i, game_res_log.clone()));
+                } else {
+                    print_games_lock.push((i, self.cycle as usize, game_res_log.clone()));
+                }
+            }
         });
 
         // Retrieve the final results from the mutex
         let final_results = results_mutex.lock().unwrap().clone();
         self.best_agents_comp_res = final_results.clone();
         self.best_agents_won_games = self.best_agents_comp_res.iter().sum();
+        let print_games = print_games_mutex.lock().unwrap().clone();
 
-        final_results
+        (final_results, print_games)
     }
 
 
@@ -257,6 +276,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
         Ok(())
     }
+    /*
     pub fn create_best_agent_tournament_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
         let writer_result = csv::Writer::from_path(filename);
         let mut wtr = match writer_result {
@@ -290,42 +310,26 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
         Ok(())
     }
-
-    pub fn create_best_agent_games_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
-        let writer_result = csv::Writer::from_path(filename);
-        let mut wtr = match writer_result {
-            Ok(writer) => writer,
-            Err(err) => return Err(Box::new(err)),
-        };
-
-        match wtr.write_record(&["opponent", "game1", "game2", "game1_last", "game2_last"]) {
-            Ok(_) => Ok(()),
-            Err(err) => return Err(Box::new(err)),
-        }
+*/
+    pub fn create_best_agent_games_txt(&self, filename: &str) {
+        OpenOptions::new()
+            .write(true)
+            .create(true)
+            .open(filename)
+            .unwrap();
     }
-    pub fn save_best_agent_games_csv(&self, filename: &str, opponent: usize, games: Vec<GameResLog>) -> Result<(), Box<csv::Error>> {
-        let file = OpenOptions::new()
+    pub fn save_best_agent_games_txt(&self, filename: &str, opponent: usize, games: Vec<GameResLog>) {
+        let mut file = OpenOptions::new()
             .write(true)
             .append(true)
             .open(filename)
             .unwrap();
-        let mut wtr = csv::Writer::from_writer(file);
+        
+        writeln!(file, "Generation: {}", self.cycle).unwrap();
+        for i in 
+        
+        
 
-
-        //let mut comp_res = String::new();
-        if self.best_agents_comp_res.len() > 0 {
-            //let res_logs = Vec::new();
-            for i in 0..games.len() {
-                //let mut res_log = String(new);
-                //res_log.push(format!("{} vs {}", games[i].0));
-                //res_logs.push(res_log);
-            }
-            //wtr.write_record(&[opponent, (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
-        }
-        else {
-            println!("Can't save best agent tournament csv, best_agents_comp_res is empty!");
-        }
-        Ok(())
     }
 
     // function that saves itself to a bincode file with serde and bincode crate

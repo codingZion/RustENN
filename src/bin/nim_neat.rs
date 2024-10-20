@@ -8,7 +8,7 @@ fn main() {
     let nim_func = Nim::run_nim_strict_single;
     let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats_single.csv";
-    let nim_config = Nim::new(vec![3, 4, 5, 6, 7]);
+    let nim_config = Nim::new(vec![8, 8, 8, 8, 8]);
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
     
     //start timer
@@ -17,13 +17,13 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
-        Population::new(20000, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
+        Population::new(200, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
         population.run_game = nim_func;
     } else {
-        population.create_best_agent_tournament_csv(best_agent_tournament_csv);
+        //population.create_best_agent_tournament_csv(best_agent_tournament_csv);
         population.create_stats_csv(stats_csv);
     }
     let mut saver= thread::spawn(|| {Ok(())});
@@ -69,7 +69,7 @@ fn main() {
         println!("Time elapsed: {:?}", now.elapsed());
         println!("Time since last: {:?}", last.elapsed());
         last = std::time::Instant::now();
-        population.save_best_agent_tournament_csv(best_agent_tournament_csv);
+        //population.save_best_agent_tournament_csv(best_agent_tournament_csv);
         population.save_stats_csv(stats_csv);
         population.best_agents.push(best_agent.clone());
         population.evolve();  // Now you can mutate population
