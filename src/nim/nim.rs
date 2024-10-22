@@ -101,11 +101,11 @@ impl Nim {
         res[winner] = 1;
         (res, history, turns_vec, perfect_play)
     }
-    
+
     pub fn run_nim_strict(&self, agents: Vec<&Agent>, print_game: bool, obj_eval: bool) -> GameResLog {
         self.run_nim_strict_state(agents, print_game, obj_eval, &mut self.initial_state.clone())
     }
-    
+
     pub fn run_nim_strict_random(&self, agents: Vec<&Agent>, print_game: bool, obj_eval: bool) -> GameResLog {
         let mut state = self.initial_state.clone();
         let max_states = state.clone();
@@ -164,7 +164,7 @@ impl Nim {
         res[1] = res[1].min(state[res[0]] as usize);
         res
     }
-    
+
     fn get_output_raw(output: Vec<f64>, state: Vec<u32>) -> [usize; 2] {
         let size = state.len();
         let mut res = [0, size];
