@@ -5,11 +5,11 @@ use std::thread;
 const USE_BIN: bool = false;
 
 fn main() {
-    let nim_func = Nim::run_nim_strict_single;
-    let best_agent_tournament_csv = "best_agent_tournament_single.csv";
+    let nim_func = Nim::run_nim_strict_random;
+    //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats_single.csv";
     let best_agent_games_txt = "best_agent_games_single.txt";
-    let nim_config = Nim::new(vec![8, 8, 8, 8, 8]);
+    let nim_config = Nim::new(vec![10]);
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
     
     //start timer

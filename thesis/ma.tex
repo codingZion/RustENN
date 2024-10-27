@@ -1,4 +1,4 @@
-\documentclass[11pt, a4paper, notitlepage]{report}
+\documentclass[11pt, a4paper]{report}
 %\usepackage[german]{babel}
 \usepackage{listings}
 
@@ -97,9 +97,30 @@ contents={%
     \setcounter{page}{2}
     \tableofcontents
     \chapter{Introduction}
-        \section{Motivation}
-    
+        \section{Preface}
+    Ever since I got into Computer Science a few years ago, I was fascinated by the Idea of Algorithms that solved various Problems.
+    Therefore, I participated in the SOI (Swiss Olympiad in Informatics) where we were taught everything about developing and programming Algorithms and their Data Structures.
+    \\ \\ In recent years although, a new field of Computer Science has gained a lot of attention, where those Algorithms are not programmed by humans, but evolved by a computer.
+    This field called Machine Learning immediately got my excitement and two years ago a friend of mine and I had our first practical experience with it.
+    We developed a simple Neural Network, which helped us predict the color of a lego brick in front of a color sensor based on the RGB values in various lighting conditions.
+    \\ \\ A Neural Network (NN) forms the basis of most Machine Learning Models and I will therefore explain it in much detail in the following Chapters.
+    In simple terms, a NN is a strongly simplified artificial model of the human brain as a NN consists of an interconnected web of Neurons through which information flows and gets computed.
+    \\ \\ Although the NN we developed two years ago already learned on its self, we still had to provide data for it to learn from.
+    This meant that we had to manually scan the RGB values of the lego bricks and then label them with the color they represented.
+    The aim of my Matura Thesis therefore is to take the idea of self learning a step further by developing Neural Networks, which don't need this kind of data with solutions predefined by humans.
+
         \section{Thesis Statement}
+    As mentioned in the previous Section, this Thesis will explore the field of Neural Networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
+    The solution this Thesis will focus on is the Neuroevolution of Augmenting Topologies (NEAT) Algorithm, a combination of Neural Networks and Genetic Algorithms.
+    This Algorithm was invented by Kenneth O. Stanley and Risto Miikkulainen in 2002 and has since then been used in various applications.
+    In this Thesis, I develop my own simplified implementation of the NEAT Algorithm and then train it on Board Games to see how well it can learn to play them.
+    The first game I will train it on is Nim, a simple game where two players take turns removing matches from different stacks.
+    \\ \\ In specific, this Thesis aims to answer following questions:
+    \begin{itemize}
+        \item How can you develop Neural Networks that learn to play Board Games using NEAT?
+        \item How do different parameters and features of the NEAT Algorithm affect the learning process?
+        \item How does this Implementation of NEAT compare to other Machine Learning Algorithms?
+    \end{itemize}
     \chapter{Background}
         \section{Neural Networks (NNs)}
         \section{Evolutionary Competition (EC) \& Genetic Algorithms (GAs)}
