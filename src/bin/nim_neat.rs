@@ -2,6 +2,12 @@ use rust_neat::neat::population::Population;
 use rust_neat::nim::nim::Nim;
 use std::thread;
 
+//mute println
+macro_rules! println {
+    () => {};
+    ($($arg:tt)*) => {};
+}
+
 const USE_BIN: bool = false;
 
 fn main() {
@@ -18,7 +24,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
-        Population::new(200, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
+        Population::new(500, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
@@ -46,7 +52,7 @@ fn main() {
         //saver.join().unwrap();
         let res = population.compete_best_agents_mt(&nim_config, &best_agent);
         if saver.is_finished() {
-            saver.join().unwrap();
+            saver.join().unwrap_or(Ok(())).expect("Saving failed!");
             saver = population.save_population("population.bin");
             println!("Saving population {}!", population.cycle);
         }

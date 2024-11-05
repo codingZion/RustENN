@@ -51,7 +51,7 @@ impl Nim {
             turns_vec[turn % agents.len()] += 1;
             let old_state = state.clone();
             state[agent_move[0]] -= agent_move[1] as u32;
-            if (obj_eval) { perfect_play[turn % agents.len()] += self.is_perfect_play(state.clone(), old_state.clone()) as u32; }
+            if (obj_eval) { perfect_play[turn % agents.len()] += self.is_perfect_play(old_state.clone(), state.clone()) as u32; }
             turn += 1;
             if turn > 500 {
                 //println!("turns exceeded 500!");
@@ -88,9 +88,10 @@ impl Nim {
                 }
                 break;
             }
-            if (obj_eval) { turns_vec[turn % agents.len()] += self.is_winning_state(state.clone()) as u32; }
+            if obj_eval { turns_vec[turn % agents.len()] += 1; }
+            let old_state = state.clone();
             state[agent_move[0]] -= agent_move[1] as u32;
-            if (obj_eval) { perfect_play[turn % agents.len()] += self.is_winning_state(state.clone()) as u32; }
+            if obj_eval { perfect_play[turn % agents.len()] += self.is_perfect_play(old_state, state.clone()) as u32; }
             if turn > 500 {
                 //println!("turns exceeded 500!");
                 return (vec![0; agents.len()], history, turns_vec, perfect_play);
