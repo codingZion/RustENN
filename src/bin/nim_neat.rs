@@ -8,7 +8,7 @@ macro_rules! println {
     ($($arg:tt)*) => {};
 }
 
-const USE_BIN: bool = false;
+const USE_BIN: bool = true;
 
 fn main() {
     let nim_func = Nim::run_nim_strict_random;
