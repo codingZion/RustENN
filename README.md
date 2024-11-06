@@ -2,7 +2,7 @@
 *A matura Thesis*
 
 Simple implementation of NEAT (Neuroevolution of Augmenting Topologies) applied on games like Nim, Tic Tac Toe etc.\
-You can find the newest pdf version of the thesis [here](/out/ma.pdf).
+You can find the newest pdf version of the thesis [here](/thesis/ma.pdf).
 
 ## Games and inputs:
 Simple Nim & Nim 
