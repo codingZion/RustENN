@@ -142,8 +142,10 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let game_arc = Arc::new(game.clone());
         let best_agents_arc = Arc::new(self.best_agents.clone()); // Clone `self.best_agents` into the `Arc`
         let print_games_mutex = Arc::new(Mutex::new(Vec::new()));
-        let mut comp_moves_mutex = Arc::new(Mutex::new(vec![0; best_agents_arc.len()]));
-        let mut comp_performances_mutex = Arc::new(Mutex::new(vec![0; best_agents_arc.len()]));
+        let mut comp_moves_mutex = Arc::new(Mutex::new(vec![0; best_agents_arc.len() * 2]));
+        let mut comp_performances_mutex = Arc::new(Mutex::new(vec![0; best_agents_arc.len() * 2]));
+        let comp_performance_sum_mutex = Arc::new(Mutex::new(0));
+        let comp_moves_sum_mutex = Arc::new(Mutex::new(0));
 
         if best_agents_arc.len() == 0 {
             return (vec![], vec![]);
@@ -179,6 +181,8 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             let print_games_mutex = Arc::clone(&print_games_mutex);
             let comp_moves_mutex = Arc::clone(&comp_moves_mutex);
             let comp_performances_mutex = Arc::clone(&comp_performances_mutex);
+            let comp_performance_sum_mutex = Arc::clone(&comp_performance_sum_mutex);
+            let comp_moves_sum_mutex = Arc::clone(&comp_moves_sum_mutex);
 
             // Decide whether to print or not
             let game_res_log = if i == print_agent || i == best_agents_arc.len() - 1 {
@@ -216,9 +220,13 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 }
             }
             let mut comp_moves_lock = comp_moves_mutex.lock().unwrap();
-            comp_moves_lock[i] = game_res_log.3.iter().sum::<u32>();
+            comp_moves_lock[i + j * best_agents_arc.len()] = game_res_log.2.iter().sum::<u32>();
             let mut comp_performances_lock = comp_performances_mutex.lock().unwrap();
-            comp_performances_lock[i] = game_res_log.2[j] / game_res_log.3[j].max(1);
+            comp_performances_lock[i + j * best_agents_arc.len()] = game_res_log.3[j] / game_res_log.2[j].max(1);
+            let mut comp_performance_sum_lock = comp_performance_sum_mutex.lock().unwrap();
+            *comp_performance_sum_lock += game_res_log.3[j];
+            let mut comp_moves_sum_lock = comp_moves_sum_mutex.lock().unwrap();
+            *comp_moves_sum_lock += game_res_log.2[j];
         });
 
         // Retrieve the final results from the mutex
@@ -231,7 +239,8 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         
         // Calculate the averages
         self.best_agents_comp_avg_moves = self.best_agents_comp_moves.iter().sum::<u32>() as f64 / self.best_agents_comp_moves.len() as f64;
-        self.best_agent_avg_performances = self.best_agent_performances.iter().sum::<u32>() as f64 / self.best_agent_performances.len() as f64;
+        //self.best_agent_avg_performances = self.best_agent_performances.iter().sum::<u32>() as f64 / self.best_agent_performances.len() as f64;
+        self.best_agent_avg_performances = comp_performance_sum_mutex.lock().unwrap().clone() as f64 / comp_moves_sum_mutex.lock().unwrap().clone() as f64;
 
         (final_results, print_games)
     }

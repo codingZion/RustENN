@@ -115,10 +115,26 @@ impl NeuralNetwork {
         edge
     }
 
-    /// Activation function: Sigmoid
     pub fn activation_function(x: f64) -> f64 {
+        Self::elu(x)
+    }
+    
+    pub fn relu(x: f64) -> f64 {
+        x.max(0.0)
+    }
+    
+    pub fn elu(x: f64) -> f64 {
+        if x > 0.0 {
+            x
+        } else {
+            0.1 * (x.exp() - 1.0)
+        }
+    }
+    
+    pub fn sigmoid(x: f64) -> f64 {
         1.0 / (1.0 + (-x).exp())
     }
+    
 
     /// Forward propagation
     pub fn predict(&self, input: Vec<f64>) -> Vec<f64> {
