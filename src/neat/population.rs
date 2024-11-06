@@ -307,10 +307,15 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         avg_layers /= self.agents.len() as f64;
         avg_hidden_layer_size /= self.agents.len() as f64;
         
+        let mut best_agent_layer_sizes = "".to_owned();
+        for i in self.agents[0].nn.layer_sizes.clone() {
+            best_agent_layer_sizes.push_str(&*format!("{},", i).to_string());
+        }
+        
         wtr.write_record(&[avg_layers.to_string(), 
             avg_hidden_layer_size.to_string(), 
-            self.best_agents_comp_avg_moves.to_string(), 
-            //format!("{:?}", self.agents[0].clone().nn.layer_sizes).to_string(), 
+            self.best_agents_comp_avg_moves.to_string(),
+            //best_agent_layer_sizes,
             self.agents[0].fitness.to_string(), 
             (self.best_agents_won_games as f64 / self.best_agents.len() as f64 * 50.).to_string(), 
             (self.best_agent_avg_performances * 100.).to_string()]
@@ -364,7 +369,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             .append(true)
             .open(filename)
             .unwrap();
-
+        
         writeln!(file, "Generation: {}", self.cycle).unwrap();
         for i in games {
             writeln!(file, "Agent {} vs Agent {}:", i.0, i.1).unwrap();

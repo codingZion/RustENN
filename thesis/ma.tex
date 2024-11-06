@@ -1,11 +1,46 @@
-\documentclass[11pt, a4paper]{report}
+\documentclass[11pt]{report}
 %\usepackage[german]{babel}
-\usepackage{listings}
+
+%Graphs
+
+\usepackage{pgfplots}
+\pgfplotsset{width=15cm,height=7.5cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
+
+%Definitions
+\usepackage{amsthm}
+\usepackage{mdframed}
+
+\NewDocumentCommand\newmdtheoremenvnonumber{O{} m m }{%
+  \newtheorem*{#2}{#3}
+  \BeforeBeginEnvironment{#2}{%
+     \begin{mdframed}[#1]}%
+  \AfterEndEnvironment{#2}{%
+     \end{mdframed}}%
+}
+
+\newmdtheoremenvnonumber{mydefinner}{\mydeflabel}
+\newcommand{\mydeflabel}{}
+\newenvironment{mydef}[1]
+ {\renewcommand\mydeflabel{#1}\begin{mydefinner}}
+ {\end{mydefinner}}
+
+\newcommand{\attribution}[1]{\textup{(#1)}}
+
+
+
+%Citations
+\usepackage[style=authoryear, backend=bibtex, urldate=long, sorting=none, defernumbers=true,autocite=superscript]{biblatex}
+\addbibresource{refs.bib}
+\usepackage{csquotes}
+
 
 %Math Library
 \usepackage{amsmath}
 
 %Images Library
+\usepackage{float}
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
@@ -27,10 +62,12 @@
 \usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{lstmisc}
+
 \hypersetup{
-    colorlinks=false, %set true if you want colored links
-    linktoc=all,     %set to all if you want both sections and subsections linked
-    linkcolor=blue,  %choose some color if you want links to stand out
+    colorlinks,
+    linkcolor={blue!50!black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
 }
 
 
@@ -47,7 +84,7 @@ contents={%
 
 \begin{document}
     \pagenumbering{gobble}
-    \begin{titelpage}
+    \begin{titlepage}
         \BgThispage
             \color{white} {
                 \begin{center}
@@ -56,7 +93,7 @@ contents={%
                     \vspace{3cm}
                     \Huge \textbf{ \textsc{How can you develop \\Evolutionary Neural Networks which \\learn to play Board Games?}}\\
                     \vspace{0.8cm}
-                    \Large \textit {Implementation \& Study \\of Evolutionary Neural Networks \\using the NEAT Algorithm}\\
+                    \Large \textit {Implementation and Study of\\ Evolutionary Neural Networks inspired\\ by the NEAT Algorithm}\\
                 \end{center}
                 \vspace{3cm}
                 \rule[0.1cm]{15.8cm}{0.1mm}\\
@@ -92,42 +129,226 @@ contents={%
                 \vfill
             }
         \clearpage
-    \end{titelpage}
+    \end{titlepage}
     \pagenumbering{arabic}
     \setcounter{page}{2}
     \tableofcontents
-    \chapter{Introduction}
-        \section{Preface}
+    \chapter{Introduction}\label{ch:introduction}
+    \section{Preface}\label{sec:preface}
     Ever since I got into Computer Science a few years ago, I was fascinated by the Idea of Algorithms that solved various Problems.
     Therefore, I participated in the SOI (Swiss Olympiad in Informatics) where we were taught everything about developing and programming Algorithms and their Data Structures.
-    \\ \\ In recent years although, a new field of Computer Science has gained a lot of attention, where those Algorithms are not programmed by humans, but evolved by a computer.
+    \\ \\
+    In recent years although, a new field of Computer Science has gained a lot of attention, where those Algorithms are not programmed by humans, but evolved by a computer.
     This field called Machine Learning immediately got my excitement and two years ago a friend of mine and I had our first practical experience with it.
     We developed a simple Neural Network, which helped us predict the color of a lego brick in front of a color sensor based on the RGB values in various lighting conditions.
-    \\ \\ A Neural Network (NN) forms the basis of most Machine Learning Models and I will therefore explain it in much detail in the following Chapters.
+    \\ \\
+    A Neural Network (NN) forms the basis of most Machine Learning Models and I will therefore explain it in much detail in the following Chapters.
     In simple terms, a NN is a strongly simplified artificial model of the human brain as a NN consists of an interconnected web of Neurons through which information flows and gets computed.
-    \\ \\ Although the NN we developed two years ago already learned on its self, we still had to provide data for it to learn from.
+    \\ \\
+    Although the NN we developed two years ago already learned on its self, we still had to provide data for it to learn from.
     This meant that we had to manually scan the RGB values of the lego bricks and then label them with the color they represented.
     The aim of my Matura Thesis therefore is to take the idea of self learning a step further by developing Neural Networks, which don't need this kind of data with solutions predefined by humans.
 
-        \section{Thesis Statement}
+        \section{Thesis Statement}\label{sec:thesis-statement}
     As mentioned in the previous Section, this Thesis will explore the field of Neural Networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
-    The solution this Thesis will focus on is the Neuroevolution of Augmenting Topologies (NEAT) Algorithm, a combination of Neural Networks and Genetic Algorithms.
-    This Algorithm was invented by Kenneth O. Stanley and Risto Miikkulainen in 2002 and has since then been used in various applications.
-    In this Thesis, I develop my own simplified implementation of the NEAT Algorithm and then train it on Board Games to see how well it can learn to play them.
-    The first game I will train it on is Nim, a simple game where two players take turns removing matches from different stacks.
-    \\ \\ In specific, this Thesis aims to answer following questions:
+    The solution this Thesis will focus on are Evolutionary Neural Networks (ENNs), a combination of Neural Networks and Genetic Algorithms.
+    \\ \\
+    In this Thesis, I develop my own simplified implementation ENNs and then train them on Board Games to see how well it can learn to play them using different Parameters and Features.
+    My approach draws inspiration from the NEAT Algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002, where the NNs start minimally in the first generation and then develop complexity over time.\footcite[p.105-106]{Neat_02}
+    The first game I will train the ENNs on is Nim, a simple game where two players take turns removing matches from different stacks.
+    \\ \\
+    In specific, this Thesis aims to answer following questions:
     \begin{itemize}
-        \item How can you develop Neural Networks that learn to play Board Games using NEAT?
-        \item How do different parameters and features of the NEAT Algorithm affect the learning process?
-        \item How does this Implementation of NEAT compare to other Machine Learning Algorithms?
+        \item How can you develop Evolutionary Neural Networks (ENNs) that learn to play Board Games?
+        \item How do different parameters and features of ENNs affect the learning process?
+        \item How does this Implementation of ENNs compare to other Machine Learning Algorithms?
     \end{itemize}
-    \chapter{Background}
-        \section{Neural Networks (NNs)}
-        \section{Evolutionary Competition (EC) \& Genetic Algorithms (GAs)}
-        \section{Neuroevolution of Augmenting Topologies (NEAT)}
+    \chapter{Background}\label{ch:background}
+    \section{Neural Networks (NNs)}\label{sec:neural-networks-(nns)}
+    As already touched on in the Preface(\ref{sec:preface}), an artificial neural network (ANN or NN) is a mathematical model for data processing, initially inspired by the structure of the brain\footcite{Chandra_22}.
+    Therefore, we will first have a brief look at the functioning of a brain.
+            \subsection{Neurons in the Brain}\label{subsec:neurons-in-the-brain}
+    Inside the brain, around 86 million neurons\footcite{caruso_23} form connections to each other through which they activate other neurons.
+    In a neuron, the signals of connected neurons add up and when they reach a certain threshold, the neuron is activated and fires a signal to its own connections\footcite{Newman_23}.
+    The neuron then resets after a certain amount of cooldown time.
+    With this web of neurons inside the brain, animals can process information from nerve signals from the body and output them again as nerve signals instructing the body.
+            \subsection{Feed Forward Neural Networks (FNNs)}\label{subsec:feed-forward-neural-networks-(fnns)}
+    Now how do we apply those ideas about Neural Networks learned from the biology of a brain to a program that runs on a computer?
+    The first step is to simplify the chaos of neurons in the brain into layers of neurons.
+    We get an input layer, an output layer and optional so-called hidden layers in between.
+    As a next step, in each layer, we connect its neurons to neurons of following layers, typically exclusively to neurons of the next layer.
+    \\
+    Now, the structure of our network looks something like this:
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.25\textwidth]{nn_simple_1}~\caption{A simple Feed Forward Neural Network (FNN) with three layers: Input, Hidden and Output.\footnote{\cite{nn_simple_img_1}}}
+        \label{fig:nn_simple_1}
+    \end{figure}
+    \noindent
+    The Structure of a NN is also called Topology.
+    \begin{mydef}{Neural Network Topology}
+        The Topology of a Neural Network is its distinct arrangement of neurons, layers and the connections between the neurons.
+        \label{definition:Topology}
+    \end{mydef}
+    \noindent
+    For the neural network to perform functions, we also need to assign a weight to all the connections.
+    This weight value ranges from -1 to 1 and can be thought of as the strength of a connection between neurons.
+    \\
+    In terms of computer science, this structure now resembles a directed, weighted graph, which is why we will call the neurons nodes and their connections edges from now on.
+    \\ \\
+    Now let's see, how information gets computed by a neural network by using the example of a computer vision NN, that recognizes digits on a black/white image:
+    First, we need a way to encode the information into values for the nodes of the input layer, in our example the Brightness values of the single pixels.
+    We assign these values to the nodes of the input layer.
+    \\
+    Then, for each node of the input layer, we look for all edges connected to that node.
+    For each of these edges we multiply its weight by the value of the input node and add the result to the other node connected by the edge.
+    \\
+    After iterating through all the nodes of the one layer, we move the next layer.
+    Now, the value of the nodes in this layer is the sum accumulated by the value of all connected nodes multiplied the weight of that connection:
+    \begin{equation}
+        v_x = \sum_{i=0}^{N}v_i * w_i\label{eq:sum_connected_nodes}
+    \end{equation}
+    Where:
+    \textit{
+        \begin{itemize}
+            \item N is the number of connected nodes
+            \item $v_x$ is the value of the current node
+            \item $v_i$ is the value of the current node
+            \item $w_i$ is the weight of the edge connecting the current node to node i
+        \end{itemize}
+    }
+    \noindent
+    Additionally, we can add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.
+    Afterward, an activation function is applied to the value of the nodes to fit the value of the node inside a preferred range.
+    This activation function can also be thought of as the threshold of stimulation for a neuron to fire.
+    Two examples for activation functions are:
+    \begin{itemize}
+        \item Sigmoid Function: $\sigma(x) = \frac{1}{1 + e^{-x}}$
+        \item Rectified Linear Unit (ReLU): $\sigma(x) = \max{0, x}$
+    \end{itemize}
+    Plot of the activation functions:
+    \\ \\
+    \begin{center}
+    \begin{tikzpicture}
+     \begin{axis}[
+     xmin=-6,
+     xmax=6,
+     ymin=0,
+     ymax=6,
+     ytick distance = 1,
+     xtick distance = 1,
+     minor tick num=1,
+    axis lines = left,
+    line width = 1.5pt,
+    grid=both,
+    major grid style={line width=0.8pt,draw=gray!50},
+    minor grid style={line width=0.4pt,draw=gray!20},
+    xlabel = \(x\),
+    ylabel = {\(\sigma(x)\)}]
+     \addplot[
+        domain=-10:10,
+        color=red,
+        samples=1000.,
+     ]{1/(1 + e^-x)};
+\addlegendentry{\(Sigmoid\)}
+     \addplot[
+         domain=-10:10,
+         color=blue,
+         samples=1000.,
+     ]{max(0,x)};
+     \addlegendentry{\(ReLU\)}
+     \end{axis}
+    \end{tikzpicture}
+    \end{center}
+    \\ \\
+    The final function for the value of one node is therefore:
+    \begin{equation}
+        v_x = \sigma\left(\sum_{i=0}^{N}v_i * w_i + r_x\right)\label{eq:value_node}
+    \end{equation}
+    Where (additionally to equation~\ref{eq:sum_connected_nodes}):
+    \textit{
+        \begin{itemize}
+            \item $r_x$ is the bias of the node
+            \item $\sigma$ is the activation function
+        \end{itemize}
+    }
+    \noindent
+    Now this value $v_x$ can be used in upcoming layers.
+    When we reach the final layer after iterating through all the nodes and layers of the NN, we can read out its computed output.
+    This output again is encoded in node values like the input and therefore needs to be decoded for the result.
+    In the example of a digit detecting NN, we could encode the output with 10 output nodes, each representing one digit.
+    The result could be decoded by using the output node with the highest value as result.
+    This kind of output encoding, where all possible result get their own node is called One-hot encoding.
+    With this kind of output encoding, the values of the output nodes can be interpreted as a certainty value for a specific result to be correct.
+            \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
+    Now that we have established how a NN works, it is important to understand why this kind of algorithm is revolutionary to computer science.
+    \\ \\
+    An algorithm is a set of functions applied in a certain order onto an input to receive a result.
+    Traditionally, this algorithm was programmed with the help of mathematical operations, logic functions, loops, system functions and data structures, which are then converted into binary code for the processor.
+    Of course, this also applies in the context of NNs, however, there is also a third layer of abstraction on top, which simulates the functioning of a brain with neurons.
+    Since the traditional algorithm only enables the neurons in the NN, the third neuron-based layer is what computes the actual function of the NN\@.
+    Therefore, NNs resemble more the functioning of a brain than a traditional algorithm.
+    This difference results in implications for the functioning of an NN:
+    Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
+    With NNs, the algorithm is based on different parameters for nodes and edges, which make it an unpredictable blackbox.
+    Additionally, NNs don't represent actual functions but try to approximate them instead.
+    This means it is hard to prove a neural network to be always accurate and is the reason why we often call the result of NNs its prediction.
+            \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
+    We already know how a NN can make a prediction for a given input with the help of parameters, which encode for the structure and weights/biases of the NN.\@
+    But how do we find such parameters for a given problem?
+    The answer is to use machine learning, which trains the model to perform a certain task with the help of training data.
+    One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient ways to train a NN.\@
+    \\ \\
+    The backpropagation algorithm is an algorithm that can find parameters for weights and biases of a NN with fixed topology.
+    It uses a training adn test set containing the problems that the NN needs to solve as well as the corresponding solutions.
+    First, it starts with a NN with fixed topology and random weights/biases.
+    Then, you give the NN the training problems, whose predictions will be random at first.
+    However, with the help of the corresponding solutions, you can refine the predictions of the NN by adjusting the parameters in a way that would let the NN make the correct prediction for the given problem.
+    This is done by starting from the prediction of a certain problem its solution and propagating back through the whole NN until reaching the input layer.
+    More specifically, you compute a cost function of
+    The NN shouldn't be adapted only to a single problem but should be able to make accurate predictions for the whole training set as well as for unknown problems.
+    To therefore prevent overcorrecting a NN for a single problem, we have to factor in a learning rate significantly smaller than 1 onto our correction.
+    No we can train the NN on the whole training set for many generations, until the NN starts to make accurate predictions for the whole.
+    To test the performance on unknown problems we can use a separate test set, which the NN wasn't trained on.
+
+        \section{Evolutionary Computation (EC) \& Genetic Algorithms (GAs)}\label{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}
+    Now we will have a look at the Machine Learning Technique, this Thesis focuses on.
+    Again, we will draw inspiration from Nature:
+    \begin{mydef}{Evolutionary Computation}
+    Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
+    \end{mydef}
+    One scenario for EC might be for example if you have a large set of data points of an unknown polynomial function with noise and outliers.
+    If you want to find the underlying polynomial function, you could then employ Evolutionary Competition to find the best fitting parameters for such polynomial.
+    So how do you find these parameters?
+    \\ \\
+    You start with an initial population of agents with a random set of parameters.
+    For each generation of your population you will then repeat following steps:
+    \begin{itemize}
+        \item Fitness: First, you need to find out how good each agent (and its parameters) performs in the function they try to optimize for.
+        The fitness evaluation can be done with an objective cost function or a competition between the agents, which evaluates their relative performances.
+        In our example, the cost function might be the sum of the absolute differences between the data points and the output of the polynomial function.
+        \item Selection: As a next step, you rank the agents performances to then pick the ones that have performed the best.
+        \item Reproduction: The best agents pick is the part of the population that survives.
+        These agents will then be replicated by copying their parameters (asexual reproduction) of by merging parameters from different agents (sexual reproduction).
+        \item Mutation: The agents parameters will then be mutated by either completely overwriting certain parameters with new random parameters or by shifting the existing parameters by a random number.
+    \end{itemize}
+    After a certain number of generations, you will then have the best performing set of parameters for a given problem.
+    There is also one popular addition to EC, which draws inspiration from nature again:
+    \begin{mydef}{Genetic Algorithm}
+    A Genetic Algorithm (GA) is an implementation of EC that uses a genetic representation of the parameters.
+    \end{mydef}
+    Its main idea is to have genes, that only encode indirectly for the parameters, and that can be on and off.
+
+        \section{Evolutionary Neural Networks (ENNs) and the NEAT Approach}
+
         \section{Related Work}
-    \chapter{Building my NEAT}
-        \section{Beta Program}
+    \chapter{Building my ENN}
+        \section{Basic Implementation}
+            \subsection{Neural Network}
+            \subsection{Mutation}
+            \subsection{Natural Selection}
+            \subsection{Nim}
+            \subsection{Data Saving}
         \section{First Findings}
             \subsection{Simple Nim}
             \subsection{Nim}
@@ -140,4 +361,6 @@ contents={%
         \section{Data}
         \section{Documentation}
         \section{References}
+    \printbibliography
+
 \end{document}
