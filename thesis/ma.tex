@@ -297,11 +297,20 @@ contents={%
     We already know how a NN can make a prediction for a given input with the help of parameters, which encode for the structure and weights/biases of the NN.\@
     But how do we find such parameters for a given problem?
     The answer is to use machine learning, which trains the model to perform a certain task with the help of training data.
+    \begin{mydef}{Machine Learning}
+        Machine Learning is a subset of artificial intelligence that involves the use of algorithms and statistical techniques to optimize artificially intelligent models for a given problem.
+    \end{mydef}
     One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient ways to train a NN.\@
-    \\ \\
-    The backpropagation algorithm is an algorithm that can find parameters for weights and biases of a NN with fixed topology.
-    It uses a training adn test set containing the problems that the NN needs to solve as well as the corresponding solutions.
-    First, it starts with a NN with fixed topology and random weights/biases.
+    \begin{mydef}{Backpropagation}
+        The backpropagation algorithm is an algorithm that can optimize parameters for weights and biases of a NN within a fixed topology for a certain problem with the help of labeled data.
+    \end{mydef}
+    Backpropagation uses a training and test set containing unlabeled data for a problem.
+    But what does a test set with unlabeled data mean in the context of machine learning?
+    \begin{mydef}{(Un)labeled Data}
+        Labeled data for a machine learning problem is a set of data with sample problems and the respective solutions.
+        Unlabeled data instead only contains the sample problems.
+    \end{mydef}
+    The Machine Learning Process starts with an NN with fixed topology and random weights/biases.
     Then, you give the NN the training problems, whose predictions will be random at first.
     However, with the help of the corresponding solutions, you can refine the predictions of the NN by adjusting the parameters in a way that would let the NN make the correct prediction for the given problem.
     This is done by starting from the prediction of a certain problem its solution and propagating back through the whole NN until reaching the input layer.
@@ -339,9 +348,34 @@ contents={%
     \end{mydef}
     Its main idea is to have genes, that only encode indirectly for the parameters, and that can be on and off.
 
-        \section{Evolutionary Neural Networks (ENNs) and the NEAT Approach}
+        \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
+    After having covered all the basics about NNs and EC, we can now combine those concepts to create the algorithm, that this thesis is about.
+    \begin{mydef}{Evolutionary Neural Networks}
+        Evolutionary Neural Networks (ENNs) are Neural Networks that use Evolutionary Computation to optimize for its parameters for the NNs weights/biases and its topology.
+    \end{mydef}
+    ENNs are useful for complex machine learning problems and also work for unlabeled training data as long as there is a fitness function.
+    Let's bring our knowledge about EC into the context of Neural Networks:
+    The parameters ENNs encode for are for the weights, biases, nodes and edges of a Neural Network.
+    You could either directly encode the NNs parameters as a graph or indirectly as genes, which would make it a Genetic Algorithm.
+    ENNs still start with a random population of agents that are evaluated and selected by a fitness function.
+    Then they replicated (sexually or asexually) and finally mutated in following ways:
+    \begin{enumerate}
+        \item Change weights/biases: A new random value is set for the weight or bias of a random existing edge or node.
+        \item Shift weights/biases: The value for an existing weight or bias of a random existing edge or node is altered by a random change but is kept close to the old value.
+        \item Add edges: A new edge is added between two random unconnected nodes.
+        \item Add nodes: A new node is added in between of a random existing edge.
+        The old edge is removed and two new edges with random weight are added between the new node and the two other nodes each.
+        \item Remove nodes/edges: A random node or edge in a way that doesn't cut off the input from the output layer.
+    \end{{enumerate}}
+    \section{Drawing Inspiration from the NEAT-Apporach}\label{sec:drawing-inspiration-from-the-neat-apporach}
+        As already stated in the Thesis Statement(\ref{sec:thesis-statement}), Neuroevolution of Augmenting Topologies is a ENN machine learning algorithm by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
+        One of its main innovations is that the initial population starts with NNs of lowest complexity and only increase topological complexity as its useful for the problem.
+        In specific, you start with NNs that have only the nodes of the input layer connected to the nodes of the output layer.
+        This should result in more efficient NNs for the problem, as the complexity is only increased when it improves the NNs performance.
+        The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.)as it is already minimal.
 
-        \section{Related Work}
+
+    \section{Related Work}
     \chapter{Building my ENN}
         \section{Basic Implementation}
             \subsection{Neural Network}
