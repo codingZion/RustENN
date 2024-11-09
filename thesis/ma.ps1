@@ -1,1 +1,1 @@
-pdflatex.exe .\ma.tex -interaction=nonstopmode -undump=pdflatex -disable-write18; bibtex.exe .\ma.aux; pdflatex pdflatex.exe .\ma.tex -interaction=nonstopmode -undump=pdflatex -disable-write18; pdflatex.exe .\ma.tex -interaction=nonstopmode -undump=pdflatex -disable-write18;
+pdflatex.exe .\ma.tex -interaction=nonstopmode -shell-escape; bibtex.exe .\ma.aux; pdflatex.exe .\ma.tex -interaction=nonstopmode -shell-escape; pdflatex.exe .\ma.tex -interaction=nonstopmode -shell-escape;

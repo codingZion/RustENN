@@ -15,10 +15,6 @@ pub struct NeuralNetwork {
     pub output_nodes: usize,
     pub edge_count: usize,
     pub nodes: Vec<Vec<Node>>,
-    /*
-    pub weights: Vec<WeightMatrix>,
-    pub biases: Vec<Vec<f64>>,
-    */
 }
 /*
 struct WeightMatrix {

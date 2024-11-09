@@ -1,8 +1,19 @@
 \documentclass[11pt]{report}
 %\usepackage[german]{babel}
 
-%Graphs
+%(Rust) Code Snippets
+\usepackage{minted}
+\usemintedstyle{borland}
 
+\setminted{
+framesep=2mm,
+fontsize=\footnotesize,
+linenos
+}
+%\usemintedstyle{trac}
+
+
+%Graphs
 \usepackage{pgfplots}
 \pgfplotsset{width=15cm,height=7.5cm,compat=1.9}
 \usepgfplotslibrary{external}
@@ -50,18 +61,18 @@
     a4paper,
     left=20mm,
     right=20mm,
-    top=20mm,
-    bottom=20mm
+    top=30mm,
+    bottom=30mm,
+%    total={6in, 8in}
 }
-
 
 %Background image
 \usepackage[pages=some]{background}
 
 %Liks of TOC
-\usepackage{color}   %May be necessary if you want to color links
 \usepackage{hyperref}
 \usepackage{lstmisc}
+\usepackage{holtxdoc}
 
 \hypersetup{
     colorlinks,
@@ -378,9 +389,75 @@ contents={%
     \section{Related Work}
     \chapter{Building my ENN}
         \section{Basic Implementation}
+    Now, we will have a detailed look at how I used the concepts described in the last Chapter(\ref{ch:introduction}) to build an Evolutionary Neural Network that plays board games.
+    First, I will explain the general Structure of my Code:
+        \subsection{Project Overview}
+    As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), this Project is written in the Rust Programming Language.
+    If you don't understand the syntax of the code snippets, you can consult the online "The Rust Programming Language" booklet under: \url{https://doc.rust-lang.org/book/}
+    \\ \\
+    My Codebase is divided into different modules as well as a bin folder with main files, one of which has to be selected to be executed at the beginning.
+    The other modules are divided into one module with the ENN algorithm, the other modules handle the different games, the ENNs learn to play.
+    The ENN module is divided into two files:
+    \begin{itemize}
+        \item agent.rs: This file handles the NNs and the mutations on the NNs
+        \item population.rs: This file handles the natural selection process and the data saving
+    \end{itemize}
+    The game modules provide the problems for the NNs handle the predictions of the NNs and finds the new game state after a move.
+    It might also include an objective performance evaluation function to measure how well the NNs perform.
+    I will now explain all the functions bottom up, starting with the Neural Network.
+    I work with Rusts Structs which are similar to classes in other programming languages.
             \subsection{Neural Network}
-            \subsection{Mutation}
-            \subsection{Natural Selection}
+    The struct \textit{NeurualNetwork} (defined in agents.rs) most importantly contains a two-dimensional vector of nodes, which encodes all the information of the NN\@:
+    \begin{minted}{rust}
+    pub struct NeuralNetwork {
+        [...] // redundant side data about the NN
+        pub nodes: Vec<Vec<Node>>,
+    }
+    \end{minted}
+    The Vector inside (\mintinline{rust}{Vec<Node>}) represents a layer of the NN and the outside Vector (\mintinline{rust}{Vec<Vec<Node>>}) contains all layers of the NN\@.
+    A \textit{Node} contains its bias and a vector for the incoming and outgoing edges:
+    \begin{minted}{rust}
+    pub struct Node {
+        pub bias: f64,
+        //edges stored in an adjacency list
+        pub incoming_edges: Vec<Edge>,
+        pub outgoing_edges: Vec<Edge>,
+    }
+    \end{minted}
+    An \textit{Edge} contains the weight of the edge and its input/output node:
+    \begin{minted}{rust}
+    pub struct Edge {
+        input: [usize; 2],
+        out: [usize; 2],
+        weight: f64,
+    }
+    \end{minted}
+    The most important functions of the \textit{NeuralNetwork} struct are:
+    \begin{itemize}
+        \item \mintinline{rust}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which initializes the NN with all input and output nodes connected to each other with random weights and biases.
+        \item \mintinline{rust}{predict(&self, input: Vec<f64>) -> Vec<f64>}, which computes the output of the NN for a given input with forward propagation algorithm described in the last Chapter(\ref{subsec:feed-forward-neural-networks-(fnns)}).
+        \item \mintinline{rust}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which computes the neuron activation described in the last Chapter(\ref{subsec:feed-forward-neural-networks-(fnns)}).
+        I use a variant of the \texit{ReLU} function, since the linearity for inputs above 0 of the ReLU function allows for more variety of neuron activation, which makes the NN more flexible and efficient.
+        The variant I use is the \texit{ELU} function, which additionally tackles the problem of dead neurons in \texit{ReLU} by allowing for negative values.
+        \item All mutation functions for the NN, which we will need in the next Subsection(\ref{subsec:mutation}).
+    \end{itemize}
+            \subsection{Mutation}\label{subsec:mutation}
+    The mutation of the NNs is handled in the \textit{Agent} struct (defined in agent.rs), which includes a NN, its fitness and its Rank:
+    \begin{minted}{rust}
+    pub struct Agent {
+        pub nn: NeuralNetwork,
+        pub fitness: f64,
+        pub rank: isize,
+    }
+    \end{minted}
+    The function \mintinline{rust}{mutate(&mut self, mutations: usize) -> Self {} } has a number of mutations as a parameter which it applies to the NN of the Agent.
+    For each mutation, it randomly selects one of the following mutations: Change weights/biases, Shift weights/biases, Add edges, Add nodes.
+    All of these mutations have already been described in the last Chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
+    \begin{itemize}
+        \item oh actually that's kind of stupid, gotta change something
+    \end{itemize}
+    
+    \subsection{Natural Selection}
             \subsection{Nim}
             \subsection{Data Saving}
         \section{First Findings}
