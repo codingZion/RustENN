@@ -384,8 +384,18 @@ contents={%
         In specific, you start with NNs that have only the nodes of the input layer connected to the nodes of the output layer.
         This should result in more efficient NNs for the problem, as the complexity is only increased when it improves the NNs performance.
         The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.)as it is already minimal.
-
-
+    
+    \section{Games}\label{sec:games}
+    Let's also have a quick look at the games, this Thesis will train the ENNs on.
+    \subsection{Simple Nim}\label{subsec:simple-nim}
+    This game is a simplified version of Nim, where two players take turns removing an arbitrary amount of matches from a single stack with some number of matches.
+    The player who removes the last match loses.
+    Therefore, the winning strategy simply is to remove all matches from the stack but one, which forces the opponent to remove the last match, which makes them lose.
+    \subsection{Nim}\label{subsec:nim}
+    This game works similarly to Simple Nim (described in the last Section(\ref{subsec:simple-nim})) with the difference that there are multiple stacks with matches.
+    Now, the player who removes the last match from the last unemptied stack loses.
+    You can read up the winning strategy for Nim on Wikipedia\footcite{nim_23}.
+    The winning strategy is much more complex, which forces the ENNs to learn a more complex strategy.
     \section{Related Work}
     \chapter{Building my ENN}
         \section{Basic Implementation}
