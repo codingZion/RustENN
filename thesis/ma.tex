@@ -12,6 +12,10 @@ linenos
 }
 %\usemintedstyle{trac}
 
+%chapter style
+\usepackage{titlesec}
+\titleformat{\chapter}{\normalfont\huge\textbf}{\thechapter.}{20pt}{\huge\textbf}
+
 
 %Graphs
 \usepackage{pgfplots}
@@ -384,7 +388,7 @@ contents={%
         In specific, you start with NNs that have only the nodes of the input layer connected to the nodes of the output layer.
         This should result in more efficient NNs for the problem, as the complexity is only increased when it improves the NNs performance.
         The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.)as it is already minimal.
-    
+
     \section{Games}\label{sec:games}
     Let's also have a quick look at the games, this Thesis will train the ENNs on.
     \subsection{Simple Nim}\label{subsec:simple-nim}
@@ -396,12 +400,16 @@ contents={%
     Now, the player who removes the last match from the last unemptied stack loses.
     You can read up the winning strategy for Nim on Wikipedia\footcite{nim_23}.
     The winning strategy is much more complex, which forces the ENNs to learn a more complex strategy.
-    \section{Related Work}
-    \chapter{Building my ENN}
-        \section{Basic Implementation}
+    \section{Related Work}\label{sec:related-work}
+
+
+    \chapter{Building my ENN}\label{ch:building-my-enn}
+
+
+    \section{Basic Implementation}\label{sec:basic-implementation}
     Now, we will have a detailed look at how I used the concepts described in the last Chapter(\ref{ch:introduction}) to build an Evolutionary Neural Network that plays board games.
     First, I will explain the general Structure of my Code:
-        \subsection{Project Overview}
+        \subsection{Project Overview}\label{subsec:project-overview}
     As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), this Project is written in the Rust Programming Language.
     If you don't understand the syntax of the code snippets, you can consult the online "The Rust Programming Language" booklet under: \url{https://doc.rust-lang.org/book/}
     \\ \\
@@ -416,7 +424,7 @@ contents={%
     It might also include an objective performance evaluation function to measure how well the NNs perform.
     I will now explain all the functions bottom up, starting with the Neural Network.
     I work with Rusts Structs which are similar to classes in other programming languages.
-            \subsection{Neural Network}
+            \subsection{Neural Network}\label{subsec:neural-network}
     The struct \textit{NeurualNetwork} (defined in agents.rs) most importantly contains a two-dimensional vector of nodes, which encodes all the information of the NN\@:
     \begin{minted}{rust}
     pub struct NeuralNetwork {
@@ -464,9 +472,12 @@ contents={%
     For each mutation, it randomly selects one of the following mutations: Change weights/biases, Shift weights/biases, Add edges, Add nodes.
     All of these mutations have already been described in the last Chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
     \begin{itemize}
+        \item new layer creation details
+        \item random selection details
+        \item shift mutation details
         \item oh actually that's kind of stupid, gotta change something
     \end{itemize}
-    
+
     \subsection{Natural Selection}
             \subsection{Nim}
             \subsection{Data Saving}
