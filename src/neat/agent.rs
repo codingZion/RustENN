@@ -91,23 +91,29 @@ impl NeuralNetwork {
 
     pub fn rand_node(&mut self) -> [usize; 2] {
         //return a random node
-        let mut node = [0usize, 0usize];
-        //input layer doesn't need to be changed
-        node[0] = rand::random::<i32>() as usize % (self.nodes.len() - 1) + 1;
-        node[1] = rand::random::<i32>() as usize % self.nodes[node[0]].len();
+        let mut node = [0usize, rand::random::<i32>() as usize % (self.layer_sizes.iter().sum::<usize>() - self.output_nodes)];
+        while node[1] >= self.layer_sizes[node[0]] {
+            node[1] -= self.layer_sizes[node[0]];
+            node[0] += 1;
+        }
         node
     }
 
     pub fn rand_edge(&mut self) -> [usize; 4] {
         //return a random edge
         let mut edge = [0usize, 0usize, 0usize, 0usize];
-        let node = self.rand_node();
-        edge[2] = node[0];
-        edge[3] = node[1];
-        let edge_index = rand::random::<i32>() as usize % self.nodes[node[0]][node[1]].incoming_edges.len();
-        edge[0] = self.nodes[node[0]][node[1]].incoming_edges[edge_index].input[0];
-        edge[1] = self.nodes[node[0]][node[1]].incoming_edges[edge_index].input[1];
-        //println!("{:?}", edge);
+        let mut edge_index = rand::random::<u32>() as usize % self.edge_count;
+        for i in 0..self.layer_sizes.len() {
+            for j in 0..self.layer_sizes[i] {
+                for k in 0..self.nodes[i][j].outgoing_edges.len() {
+                    if edge_index == 0 {
+                        edge = [i, j, self.nodes[i][j].outgoing_edges[k].out[0], self.nodes[i][j].outgoing_edges[k].out[1]];
+                        break;
+                    }
+                    edge_index -= 1;
+                }
+            }
+        }
         edge
     }
 

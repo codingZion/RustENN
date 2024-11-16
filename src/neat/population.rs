@@ -404,6 +404,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         OpenOptions::new()
             .write(true)
             .create(true)
+            .truncate(true)
             .open(filename)
             .unwrap();
     }

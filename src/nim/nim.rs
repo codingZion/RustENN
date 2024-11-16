@@ -86,6 +86,9 @@ impl Nim {
                 if print_game {
                     //println!("invalid move!");
                 }
+                if obj_eval && state.iter().sum::<u32>() > 1 {
+                    turns_vec[turn % agents.len()] += 1;
+                }
                 break;
             }
             if obj_eval { turns_vec[turn % agents.len()] += 1; }
