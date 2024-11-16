@@ -112,7 +112,7 @@ contents={%
                 \end{center}
                 \vspace{3cm}
                 \rule[0.1cm]{15.8cm}{0.1mm}\\
-                \vspace{7cm}\\
+                \vspace{9cm}\\
                 \begin{minipage}[t]{0.47\textwidth}
                 \large\textbf {Thesis By:}\\
                 \end{minipage}
@@ -353,7 +353,7 @@ contents={%
         In our example, the cost function might be the sum of the absolute differences between the data points and the output of the polynomial function.
         \item Selection: As a next step, you rank the agents performances to then pick the ones that have performed the best.
         \item Reproduction: The best agents pick is the part of the population that survives.
-        These agents will then be replicated by copying their parameters (asexual reproduction) of by merging parameters from different agents (sexual reproduction).
+        These agents will then be replicated by copying their parameters (non-mating) of by merging parameters from different agents (crossover).
         \item Mutation: The agents parameters will then be mutated by either completely overwriting certain parameters with new random parameters or by shifting the existing parameters by a random number.
     \end{itemize}
     After a certain number of generations, you will then have the best performing set of parameters for a given problem.
@@ -373,7 +373,7 @@ contents={%
     The parameters ENNs encode for are for the weights, biases, nodes and edges of a Neural Network.
     You could either directly encode the NNs parameters as a graph or indirectly as genes, which would make it a Genetic Algorithm.
     ENNs still start with a random population of agents that are evaluated and selected by a fitness function.
-    Then they replicated (sexually or asexually) and finally mutated in following ways:
+    Then they are replicated (with crossover or non-mating) and finally mutated in following ways:
     \begin{enumerate}
         \item Change weights/biases: A new random value is set for the weight or bias of a random existing edge or node.
         \item Shift weights/biases: The value for an existing weight or bias of a random existing edge or node is altered by a random change but is kept close to the old value.
@@ -406,10 +406,10 @@ contents={%
     \chapter{Building my ENN}\label{ch:building-my-enn}
 
 
-    \section{Basic Implementation}\label{sec:basic-implementation}
+    \section{Algorithm Design}\label{sec:algorithm-design}
     Now, we will have a detailed look at how I used the concepts described in the last Chapter(\ref{ch:introduction}) to build an Evolutionary Neural Network that plays board games.
     First, I will explain the general Structure of my Code:
-        \subsection{Project Overview}\label{subsec:project-overview}
+        \subsection{Overview}\label{subsec:overview}
     As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), this Project is written in the Rust Programming Language.
     If you don't understand the syntax of the code snippets, you can consult the online "The Rust Programming Language" booklet under: \url{https://doc.rust-lang.org/book/}
     \\ \\
@@ -478,7 +478,7 @@ contents={%
         \item oh actually that's kind of stupid, gotta change something
     \end{itemize}
 
-    \subsection{Natural Selection}
+            \subsection{Natural Selection}
             \subsection{Nim}
             \subsection{Data Saving}
         \section{First Findings}
