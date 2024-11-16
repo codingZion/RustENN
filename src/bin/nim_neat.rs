@@ -1,14 +1,16 @@
 use rust_neat::neat::population::Population;
 use rust_neat::nim::nim::Nim;
 use std::thread;
-
+use std::time::SystemTime;
 //mute println
+/*
 macro_rules! println {
     () => {};
     ($($arg:tt)*) => {};
 }
+*/
 
-const USE_BIN: bool = true;
+const USE_BIN: bool = false;
 
 fn main() {
     let nim_func = Nim::run_nim_strict_random;
@@ -19,8 +21,7 @@ fn main() {
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
     
     //start timer
-    let now = std::time::Instant::now();
-    let mut last = now.clone();
+    let mut last = SystemTime::now();
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
@@ -74,9 +75,10 @@ fn main() {
         println!();
         //println!("Competition results: {:?}", res);
         println!("Wins: {:?} -> {:?}%", res.0.iter().sum::<u32>(), res.0.iter().sum::<u32>() as f64 / res.0.len() as f64 * 50.);
-        println!("Time elapsed: {:?}", now.elapsed());
-        println!("Time since last: {:?}", last.elapsed());
-        last = std::time::Instant::now();
+        println!("Time elapsed: {:?}", population.total_elapsed);
+        println!("Time since last: {:?}", last.elapsed().unwrap().as_secs_f32());
+        population.total_elapsed += last.elapsed().unwrap().as_secs_f64();
+        last = SystemTime::now();
         //population.save_best_agent_tournament_csv(best_agent_tournament_csv);
         population.save_stats_csv(stats_csv);
         population.save_best_agent_games_txt(best_agent_games_txt, res.1);
