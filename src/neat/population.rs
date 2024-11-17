@@ -19,12 +19,15 @@ use csv::Trim::Fields;
 
 pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>);
 
-pub const FITNESS_EXP: f64 = 0.5;
+pub const FITNESS_EXP: f64 = 2.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
-pub const BEST_AGENT_SHARE: u32 = 40;
-pub const RANDOM_AGENT_SHARE: u32 = 40;
+pub const BEST_AGENT_SHARE: u32 = 30;
+pub const RANDOM_AGENT_SHARE: u32 = 20;
+
+pub const RANDOM_OLD_AGENT_SHARE: u32 = 30;
+
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
@@ -82,11 +85,16 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     pub fn rank_agents(&mut self) {
-        let mut agents = &mut self.agents;
+        let agents = &mut self.agents;
         agents.sort_by(|a, b| b.fitness.total_cmp(&a.fitness));
         for i in 0..self.size as usize {
             agents[i].rank = i as isize;
         }
+        /*
+        for i in agents {
+            print!("{}, ", i.fitness);
+        }
+        println!();*/
     }
 
     pub fn circular_pairing(&mut self, distance: usize) -> Vec<[usize; 2]> {
@@ -283,10 +291,14 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         for _ in 0..self.size / 100 * BEST_AGENT_SHARE {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
-                new_agents.push(best_agents[i].clone());
+                new_agents.push(best_agents[i].clone().mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize));
             }
         }
-
+        
+        //add random old agent to new population
+        for _ in 0..self.size / 100 * RANDOM_OLD_AGENT_SHARE {
+            new_agents.push(self.agents[(rand::random::<u32>() % self.size) as usize].clone().mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize));
+        }
 
         //add random agents to new population
         for _ in 0..self.size / 100 * RANDOM_AGENT_SHARE {
@@ -336,18 +348,17 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let mut wtr = csv::Writer::from_writer(file);
         let agents = &self.agents;
         let mut avg_layers = 0.;
+        let mut avg_hidden_layers = 0.;
         let mut avg_hidden_layer_size = 0.;
         for agent in agents.iter() {
             avg_layers += agent.nn.layer_sizes.len() as f64;
-            let mut avg_hidden_layer_size_i = 0.;
             for i in 1..agent.nn.layer_sizes.len() - 1 {
-                avg_hidden_layer_size_i += agent.nn.layer_sizes[i] as f64;
+                avg_hidden_layer_size += agent.nn.layer_sizes[i] as f64;
+                avg_hidden_layers += 1.;
             }
-            avg_hidden_layer_size_i /= f64::max(1., (agent.nn.layer_sizes.len() - 2) as f64);
-            avg_hidden_layer_size += avg_hidden_layer_size_i;
         }
         avg_layers /= self.agents.len() as f64;
-        avg_hidden_layer_size /= self.agents.len() as f64;
+        avg_hidden_layer_size /= f64::max(avg_hidden_layers, 1.);
         
         let mut best_agent_layer_sizes = "".to_owned();
         for i in self.agents[0].nn.layer_sizes.clone() {
@@ -434,6 +445,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             "fitness exponent",
             "best agent share",
             "random agent share",
+            "random old agent share",
             "best agent tournament games",
             "add_connection_rand",
             "add_node_rand",
@@ -456,6 +468,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             FITNESS_EXP.to_string(),
             BEST_AGENT_SHARE.to_string(),
             RANDOM_AGENT_SHARE.to_string(),
+            RANDOM_OLD_AGENT_SHARE.to_string(),
             BEST_AGENT_TOURNAMENT_MAX.to_string(),
             MUTATION_TYPES[0].weight.to_string(),
             MUTATION_TYPES[1].weight.to_string(),

@@ -15,7 +15,7 @@ const USE_BIN: bool = false;
 fn main() {
     let nim_func = Nim::run_nim_strict_random;
     let func_str = "run_nim_strict_random";
-    let comp_games = 75;
+    let comp_games = 250;
     let initial_state = vec![10];
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats_single.csv";
@@ -29,7 +29,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
-        Population::new(1000, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
+        Population::new(10000, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 25usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
@@ -40,10 +40,10 @@ fn main() {
         population.create_best_agent_games_txt(best_agent_games_txt);
     }
     let mut saver= thread::spawn(|| {Ok(())});
-    
+
     population.save_params_csv(params_csv, func_str, comp_games, initial_state.clone());
-    
-    for _ in 0..10000 {
+
+    for _ in 0..1000000 {
         //let mut population = Population::load_population("population.bin").unwrap();
         //population.run_game = Nim::run_nim_strict;
         

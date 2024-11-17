@@ -20,11 +20,11 @@ pub struct NeuralNetwork {
 pub const MUTATION_TYPES:[MutationType; 6] = [
     MutationType {
         mutation: NeuralNetwork::add_connection_rand,
-        weight: 5.,
+        weight: 1.5,
     },
     MutationType {
         mutation: NeuralNetwork::add_node_rand,
-        weight: 2.5,
+        weight: 1.,
     },
     MutationType {
         mutation: NeuralNetwork::change_weight_rand,
@@ -36,11 +36,11 @@ pub const MUTATION_TYPES:[MutationType; 6] = [
     },
     MutationType {
         mutation: NeuralNetwork::shift_weight_rand,
-        weight: 20.,
+        weight: 40.,
     },
     MutationType {
         mutation: NeuralNetwork::shift_bias_rand,
-        weight: 7.5,
+        weight: 15.,
     }];
 /*
 struct WeightMatrix {
@@ -125,21 +125,23 @@ impl NeuralNetwork {
         node
     }
 
-    pub fn rand_edge(&mut self) -> [usize; 4] {
+    pub fn rand_edge(&mut self) -> Edge {
         //return a random edge
-        let mut edge = [0usize, 0usize, 0usize, 0usize];
+        let mut edge = self.nodes[0][0].outgoing_edges[0].clone();
         let mut edge_index = rand::random::<u32>() as usize % self.edge_count;
-        for i in 0..self.layer_sizes.len() {
+        let edge_index_copy = edge_index;
+        'outer: for i in 0..self.layer_sizes.len() {
             for j in 0..self.layer_sizes[i] {
                 for k in 0..self.nodes[i][j].outgoing_edges.len() {
                     if edge_index == 0 {
-                        edge = [i, j, self.nodes[i][j].outgoing_edges[k].out[0], self.nodes[i][j].outgoing_edges[k].out[1]];
-                        break;
+                        edge = self.nodes[i][j].outgoing_edges[k].clone();
+                        break 'outer;
                     }
                     edge_index -= 1;
                 }
             }
         }
+        //println!("edge count: {}, edge_index: {}, layer_sizes: {:?}, edge: {:?}", self.edge_count, edge_index_copy, self.layer_sizes, edge);
         edge
     }
 
@@ -245,15 +247,15 @@ impl NeuralNetwork {
         true // idk if anything could fail
     }
 
-    pub fn add_node(&mut self, edge: [usize; 4]) {
+    pub fn add_node(&mut self, edge: Edge) {
         let mut edge = edge;
         //check the distance between the two nodes
-        let distance = (edge[0] as i32 - edge[2] as i32).abs() as u32;
+        let distance = (edge.input[0] as i32 - edge.out[0] as i32).unsigned_abs();
         //if distance is 1, add new layer, otherwise add node to a random existing layer in between
         let layer = if distance == 1 {
-            edge[0] + 1
+            edge.input[0] + 1
         } else {
-            (rand::random::<u32>() % (distance - 1) + edge[0] as u32 + 1) as usize
+            (rand::random::<u32>() % (distance - 1) + edge.input[0] as u32 + 1) as usize
         };
         if distance == 1 {
             //add new layer
@@ -268,7 +270,7 @@ impl NeuralNetwork {
         });
         self.layer_sizes[layer] += 1;
         if distance == 1 {
-            edge[2] += 1;
+            edge.out[0] += 1;
             //update the layer indices of the nodes
             //this could be done drastically more efficiently TODO
             for i in 0..self.layer_sizes.len() {
@@ -295,30 +297,30 @@ impl NeuralNetwork {
         //add edges between the new node and the two nodes
         let weight = Self::rand_wb();
         let new_node = [layer, self.nodes[layer].len() - 1];
-        self.nodes[edge[0]][edge[1]].outgoing_edges.push(Edge {
+        self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.push(Edge {
             weight: weight,
-            input: [edge[0], edge[1]],
+            input: [edge.input[0], edge.input[1]],
             out: new_node,
         });
         self.nodes[layer][new_node[1]].incoming_edges.push(Edge {
             weight: weight,
-            input: [edge[0], edge[1]],
+            input: [edge.input[0], edge.input[1]],
             out: new_node,
         });
         let weight = Self::rand_wb();
         self.nodes[layer][new_node[1]].outgoing_edges.push(Edge {
             weight: weight,
             input: new_node,
-            out: [edge[2], edge[3]],
+            out: [edge.out[0], edge.out[1]],
         });
-        self.nodes[edge[2]][edge[3]].incoming_edges.push(Edge {
+        self.nodes[edge.out[0]][edge.out[1]].incoming_edges.push(Edge {
             weight: weight,
             input: new_node,
-            out: [edge[2], edge[3]],
+            out: [edge.out[0], edge.out[1]],
         });
         //remove the old edge
-        self.nodes[edge[0]][edge[1]].outgoing_edges.retain(|x| x.out != [edge[2], edge[3]]);
-        self.nodes[edge[2]][edge[3]].incoming_edges.retain(|x| x.input != [edge[0], edge[1]]);
+        self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.retain(|x| x.out != [edge.out[0], edge.out[1]]);
+        self.nodes[edge.out[0]][edge.out[1]].incoming_edges.retain(|x| x.input != [edge.input[0], edge.input[1]]);
         self.edge_count += 1;
     }
 
@@ -329,13 +331,13 @@ impl NeuralNetwork {
         true // idk if anything could fail
     }
 
-    pub fn change_weight(&mut self, edge: [usize; 4]) {
+    pub fn change_weight(&mut self, edge: Edge) {
         //change the weight of an edge
         let weight = Self::rand_wb();
         //println!("{:?}", self.nodes[edge[0]][edge[1]].outgoing_edges);
         //println!("{:?}", self.nodes[edge[2]][edge[3]].incoming_edges);
-        self.nodes[edge[0]][edge[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge[2], edge[3]]).unwrap().weight = weight;
-        self.nodes[edge[2]][edge[3]].incoming_edges.iter_mut().find(|x| x.input == [edge[0], edge[1]]).unwrap().weight = weight;
+        self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge.out[0], edge.out[1]]).unwrap().weight = weight;
+        self.nodes[edge.out[0]][edge.out[1]].incoming_edges.iter_mut().find(|x| x.input == [edge.input[0], edge.input[1]]).unwrap().weight = weight;
     }
 
     pub fn change_bias_rand(&mut self) -> bool{
@@ -362,11 +364,11 @@ impl NeuralNetwork {
         true // idk if anything could fail
     }
 
-    pub fn shift_weight(&mut self, edge: [usize; 4]) {
+    pub fn shift_weight(&mut self, edge: Edge) {
         //shift the weight of an edge
-        let shift = Self::shift(self.nodes[edge[0]][edge[1]].outgoing_edges.iter().find(|x| x.out == [edge[2], edge[3]]).unwrap().weight);
-        self.nodes[edge[0]][edge[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge[2], edge[3]]).unwrap().weight = shift;
-        self.nodes[edge[2]][edge[3]].incoming_edges.iter_mut().find(|x| x.input == [edge[0], edge[1]]).unwrap().weight = shift;
+        let shift = Self::shift(self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.iter().find(|x| x.out == [edge.out[0], edge.out[1]]).unwrap().weight);
+        self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge.out[0], edge.out[1]]).unwrap().weight = shift;
+        self.nodes[edge.out[0]][edge.out[1]].incoming_edges.iter_mut().find(|x| x.input == [edge.input[0], edge.input[1]]).unwrap().weight = shift;
     }
 
     pub fn shift_bias_rand(&mut self) -> bool{
