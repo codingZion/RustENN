@@ -23,8 +23,8 @@ pub const FITNESS_EXP: f64 = 0.5;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
-pub const BEST_AGENT_SHARE: u32 = 10;
-pub const RANDOM_AGENT_SHARE: u32 = 50;
+pub const BEST_AGENT_SHARE: u32 = 40;
+pub const RANDOM_AGENT_SHARE: u32 = 40;
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
@@ -283,7 +283,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         for _ in 0..self.size / 100 * BEST_AGENT_SHARE {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
-                new_agents.push(best_agents.remove(i).clone());
+                new_agents.push(best_agents[i].clone());
             }
         }
 
