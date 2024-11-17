@@ -2,7 +2,7 @@ use std::fs::OpenOptions;
 use std::io::Write;
 use std::fmt::Write as FmtWrite;
 use std::ops::Add;
-use crate::neat::agent::Agent;
+use crate::neat::agent::{Agent, MUTATION_TYPES};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use indicatif::ProgressBar;
@@ -14,13 +14,17 @@ use rayon::prelude::*; // For parallel iterators
 use rand::Rng;
 use std::string::String;
 use std::time::{Instant, SystemTime};
+use csv::Trim::Fields;
 // For random number generation
 
 pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>);
 
-pub const FITNESS_EXP: f64 = 1.25;
+pub const FITNESS_EXP: f64 = 0.5;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
+
+pub const BEST_AGENT_SHARE: u32 = 10;
+pub const RANDOM_AGENT_SHARE: u32 = 50;
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Population<T: Send + Sync + 'static> {
@@ -83,10 +87,6 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         for i in 0..self.size as usize {
             agents[i].rank = i as isize;
         }
-        /*println!("fitnesses: ");
-        for i in 0..self.size as usize {
-            print!("{}: {}, ", i, agents[i].fitness);
-        }*/
     }
 
     pub fn circular_pairing(&mut self, distance: usize) -> Vec<[usize; 2]> {
@@ -280,7 +280,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let mut new_agents = Vec::new();
         //add old best agents to new population
         let mut best_agents = self.best_agents.clone();
-        for _ in 0..self.size / 10 {
+        for _ in 0..self.size / 100 * BEST_AGENT_SHARE {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
                 new_agents.push(best_agents.remove(i).clone());
@@ -289,7 +289,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
 
         //add random agents to new population
-        for _ in 0..self.size / 10 {
+        for _ in 0..self.size / 100 * RANDOM_AGENT_SHARE {
             new_agents.push(Agent::new(self.inputs, self.outputs));
         }
         
@@ -321,7 +321,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             Err(err) => return Err(Box::new(err)),
         };
 
-        match wtr.write_record(&["time", "avg_layers", "avg_hidden_layer_size", "avg_moves", /*"best_agent_layer_sizes",*/ "best_agent_fitness", "best_agent_wins_percentage", "best_agent_avg_performance"]) {
+        match wtr.write_record(["time", "avg_layers", "avg_hidden_layer_size", "avg_moves", /*"best_agent_layer_sizes",*/ "best_agent_fitness", "best_agent_wins_percentage", "best_agent_avg_performance"]) {
             Ok(_) => Ok(()),
             Err(err) => Err(Box::new(err)),
         }
@@ -351,7 +351,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         
         let mut best_agent_layer_sizes = "".to_owned();
         for i in self.agents[0].nn.layer_sizes.clone() {
-            best_agent_layer_sizes.push_str(&*format!("{},", i).to_string());
+            best_agent_layer_sizes.push_str(&format!("{},", i).to_string());
         }
         
         wtr.write_record(&[
@@ -365,41 +365,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             (self.best_agent_avg_performances * 100.).to_string()]
         )
     }
-    /*
-    pub fn create_best_agent_tournament_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
-        let writer_result = csv::Writer::from_path(filename);
-        let mut wtr = match writer_result {
-            Ok(writer) => writer,
-            Err(err) => return Err(Box::new(err)),
-        };
-
-        match wtr.write_record(&["won_games", "percentage", "competition_results"]) {
-            Ok(_) => Ok(()),
-            Err(err) => return Err(Box::new(err)),
-        }
-    }
-    pub fn save_best_agent_tournament_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
-        let file = OpenOptions::new()
-            .write(true)
-            .append(true)
-            .open(filename)
-            .unwrap();
-        let mut wtr = csv::Writer::from_writer(file);
-
-
-        let mut comp_res = String::new();
-        if self.best_agents_comp_res.len() > 0 {
-            for i in self.best_agents_comp_res.iter() {
-                comp_res.push_str(&i.to_string());
-            }
-            wtr.write_record(&[self.best_agents_won_games.to_string(), (self.best_agents_won_games as f64 / self.best_agents_comp_res.len() as f64 * 50.0).to_string(), comp_res]).unwrap();
-        }
-        else {
-            println!("Can't save best agent tournament csv, best_agents_comp_res is empty!");
-        }
-        Ok(())
-    }
-*/
+    
     pub fn create_best_agent_games_txt(&self, filename: &str) {
         OpenOptions::new()
             .write(true)
@@ -416,6 +382,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             .unwrap();
         
         writeln!(file, "Generation: {}", self.cycle).unwrap();
+        writeln!(file, "Best agent layer sizes: {:?}", self.agents[0].nn.layer_sizes ).unwrap();
         for i in games {
             writeln!(file, "Agent {} vs Agent {}:", i.0, i.1).unwrap();
             for j_index in 0..i.2.1.len() {
@@ -424,6 +391,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             }
             writeln!(file, "Game result: {:?}", i.2 .0).unwrap();
         }
+        writeln!(file).unwrap();
 
     }
 
@@ -452,4 +420,51 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let res: Population<T> = bincode::deserialize_from(file).unwrap();
         Ok(res)
     }
+    
+    pub fn save_params_csv(&self, filename: &str, func_str: &str, comp_games: usize, initial_state:Vec<u32>) {
+        let mut wtr = csv::Writer::from_path(filename).unwrap();
+
+        wtr.write_record([
+            "game func",
+            "initial state",
+            "population size",
+            "comp games",
+            "mutation min",
+            "mutation max",
+            "fitness exponent",
+            "best agent share",
+            "random agent share",
+            "best agent tournament games",
+            "add_connection_rand",
+            "add_node_rand",
+            "change_weight_rand",
+            "change_bias_rand",
+            "shift_weight_rand",
+            "shift_bias_rand"
+        ]).expect("CSV Writer Error!");
+        
+        let mut initial_state_str = String::new();
+        write!(initial_state_str, "{:?}", initial_state).expect("write didnt work");
+        
+        wtr.write_record([
+            func_str.to_string(),
+            initial_state_str,
+            self.size.to_string(),
+            comp_games.to_string(),
+            self.mutation_rate_range.0.to_string(),
+            self.mutation_rate_range.1.to_string(),
+            FITNESS_EXP.to_string(),
+            BEST_AGENT_SHARE.to_string(),
+            RANDOM_AGENT_SHARE.to_string(),
+            BEST_AGENT_TOURNAMENT_MAX.to_string(),
+            MUTATION_TYPES[0].weight.to_string(),
+            MUTATION_TYPES[1].weight.to_string(),
+            MUTATION_TYPES[2].weight.to_string(),
+            MUTATION_TYPES[3].weight.to_string(),
+            MUTATION_TYPES[4].weight.to_string(),
+            MUTATION_TYPES[5].weight.to_string(),
+
+        ]).expect("CSV Writer Error!")
+    }
+    
 }

@@ -14,10 +14,14 @@ const USE_BIN: bool = false;
 
 fn main() {
     let nim_func = Nim::run_nim_strict_random;
+    let func_str = "run_nim_strict_random";
+    let comp_games = 75;
+    let initial_state = vec![10];
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats_single.csv";
     let best_agent_games_txt = "best_agent_games_single.txt";
-    let nim_config = Nim::new(vec![10]);
+    let params_csv = "params.csv";
+    let nim_config = Nim::new(initial_state.clone());
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
     
     //start timer
@@ -25,7 +29,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
-        Population::new(500, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
+        Population::new(1000, nim_config.input_size, nim_config.output_size, nim_func, (1usize, 5usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
@@ -36,12 +40,15 @@ fn main() {
         population.create_best_agent_games_txt(best_agent_games_txt);
     }
     let mut saver= thread::spawn(|| {Ok(())});
+    
+    population.save_params_csv(params_csv, func_str, comp_games, initial_state.clone());
+    
     for _ in 0..10000 {
         //let mut population = Population::load_population("population.bin").unwrap();
         //population.run_game = Nim::run_nim_strict;
         
         println!("generation: {}", population.cycle);
-        population.competition(&nim_config, 75);
+        population.competition(&nim_config, comp_games);
         population.rank_agents();
 
         // Limit the scope of the immutable borrow

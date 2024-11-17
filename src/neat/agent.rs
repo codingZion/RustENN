@@ -16,6 +16,32 @@ pub struct NeuralNetwork {
     pub edge_count: usize,
     pub nodes: Vec<Vec<Node>>,
 }
+
+pub const MUTATION_TYPES:[MutationType; 6] = [
+    MutationType {
+        mutation: NeuralNetwork::add_connection_rand,
+        weight: 5.,
+    },
+    MutationType {
+        mutation: NeuralNetwork::add_node_rand,
+        weight: 2.5,
+    },
+    MutationType {
+        mutation: NeuralNetwork::change_weight_rand,
+        weight: 7.5,
+    },
+    MutationType {
+        mutation: NeuralNetwork::change_bias_rand,
+        weight: 3.,
+    },
+    MutationType {
+        mutation: NeuralNetwork::shift_weight_rand,
+        weight: 20.,
+    },
+    MutationType {
+        mutation: NeuralNetwork::shift_bias_rand,
+        weight: 7.5,
+    }];
 /*
 struct WeightMatrix {
     pub data: Vec<Vec<f64>>,
@@ -27,7 +53,7 @@ impl WeightMatrix {
     }
 }
 */
-struct MutationType {
+pub struct MutationType {
     pub mutation: fn(&mut NeuralNetwork) -> bool,
     pub weight: f64,
 }
@@ -368,44 +394,19 @@ impl Agent {
     }
     
     pub fn mutate(&mut self, mutations: usize) -> Self {
-        let mutation_types = [
-            MutationType {
-                mutation: NeuralNetwork::add_connection_rand,
-                weight: 5.,
-            },
-            MutationType {
-                mutation: NeuralNetwork::add_node_rand,
-                weight: 2.5,
-            },
-            MutationType {
-                mutation: NeuralNetwork::change_weight_rand,
-                weight: 7.5,
-            },
-            MutationType {
-                mutation: NeuralNetwork::change_bias_rand,
-                weight: 3.,
-            },
-            MutationType {
-                mutation: NeuralNetwork::shift_weight_rand,
-                weight: 20.,
-            },
-            MutationType {
-                mutation: NeuralNetwork::shift_bias_rand,
-                weight: 7.5,
-            }];
         for _ in 0..mutations {
             let mut rng = rand::thread_rng();
             let mut sum = 0.0;
-            for i in 0..mutation_types.len() {
-                sum += mutation_types[i].weight;
+            for i in 0..MUTATION_TYPES.len() {
+                sum += MUTATION_TYPES[i].weight;
             }
             let mut rand = rng.gen_range(0.0..sum);
             let mut i = 0;
-            while rand > mutation_types[i].weight {
-                rand -= mutation_types[i].weight;
+            while rand > MUTATION_TYPES[i].weight {
+                rand -= MUTATION_TYPES[i].weight;
                 i += 1;
             }
-            (mutation_types[i].mutation)(&mut self.nn);
+            (MUTATION_TYPES[i].mutation)(&mut self.nn);
         }
         self.clone()
     }
