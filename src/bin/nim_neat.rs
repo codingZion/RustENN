@@ -29,7 +29,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
-        Population::new(10000, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 25usize))
+        Population::new(2500, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {

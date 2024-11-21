@@ -13,11 +13,14 @@ use std::thread::JoinHandle;
 use rayon::prelude::*; // For parallel iterators
 use rand::Rng;
 use std::string::String;
+use std::sync::atomic::{AtomicU32, AtomicUsize, Ordering};
 use std::time::{Instant, SystemTime};
 use csv::Trim::Fields;
 // For random number generation
 
 pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>);
+
+pub const MOVE_FITNESS: bool = true;
 
 pub const FITNESS_EXP: f64 = 2.;
 
@@ -40,6 +43,7 @@ pub struct Population<T: Send + Sync + 'static> {
     #[serde(skip, default = "default_fn")]
     pub run_game: fn(&T, Vec<&Agent>, bool, bool) -> GameResLog,  // Function pointer in the Population struct
     pub mutation_rate_range: (usize, usize),
+    pub comp_avg_moves: f64,
     pub best_agents: Vec<Agent>,
     pub best_agents_comp_res: Vec<u32>,
     pub best_agents_won_games: u32,
@@ -73,6 +77,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             run_game,
             mutation_rate_range,
             best_agents: Vec::new(),
+            comp_avg_moves: 0.,
             best_agents_comp_res: Vec::new(),
             best_agents_won_games: 0,
             best_agent_played_games: 0,
@@ -117,17 +122,28 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let run_game = self.run_game; // Capture the run_game function pointer from the struct
         let bar = ProgressBar::new(games as u64);
 
-        let step = (self.size as usize / games) + 1;
-        let offset = rand::thread_rng().gen_range(0..step); // Optimized random offset generation
+        let mut dist = rand::thread_rng().gen_range(1..self.size);
+        let mut previous_dists = vec![dist];
 
         // Precompute pairings outside the parallel loop to avoid mutating `self`
-        let pairings: Vec<_> = (0..games)
-            .map(|i| self.circular_pairing(i * step + offset))
-            .collect();
+        let mut pairings = Vec::with_capacity(games); // Preallocate space for efficiency
+        for _ in 0..games {
+            pairings.push(self.circular_pairing(dist as usize));
+            let dist_old = rand::thread_rng().gen_range(1..self.size);
+            dist = dist_old;
+            while !previous_dists.iter().all(|&factor| dist % self.size % factor != 0) && dist < self.size + dist_old{
+                dist += 1;
+            }
+            dist = dist % self.size;
+            previous_dists.push(dist);
+        }
 
         // Mutex for safe concurrent updates of agent fitness
         let fitness_updates = Arc::new(Mutex::new(vec![0.0; self.agents.len()]));
 
+        let mut count = AtomicUsize::new(0);
+        let mut moves_sum = AtomicU32::new(0);
+        
         // Use `rayon`'s thread pool to run games in parallel
         pairings.into_par_iter().for_each(|pairing| {
             bar.inc(1);
@@ -138,12 +154,20 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
                 // Run the game and get the results
                 let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
-                let game_res = run_game(&game, agents_slice, false, false).0;
+                let game_res = run_game(&game, agents_slice, false, MOVE_FITNESS);
 
                 // Update fitness in a critical section
                 let mut fitness_lock = fitness_updates.lock().unwrap();
-                fitness_lock[j[0]] += game_res[0] as f64;
-                fitness_lock[j[1]] += game_res[1] as f64;
+                count.fetch_add(2, Ordering::SeqCst);
+                moves_sum.fetch_add(game_res.2.iter().sum::<u32>(), Ordering::SeqCst);
+                if self.comp_avg_moves >= 0. && MOVE_FITNESS{
+                    fitness_lock[j[0]] += game_res.0[0] as f64 + 1. / (game_res.2[0].max(1) as f64).powf(2.) * self.comp_avg_moves;
+                    fitness_lock[j[1]] += game_res.0[1] as f64 + 1. / (game_res.2[1].max(1) as f64).powf(2.) * self.comp_avg_moves;
+                }
+                else {
+                    fitness_lock[j[0]] += game_res.0[0] as f64;
+                    fitness_lock[j[1]] += game_res.0[1] as f64;
+                }                
             }
         });
 
@@ -152,6 +176,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         for (i, agent) in self.agents.iter_mut().enumerate() {
             agent.fitness = fitness_lock[i];
         }
+        self.comp_avg_moves = moves_sum.load(Ordering::SeqCst) as f64 / count.load(Ordering::SeqCst) as f64;
     }
 
     //compete_best_agents() but multithreaded
@@ -248,7 +273,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             // Update the results, moves and performances safely
             let mut results_lock = results_mutex.lock().unwrap();
             results_lock[i/2] += game_res[j];
-            if i == print_agent || pairings[i].0 == best_agents_arc.len() - 1 {
+            if pairings[i].0 == print_agent || pairings[i].0 == best_agents_arc.len() - 1 {
                 let mut print_games_lock = print_games_mutex.lock().unwrap();
                 if j == 0 {
                     print_games_lock.push((self.cycle as usize, pairings[i].0, game_res_log.clone()));

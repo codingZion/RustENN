@@ -353,7 +353,7 @@ impl NeuralNetwork {
         self.nodes[node[0]][node[1]].bias = bias;
     }
     pub fn shift(value: f64) -> f64 {
-        (value + (rand::random::<f64>() * 2. - 1.).powi(2) / 2.).max(-1.).min(1.)
+        (value + rand::random::<f64>().powi(2) * if rand::random::<bool>() {-1.} else {1.}).max(-1.).min(1.)
     }
 
 
