@@ -77,6 +77,7 @@ linenos
 \usepackage{hyperref}
 \usepackage{lstmisc}
 \usepackage{holtxdoc}
+\usepackage{pgfregressiontest}
 
 \hypersetup{
     colorlinks,
@@ -342,7 +343,7 @@ contents={%
     Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
     \end{mydef}
     One scenario for EC might be for example if you have a large set of data points of an unknown polynomial function with noise and outliers.
-    If you want to find the underlying polynomial function, you could then employ Evolutionary Competition to find the best fitting parameters for such polynomial.
+    If you want to find the underlying polynomial function, you could then employ Evolutionary Computation to find the best fitting parameters for such polynomial.
     So how do you find these parameters?
     \\ \\
     You start with an initial population of agents with a random set of parameters.
@@ -361,7 +362,29 @@ contents={%
     \begin{mydef}{Genetic Algorithm}
     A Genetic Algorithm (GA) is an implementation of EC that uses a genetic representation of the parameters.
     \end{mydef}
-    Its main idea is to have genes, that only encode indirectly for the parameters, and that can be on and off.
+    Its main idea is to have genes that only encode indirectly for the parameters, and that can be on and off.
+            \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
+    We know from the previous Chapter(\ref{subsec:mutation}) that EC starts with an initial population of agents with random sets of parameters, which all have a cost determined by the cost function.
+    Agents with relatively low cost survive the round and then get replicated a few times, mutated and again selected by cost.
+    \\ \\
+    This whole process strongly resembles a ball rolling down a hill in some terrain.
+    On any given point on the terrain, de ball will roll down to the next neighboring point that is the lowest of all.
+    Now, in EC the parameters for a function can be imagined as the horizontal coordinates for the ball meanwhile the cost of these parameters is the height at their location.
+    The different mutations have parameters close to the original and can therefore be thought of as points close to the original in our terrain.
+    And as the ball rolls down to the lowest of all neighboring points in any moment, EC again chooses the set of parameters with the lowest cost every cycle.
+    This learning method is called Gradient Descent, as the algorithm evaluates all neighboring points and then follows this direction with the lowest cost and therefore steepest gradient.
+    \\ \\
+    So what does the ball example tell us about how EC learning works?
+    Imagine a hill with each a shallow and a deep valley next to it.
+    Depending on which side of the hill you place the ball in the beginning, it will roll in a different direction and end up in either of the two valleys with different height.
+    From this we can take away following things about EC learning:
+    \begin{itemize}
+        \item (Minor) differences in the starting position can result in large differences in the end position and the respective cost.
+        \item Once in reached a point with no downwards gradient, innovation halts for that agent, even if there is a lower cost point somewhere.
+        Such points are called local minima.
+    \end{itemize}
+    The impact of starting position and local minima often pose a large problem for EC applications.
+    Strategies to reduce the impact of such, are therefore essential for the Algorithms success.
 
         \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
     After having covered all the basics about NNs and EC, we can now combine those concepts to create the algorithm, that this thesis is about.
@@ -382,8 +405,6 @@ contents={%
         The old edge is removed and two new edges with random weight are added between the new node and the two other nodes each.
         \item Remove nodes/edges: A random node or edge in a way that doesn't cut off the input from the output layer.
     \end{{enumerate}}
-        \subsection{Gradient Descent}\label{subsec:gradient-descent}
-    
     \section{Drawing Inspiration from the NEAT-Apporach}\label{sec:drawing-inspiration-from-the-neat-apporach}
         As already stated in the Thesis Statement(\ref{sec:thesis-statement}), Neuroevolution of Augmenting Topologies is a ENN machine learning algorithm by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
         One of its main innovations is that the initial population starts with NNs of lowest complexity and only increase topological complexity as its useful for the problem.
@@ -474,16 +495,65 @@ contents={%
     For each mutation, it randomly selects one of the following mutations: Change weights/biases, Shift weights/biases, Add edges, Add nodes.
     All of these mutations have already been described in the last Chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
     \begin{itemize}
-        \item new layer creation details
-        \item random selection details
-        \item shift mutation details
-        \item oh actually that's kind of stupid, gotta change something
+        \item When inserting a new node between two connected nodes (mutation 4.), the inserted node will be added to a random layer in between the previously connected nodes.
+        If the previously connected nodes are in neighboring layers, we create a new layer in between for the new node.
+        %\item random selection details
+        \item The shift mutation adds to the initial value a random float in the range 0.0 to 1.0 squared with random sign:
+        $v_{new} = v_{old} + rand(-1, 1) * rand(0..1)^2$
+        \item random weighted selection
     \end{itemize}
 
-            \subsection{Natural Selection}
-            \subsection{Nim}
-            \subsection{Data Saving}
-        \section{First Findings}
+            \subsection{Evolutionary Computation}\label{subsec:natural-slection}
+    The EC process starts with an initial population of Agents with new, minimal NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in \ref{subsec:neural-network}).
+    As we already established before (see~\ref{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}), we now repeat the steps of performance evaluation, selection and mutation.
+                \subsubsection{Competition and Fitness}
+    In my case, the fitness evaluation works by letting the agents of a population compete against each other in the games.
+    However, I can't let every agent play against all other agents, since the needed time increases quadratically with population size.
+    My solution therefore is to use my circular Pairing algorithm.
+    This algorithm, I first define a number of opponents each agent needs to play against.
+    For each of those games, I generate a new distance, where I now loop through my list of agents and pair agent i with agent i + distance.
+    I also check before, that the distance isn't a multiple of any distance we had previously, since this would result in the same agents being paired twice.
+    \\ \\
+    Now, we need to evaluate the fitness of the agents with the fitness function.
+    The main idea for the fitness function is to simply count the number of wins an agents has made during the competition.
+    Of course, there are other possibilities to evaluate the performance of the agents that may represent an agents performance more accurately.
+    The reason why I still first try to use the number of wins as fitness is because it is a generally applicable function to any game.
+    Counting the number of wins doesn't require a deeper understanding of the game, which is very useful in games that are indeterministic.
+    This also enables the ENNs to find their own new strategy for the game, which is finally the goal of AI training.
+                \subsubsection{Natural Selection}
+    After the fitness evaluation, we now can test the performance of the generation (in the next section~\ref{subsec:performance-tests}) and then generate the new population.
+    The new population is made up by some portion of each of following:
+    \begin{itemize}
+        \item Agents from the last generation:
+        The main part of the new population will be drawn from agents from the old generation with high fitness.
+        This works by drawing all needed agents randomly with the probability of an agent being drawn being its fitness.
+        We can also raise the fitness to some power to either allow more or less survival of non top-performing agents.
+        \item Random agents from the last generation:
+        Some fraction of the new population is made up of randomly selected agents from the last generation, which might help counter a population with the top performing agents stuck in local minimum.
+        \item New random agents:
+        Another fraction of the new population is made up of newly generated random agents, which might help counter overly complex NNs and also local minima in a population.
+    \end{itemize}
+    Now that we have generated our new population, we can start over the whole process.
+            \subsection{Performance Tests}\label{subsec:performance-tests}
+    To see how the Agents perform in the games, we need to track some stats and games.
+    We save following data every generation after the competition phase:
+    \begin{itemize}
+        \item The fitness of the best agent: This stat shows us, how much better the best agent performs relatively to the average agent
+        \item Wins against older generation: We pair the best agent against an evenly distributed set of the best agents from past generations to track relative performance to the past.
+        As long as this number is above 50\%, we should expect improvement over older generations.
+        \item Objective grading: This stat is the performance evaluation of the best agent based on some algorithm that either plays mathematically perfect or (in non-deterministic games) is generally accepted to play well.
+        It is important to note that we primarily don't use this algorithm for the fitness function, because of the points previously mentioned in section~\ref{subsec:natural-slection}.
+        \item Number of turns: We track the average number of turns the agents needed while playing their competition games.
+        In Nim, low turn count generally means better play.
+        \item Average amount of hidden layers and nodes per hidden layer: We track these stats to see how complex the topologies of our NNs in the population are.
+        \item Best agent layer sizes and edges: We track these topological stats to see how complex the best solution is.
+        \item Best agent games: We track the whole game turn for turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from previous generations.
+        With this game logs, we can see what moves our agents make in real games and try to grasp their tactics and strategies.
+    \end{itemize}
+    For each test, we also save a file with the information about the value of all parameters of the ENN Algorithm.
+            \subsection{Nim}\label{subsec:nim2}
+    For the nim game, I implemented a few different game modes as well as objectively perfectly playing dynamic programming algorithm.
+    \section{First Findings}
             \subsection{Simple Nim}
             \subsection{Nim}
         \section{Complexification}
