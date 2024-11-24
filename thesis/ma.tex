@@ -12,6 +12,9 @@ linenos
 }
 %\usemintedstyle{trac}
 
+%table cells
+\usepackage{makecell}
+
 %chapter style
 \usepackage{titlesec}
 \titleformat{\chapter}{\normalfont\huge\textbf}{\thechapter.}{20pt}{\huge\textbf}
@@ -78,6 +81,7 @@ linenos
 \usepackage{lstmisc}
 \usepackage{holtxdoc}
 \usepackage{pgfregressiontest}
+\usepackage{hhline}
 
 \hypersetup{
     colorlinks,
@@ -425,17 +429,34 @@ contents={%
     You can read up the winning strategy for Nim on Wikipedia\footcite{nim_23}.
     The winning strategy is much more complex, which forces the ENNs to learn a more complex strategy.
     \section{Related Work}\label{sec:related-work}
+    The field of AI research in ENNs is largely studied and is often linked to games.
+    In the following table, we can find some examples of ENN models that have been tested on games:
 
+    \begin{center}
+    %\begin{tabular}{ | c | c | c | c | c | c | }
+    \begin{tabular}{ || p{8em} c c p{8em} p{5em} p{8em} || }
+        \hline
+        author(s) & year & model & game/benchmark & computation & accuracy\\
+        \hline\hline
+        Stanley, Kenneth O. and Miikkulainen, Risto\footcite{neat_02} & 2002 & NEAT & Double Pole Balancing With Velocities & \makecell{3600\\ evaluations} & 100\% \\
+        \hline
+        Banaz Anwer Qader et al.\footcite{dama_22} & 2022 & NEAT & Dama & \makecell{$>$5000 \\ generations} & 81.25\% (wins against humans)\\
+        \hline
+        Richards, Norman et al.\footcite{go_98} & 1998 & SANE & Go & \makecell{260 \\ generations} & $>$75\% vs Wally (9$*$9 board)\\
+        \hline
+
+
+    \end{tabular}
+    \end{center}
 
     \chapter{Building my ENN}\label{ch:building-my-enn}
-
 
     \section{Algorithm Design}\label{sec:algorithm-design}
     Now, we will have a detailed look at how I used the concepts described in the last Chapter(\ref{ch:introduction}) to build an Evolutionary Neural Network that plays board games.
     First, I will explain the general Structure of my Code:
         \subsection{Overview}\label{subsec:overview}
     As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), this Project is written in the Rust Programming Language.
-    If you don't understand the syntax of the code snippets, you can consult the online "The Rust Programming Language" booklet under: \url{https://doc.rust-lang.org/book/}
+    If you don't understand the syntax of the code snippets, you can consult the online \("\)The Rust Programming Language\("\) booklet under: \url{https://doc.rust-lang.org/book/}
     \\ \\
     My Codebase is divided into different modules as well as a bin folder with main files, one of which has to be selected to be executed at the beginning.
     The other modules are divided into one module with the ENN algorithm, the other modules handle the different games, the ENNs learn to play.
@@ -566,14 +587,62 @@ contents={%
     \end{itemize}
             \subsection{Nim}\label{subsec:nim-implementation}
     For the nim game, I implemented a few different game modes as well as objectively perfectly playing dynamic programming algorithm.
-    However, let's first have a look at how we encode the input and decode the output.
+    Let's first look at the general idea of how a game is played.
+                \subsubsection{General Approach}
+    Each game starts with a first game state, which is derived from the initial state parameter.
+    A game state is a list where the length is the amount of stacks in that game and each value $v_i$ stands for the amount of matches on the i-th stack.
+    Then, the competing agents take turns playing their moves.
+    In one turn, the agent whose turn it is, reads the current game state as input and then makes a prediction for its move.
+    A move indicates the stack where the matches are removed as well as the number of removed matches.
+    Then the game computes the new game state after the move or ends the game if all stacks are empty.
+
                 \subsubsection{Encoding and Decoding}
+    Our input is directly encoded into the input layer of the NNs, which means the input layer has the same size as the state.
+    The values of the input nodes are directly copied from the game state list and therefore also represent the amount of matches on the i-th stack.
+    \\ \\
+    For the output, I implemented two different ways of encoding.
+    \begin{itemize}
+        \item Direct encoding: We have two output nodes where the value for the first represents the index of the stack and the second value represents the amount of matches that are removed.
+        \item One-hot encoding: The first $N$ output nodes encode for the index and the following nodes encode for the amount of matches removed.
+        For both the nodes encoding for index and amount the node with the highest value is finally used as output.
+        The output layer therefore has length $l = N + \max(state_{initial})$, where $N$ is the amount of stacks and $\max(state_{initial})$ is the highest possible amount of matches on a stack.
+    \end{itemize}
+    Direct encoding is the more straight forward approach with lower NN topology whereas one-hot encoding ensures that the output stays in a reasonable range.
                 \subsubsection{Game Modes}
+    There are game modes \texit{Simple Nim} and \texit{Nim} with some configuration possibilities:
+    \\
+    In \texit{Nim}, each stack of the initial state can hold matches whereas in \textit{Simple Nim}, the value of all stacks but one randomly chosen stack is set to 0.
+    \\
+    The stack sizes in the initial state equal the corresponding value from the initial state list parameter except for the configuration \textit{random}, where the stack sizes of the initial state are randomly selected with the corresponding value in the initial state list parameter as upper bound.
+    \\
+    Another configuration involves the output decoding.
+    With strict grading, illegal moves lead to a game loss, whereas in safe grading, the closest legal move to the illegal prediction is played.
+                \subsubsection{Objective Grading}
+    To have an exact measure of performance, I implemented a Dynamic Programming (DP) algorithm that knows the best moves for each given state.
+    It works by first defining a base case, which in case of Nim is every stack being empty and the result a loss.
+    Then, it starts with the initial state and tries out all possible moves using recursion.
+    For each state it tries to find a move that forces the opponent into a losing position.
+    If it can find such move, the position is winning, but if all moves lead to winning position for the opponent, the algorithm returns the position with the highest minimum moves for the opponent to win.
+    It also stores the result for each already computed state, so that all other paths that lead to that position can use the precomputed result.
+    \\ \\
+    Now, that we know for all positions if they're winning, we can use this to grade moves of our agents:
+    For each move, an agent gets one point if
+    \begin{itemize}
+        \item the agent had a winning state and made a move that got the opponent into a losing state,
+    \end{itemize}
+    or if
+    \begin{itemize}
+        \item the agent had a losing state and made a move that required the maximal amount of moves for the opponent to win.
+    \end{itemize}
+    The sum of all points an agent has collected is then divided by the amount of moves it has made to get the final performance score.
 
     \section{First Findings}\label{sec:first-findings}
+    Now we can test our ENN algorithm with the games and different parameters.
+    The general approach is to start by training the ENNs on easy problems whilst observing the effect of different parameters on the result.
+    We therefore start with the game Simple Nim.
+            \subsection{Simple Nim}\label{subsec:simple-nim-results}
 
-    \subsection{Simple Nim}
-            \subsection{Nim}
+    \subsection{Nim}
         \section{Complexification}
     \chapter{Wrapping Up}
         \section{Auto Review}
