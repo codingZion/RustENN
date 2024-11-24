@@ -105,7 +105,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     pub fn circular_pairing(&mut self, distance: usize) -> Vec<[usize; 2]> {
         let mut res = Vec::new();
         for i in 0..self.size as usize {
-            res.push([i , (i + distance) % self.size as usize]);
+            res.push([i, (i + distance) % self.size as usize]);
         }
         res
     }
@@ -131,7 +131,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             pairings.push(self.circular_pairing(dist as usize));
             let dist_old = rand::thread_rng().gen_range(1..self.size);
             dist = dist_old;
-            while !previous_dists.iter().all(|&factor| dist % self.size % factor != 0) && dist < self.size + dist_old{
+            while !previous_dists.iter().all(|&factor| dist % self.size % factor != 0) && dist < self.size + dist_old {
                 dist += 1;
             }
             dist = dist % self.size;
@@ -143,7 +143,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
         let mut count = AtomicUsize::new(0);
         let mut moves_sum = AtomicU32::new(0);
-        
+
         // Use `rayon`'s thread pool to run games in parallel
         pairings.into_par_iter().for_each(|pairing| {
             bar.inc(1);
@@ -160,14 +160,13 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 let mut fitness_lock = fitness_updates.lock().unwrap();
                 count.fetch_add(2, Ordering::SeqCst);
                 moves_sum.fetch_add(game_res.2.iter().sum::<u32>(), Ordering::SeqCst);
-                if self.comp_avg_moves >= 0. && MOVE_FITNESS{
+                if self.comp_avg_moves >= 0. && MOVE_FITNESS {
                     fitness_lock[j[0]] += game_res.0[0] as f64 + 1. / (game_res.2[0].max(1) as f64).powf(2.) * self.comp_avg_moves;
                     fitness_lock[j[1]] += game_res.0[1] as f64 + 1. / (game_res.2[1].max(1) as f64).powf(2.) * self.comp_avg_moves;
-                }
-                else {
+                } else {
                     fitness_lock[j[0]] += game_res.0[0] as f64;
                     fitness_lock[j[1]] += game_res.0[1] as f64;
-                }                
+                }
             }
         });
 
@@ -183,49 +182,45 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> (Vec<u32>, Vec<(usize, usize, GameResLog)>) {
         let game_arc = Arc::new(game.clone());
         let best_agents_arc = Arc::new(self.best_agents.clone()); // Clone `self.best_agents` into the `Arc`
-        
+
         if best_agents_arc.len() == 0 {
             return (vec![], vec![]);
         }
-        
+
         let step = best_agents_arc.len() as f64 / BEST_AGENT_TOURNAMENT_MAX as f64;
         let mut count = best_agents_arc.len() as f64 % step;
-        
+
         // Prepare pairings upfront for easier parallel processing
         let mut pairings = Vec::new();
 
         println!("Pairings:");
         print!("[");
         let mut k = 0;
-        for i in 0..best_agents_arc.len() {
-            if best_agents_arc.len() < BEST_AGENT_TOURNAMENT_MAX ||
-                i == best_agents_arc.len() - 1 ||
-                count as usize == i
-            {
-                print!("{}, ", i);
-                let best_agents = Arc::clone(&best_agents_arc); // Clone the `Arc` to use inside the closure
+        while count < best_agents_arc.len() as f64 - 1. + step {
+            let i = (count as usize).min(best_agents_arc.len()- 1);
+            print!("{}, ", i);
+            let best_agents = Arc::clone(&best_agents_arc); // Clone the `Arc` to use inside the closure
 
-                for j in 0..2 {
-                    // Dereference `best_agents` and clone the required agents from the underlying Vec
-                    let mut agents = vec![agent.clone(), best_agents[i].clone()];
-                    if j == 1 {
-                        agents.reverse();
-                    }
-                    pairings.push((k, j, agents));
-                    k += 1;
+            for j in 0..2 {
+                // Dereference `best_agents` and clone the required agents from the underlying Vec
+                let mut agents = vec![agent.clone(), best_agents[i].clone()];
+                if j == 1 {
+                    agents.reverse();
                 }
-                count += step;
+                pairings.push((k, j, agents));
+                k += 1;
             }
+            count += step;
         }
         println!("]");
         
+
         let print_games_mutex = Arc::new(Mutex::new(Vec::new()));
         let mut comp_moves_mutex = Arc::new(Mutex::new(vec![0; pairings.len()]));
         let mut comp_performances_mutex = Arc::new(Mutex::new(vec![0; pairings.len()]));
         let comp_performance_sum_mutex = Arc::new(Mutex::new(0));
         let comp_moves_sum_mutex = Arc::new(Mutex::new(0));
 
-        
 
         let print_agent = rand::thread_rng().gen_range(0..pairings.len());
         let run_game = self.run_game;
@@ -272,7 +267,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
             // Update the results, moves and performances safely
             let mut results_lock = results_mutex.lock().unwrap();
-            results_lock[i/2] += game_res[j];
+            results_lock[i / 2] += game_res[j];
             if pairings[i].0 == print_agent || pairings[i].0 == best_agents_arc.len() - 1 {
                 let mut print_games_lock = print_games_mutex.lock().unwrap();
                 if j == 0 {
@@ -299,7 +294,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let print_games = print_games_mutex.lock().unwrap().clone();
         self.best_agents_comp_moves = comp_moves_mutex.lock().unwrap().clone();
         self.best_agent_performances = comp_performances_mutex.lock().unwrap().clone();
-        
+
         // Calculate the averages
         self.best_agents_comp_avg_moves = self.best_agents_comp_moves.iter().sum::<u32>() as f64 / self.best_agents_comp_moves.len() as f64;
         //self.best_agent_avg_performances = self.best_agent_performances.iter().sum::<u32>() as f64 / self.best_agent_performances.len() as f64;
@@ -319,7 +314,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 new_agents.push(best_agents[i].clone().mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize));
             }
         }
-        
+
         //add random old agent to new population
         for _ in 0..self.size / 100 * RANDOM_OLD_AGENT_SHARE {
             new_agents.push(self.agents[(rand::random::<u32>() % self.size) as usize].clone().mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize));
@@ -329,7 +324,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         for _ in 0..self.size / 100 * RANDOM_AGENT_SHARE {
             new_agents.push(Agent::new(self.inputs, self.outputs));
         }
-        
+
         //crossover and mutate new agents
         let mut agents_fitness = Vec::new();
         for agent in &self.agents {
@@ -384,24 +379,24 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
         avg_layers /= self.agents.len() as f64;
         avg_hidden_layer_size /= f64::max(avg_hidden_layers, 1.);
-        
+
         let mut best_agent_layer_sizes = "".to_owned();
         for i in self.agents[0].nn.layer_sizes.clone() {
             best_agent_layer_sizes.push_str(&format!("{},", i).to_string());
         }
-        
+
         wtr.write_record(&[
             self.total_elapsed.to_string(),
             avg_layers.to_string(),
-            avg_hidden_layer_size.to_string(), 
+            avg_hidden_layer_size.to_string(),
             self.best_agents_comp_avg_moves.to_string(),
             //best_agent_layer_sizes,
-            self.agents[0].fitness.to_string(), 
+            self.agents[0].fitness.to_string(),
             (self.best_agents_won_games as f64 / self.best_agent_played_games as f64 * 100.).to_string(),
             (self.best_agent_avg_performances * 100.).to_string()]
         )
     }
-    
+
     pub fn create_best_agent_games_txt(&self, filename: &str) {
         OpenOptions::new()
             .write(true)
@@ -416,19 +411,18 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             .append(true)
             .open(filename)
             .unwrap();
-        
+
         writeln!(file, "Generation: {}", self.cycle).unwrap();
-        writeln!(file, "Best agent layer sizes: {:?}", self.agents[0].nn.layer_sizes ).unwrap();
+        writeln!(file, "Best agent layer sizes: {:?}", self.agents[0].nn.layer_sizes).unwrap();
         for i in games {
             writeln!(file, "Agent {} vs Agent {}:", i.0, i.1).unwrap();
             for j_index in 0..i.2.1.len() {
                 let j = &i.2.1[j_index];
                 writeln!(file, "Turn: {}: state: {:?}, agent_move: {:?}", j_index, j.0, j.1).unwrap();
             }
-            writeln!(file, "Game result: {:?}", i.2 .0).unwrap();
+            writeln!(file, "Game result: {:?}", i.2.0).unwrap();
         }
         writeln!(file).unwrap();
-
     }
 
     // function that saves itself to a bincode file with serde and bincode crate
@@ -456,8 +450,8 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let res: Population<T> = bincode::deserialize_from(file).unwrap();
         Ok(res)
     }
-    
-    pub fn save_params_csv(&self, filename: &str, func_str: &str, comp_games: usize, initial_state:Vec<u32>) {
+
+    pub fn save_params_csv(&self, filename: &str, func_str: &str, comp_games: usize, initial_state: Vec<u32>) {
         let mut wtr = csv::Writer::from_path(filename).unwrap();
 
         wtr.write_record([
@@ -479,10 +473,10 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             "shift_weight_rand",
             "shift_bias_rand"
         ]).expect("CSV Writer Error!");
-        
+
         let mut initial_state_str = String::new();
         write!(initial_state_str, "{:?}", initial_state).expect("write didnt work");
-        
+
         wtr.write_record([
             func_str.to_string(),
             initial_state_str,
@@ -501,8 +495,6 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             MUTATION_TYPES[3].weight.to_string(),
             MUTATION_TYPES[4].weight.to_string(),
             MUTATION_TYPES[5].weight.to_string(),
-
         ]).expect("CSV Writer Error!")
     }
-    
 }

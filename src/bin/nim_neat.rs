@@ -1,5 +1,5 @@
 use rust_neat::neat::population::Population;
-use rust_neat::nim::nim::Nim;
+use rust_neat::nim::nim2::Nim;
 use std::thread;
 use std::time::SystemTime;
 //mute println
@@ -16,7 +16,7 @@ fn main() {
     let nim_func = Nim::run_nim_strict_random;
     let func_str = "run_nim_strict_random";
     let comp_games = 250;
-    let initial_state = vec![10];
+    let initial_state = vec![10; 2];
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats_single.csv";
     let best_agent_games_txt = "best_agent_games_single.txt";

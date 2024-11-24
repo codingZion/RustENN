@@ -178,7 +178,7 @@ impl NeuralNetwork {
             values[0][i] = input[i];
         }
         //calculate values for all nodes
-        for i in 1..self.layer_sizes.len() {
+        for i in 1..self.layer_sizes.len() - 1 {
             for j in 0..self.layer_sizes[i] {
                 let mut sum = self.nodes[i][j].bias;
                 for k in 0..self.nodes[i][j].incoming_edges.len() {
@@ -187,6 +187,15 @@ impl NeuralNetwork {
                 }
                 values[i][j] = NeuralNetwork::activation_function(sum);
             }
+        }
+        let i = self.layer_sizes.len() - 1;
+        for j in 0..self.layer_sizes[i] {
+            let mut sum = self.nodes[i][j].bias;
+            for k in 0..self.nodes[i][j].incoming_edges.len() {
+                let edge = &self.nodes[i][j].incoming_edges[k];
+                sum += edge.weight * values[edge.input[0]][edge.input[1]];
+            }
+            values[i][j] = sum;
         }
         //return output values
         let mut output = Vec::new();
