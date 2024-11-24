@@ -169,8 +169,9 @@ contents={%
     As mentioned in the previous Section, this Thesis will explore the field of Neural Networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
     The solution this Thesis will focus on are Evolutionary Neural Networks (ENNs), a combination of Neural Networks and Genetic Algorithms.
     \\ \\
-    In this Thesis, I develop my own simplified implementation ENNs and then train them on Board Games to see how well it can learn to play them using different Parameters and Features.
-    My approach draws inspiration from the NEAT Algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002, where the NNs start minimally in the first generation and then develop complexity over time.\footcite[p.105-106]{Neat_02}
+    In this Thesis, I develop my own simplified implementation ENNs and then train them on some Board Games.
+    The research effort consists of testing the ENN algorithm with different Parameters and Features to see how well it can learn to play the games in different configurations.
+    My approach also draws inspiration from the NEAT Algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002, where the NNs start minimally in the first generation and then develop complexity over time.\footcite[p.105-106]{Neat_02}
     The first game I will train the ENNs on is Nim, a simple game where two players take turns removing matches from different stacks.
     \\ \\
     In specific, this Thesis aims to answer following questions:
@@ -534,7 +535,20 @@ contents={%
         Another fraction of the new population is made up of newly generated random agents, which might help counter overly complex NNs and also local minima in a population.
     \end{itemize}
     Now that we have generated our new population, we can start over the whole process.
-            \subsection{Performance Tests}\label{subsec:performance-tests}
+            \subsection{ENN Parameters}\label{subsec:enn-parameters}
+    As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), my research involves testing my implementation with several configurations of different parameters and then evaluate their performance with the stats described in the following section(\ref{subsec:performance-tests}).
+    Here is a list of all possible parameters influencing my ENNs:
+    \begin{itemize}
+        \item General: Size of the population
+        \item Game: Initial state of the game, game function that decodes the NN prediction and executes the move on the current state
+        \item Competition: Number of opponents per agent
+        \item Selection: Fitness exponent, share of old best agents, random agents from last generation and new random agents making up the new population besides agents selected by fitness
+        \item Mutation: Min and max amount of mutations per agent, weight/probability of the different mutations
+        \item Evaluation: Number of games from the best agent against old best agents
+    \end{itemize}
+    For each test, we then save a file with the information about the value of all these parameters.
+
+    \subsection{Performance Tests}\label{subsec:performance-tests}
     To see how the Agents perform in the games, we need to track some stats and games.
     We save following data every generation after the competition phase:
     \begin{itemize}
@@ -550,11 +564,15 @@ contents={%
         \item Best agent games: We track the whole game turn for turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from previous generations.
         With this game logs, we can see what moves our agents make in real games and try to grasp their tactics and strategies.
     \end{itemize}
-    For each test, we also save a file with the information about the value of all parameters of the ENN Algorithm.
-            \subsection{Nim}\label{subsec:nim2}
+            \subsection{Nim}\label{subsec:nim-implementation}
     For the nim game, I implemented a few different game modes as well as objectively perfectly playing dynamic programming algorithm.
-    \section{First Findings}
-            \subsection{Simple Nim}
+    However, let's first have a look at how we encode the input and decode the output.
+                \subsubsection{Encoding and Decoding}
+                \subsubsection{Game Modes}
+
+    \section{First Findings}\label{sec:first-findings}
+
+    \subsection{Simple Nim}
             \subsection{Nim}
         \section{Complexification}
     \chapter{Wrapping Up}
