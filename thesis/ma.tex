@@ -433,21 +433,43 @@ contents={%
     In the following table, we can find some examples of ENN models that have been tested on games:
 
     \begin{center}
-    %\begin{tabular}{ | c | c | c | c | c | c | }
-    \begin{tabular}{ || p{8em} c c p{8em} p{5em} p{8em} || }
-        \hline
-        author(s) & year & model & game/benchmark & computation & accuracy\\
-        \hline\hline
-        Stanley, Kenneth O. and Miikkulainen, Risto\footcite{neat_02} & 2002 & NEAT & Double Pole Balancing With Velocities & \makecell{3600\\ evaluations} & 100\% \\
-        \hline
-        Banaz Anwer Qader et al.\footcite{dama_22} & 2022 & NEAT & Dama & \makecell{$>$5000 \\ generations} & 81.25\% (wins against humans)\\
-        \hline
-        Richards, Norman et al.\footcite{go_98} & 1998 & SANE & Go & \makecell{260 \\ generations} & $>$75\% vs Wally (9$*$9 board)\\
-        \hline
-
-
-    \end{tabular}
+        \hspace*{-2cm}\begin{tabular}{ || l l l l l l || }
+            \hline
+            \makecell{\textbf{Author(s)}} &
+            \makecell{\textbf{Year}} &
+            \makecell{\textbf{Model}} &
+            \makecell{\textbf{Game/Benchmark}} &
+            \makecell{\textbf{Computation}} &
+            \makecell{\textbf{Accuracy}} \\
+            \hline\hline
+            \makecell{Stanley, Kenneth O.\\and Miikkulainen, Risto\footcite{neat_02}} &
+            \makecell{2002} &
+            \makecell{NEAT} &
+            \makecell{Double Pole Balancing\\With Velocities} &
+            \makecell{3600\\evaluations} &
+            \makecell{100\%} \\
+            \hline
+            \makecell{Banaz Anwer Qader\\et al.\footcite{dama_22}} &
+            \makecell{2022} &
+            \makecell{NEAT} &
+            \makecell{Dama} &
+            \makecell{$>$5000\\generations} &
+            \makecell{81.25\%\\(wins against humans)} \\
+            \hline
+            \makecell{Richards, Norman\\et al.\footcite{go_98}} &
+            \makecell{1998} &
+            \makecell{SANE} &
+            \makecell{Go} &
+            \makecell{260\\generations} &
+            \makecell{$>$75\%\\(vs Wally, 9$\times$9 board)} \\
+            \hline
+        \end{tabular}\hspace*{-2cm}
     \end{center}
+
+
+
+    Note:
+    Although the amount of fitness evaluation is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations isn't indicated and cannot be calculated.
 
     \chapter{Building my ENN}\label{ch:building-my-enn}
 
