@@ -16,7 +16,7 @@ fn main() {
     for i in 0..test_size {
         c.push(i);
     }
-    println!("Test stack_10: {:?} ms", start.elapsed());
+    println!("Test stack_8: {:?} ms", start.elapsed());
     let start = Instant::now();
     let mut b = 0.5;
     for _ in 0..test_size {

@@ -25,7 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     // Process rows and add the index as the "generation" value
     for (i, record) in reader.records().enumerate() {
         let record = record?;
-        let mut new_row = vec![(i + 1).to_string()];
+        let mut new_row = vec![i.to_string()];
         new_row.extend(record.iter().map(String::from));
         writer.write_record(&new_row)?;
     }
