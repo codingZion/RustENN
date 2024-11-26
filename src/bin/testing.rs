@@ -9,14 +9,14 @@ fn main() {
     for _ in 0..test_size {
         a += 1;
     }
-    println!("Test 1: {:?}", start.elapsed());
+    println!("Test stacks_2x10: {:?}", start.elapsed());
     println!("a: {}", a);
     let start = Instant::now();
     let mut c = Vec::new(); 
     for i in 0..test_size {
         c.push(i);
     }
-    println!("Test 2: {:?} ms", start.elapsed());
+    println!("Test stack_10: {:?} ms", start.elapsed());
     let start = Instant::now();
     let mut b = 0.5;
     for _ in 0..test_size {

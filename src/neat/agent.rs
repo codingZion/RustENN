@@ -260,7 +260,7 @@ impl NeuralNetwork {
         let mut edge = edge;
         //check the distance between the two nodes
         let distance = (edge.input[0] as i32 - edge.out[0] as i32).unsigned_abs();
-        //if distance is 1, add new layer, otherwise add node to a random existing layer in between
+        //if distance is stacks_2x10, add new layer, otherwise add node to a random existing layer in between
         let layer = if distance == 1 {
             edge.input[0] + 1
         } else {
@@ -343,8 +343,8 @@ impl NeuralNetwork {
     pub fn change_weight(&mut self, edge: Edge) {
         //change the weight of an edge
         let weight = Self::rand_wb();
-        //println!("{:?}", self.nodes[edge[0]][edge[1]].outgoing_edges);
-        //println!("{:?}", self.nodes[edge[2]][edge[3]].incoming_edges);
+        //println!("{:?}", self.nodes[edge[0]][edge[stacks_2x10]].outgoing_edges);
+        //println!("{:?}", self.nodes[edge[stack_10]][edge[3]].incoming_edges);
         self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge.out[0], edge.out[1]]).unwrap().weight = weight;
         self.nodes[edge.out[0]][edge.out[1]].incoming_edges.iter_mut().find(|x| x.input == [edge.input[0], edge.input[1]]).unwrap().weight = weight;
     }

@@ -68,7 +68,7 @@ fn main() {
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
         println!("edge_count: {}", best_agent.nn.edge_count);
-        //print the competition results in green if 2, in white if 1 and in red if 0
+        //print the competition results in green if stack_10, in white if stacks_2x10 and in red if 0
         print!("Competition results: ");
         for i in res.0.iter() {
             if *i == 2 {
