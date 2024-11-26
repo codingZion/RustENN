@@ -20,7 +20,8 @@ pub struct NeuralNetwork {
 pub const MUTATION_TYPES:[MutationType; 6] = [
     MutationType {
         mutation: NeuralNetwork::add_connection_rand,
-        weight: 1.5,
+        //weight: 1.5,
+        weight: 1.,
     },
     MutationType {
         mutation: NeuralNetwork::add_node_rand,
@@ -28,19 +29,23 @@ pub const MUTATION_TYPES:[MutationType; 6] = [
     },
     MutationType {
         mutation: NeuralNetwork::change_weight_rand,
-        weight: 7.5,
+        //weight: 7.5,
+        weight: 1.,
     },
     MutationType {
         mutation: NeuralNetwork::change_bias_rand,
-        weight: 3.,
+        //weight: 3.,
+        weight: 1.,
     },
     MutationType {
         mutation: NeuralNetwork::shift_weight_rand,
-        weight: 40.,
+        //weight: 40.,
+        weight: 1.,
     },
     MutationType {
         mutation: NeuralNetwork::shift_bias_rand,
-        weight: 15.,
+        //weight: 15.,
+        weight: 1.,
     }];
 /*
 struct WeightMatrix {
@@ -344,7 +349,7 @@ impl NeuralNetwork {
         //change the weight of an edge
         let weight = Self::rand_wb();
         //println!("{:?}", self.nodes[edge[0]][edge[stacks_2x10]].outgoing_edges);
-        //println!("{:?}", self.nodes[edge[stack_10]][edge[3]].incoming_edges);
+        //println!("{:?}", self.nodes[edge[stack_8]][edge[3]].incoming_edges);
         self.nodes[edge.input[0]][edge.input[1]].outgoing_edges.iter_mut().find(|x| x.out == [edge.out[0], edge.out[1]]).unwrap().weight = weight;
         self.nodes[edge.out[0]][edge.out[1]].incoming_edges.iter_mut().find(|x| x.input == [edge.input[0], edge.input[1]]).unwrap().weight = weight;
     }

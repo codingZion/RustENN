@@ -14,22 +14,21 @@ use rayon::prelude::*; // For parallel iterators
 use rand::Rng;
 use std::string::String;
 use std::sync::atomic::{AtomicU32, AtomicUsize, Ordering};
-use std::time::{Instant, SystemTime};
-use csv::Trim::Fields;
+
 // For random number generation
 
 pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>);
 
-pub const MOVE_FITNESS: bool = true;
+pub const MOVE_FITNESS: bool = false;
 
 pub const FITNESS_EXP: f64 = 2.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
-pub const BEST_AGENT_SHARE: u32 = 30;
-pub const RANDOM_AGENT_SHARE: u32 = 20;
+pub const BEST_AGENT_SHARE: u32 = 15;
+pub const RANDOM_AGENT_SHARE: u32 = 15;
 
-pub const RANDOM_OLD_AGENT_SHARE: u32 = 30;
+pub const RANDOM_OLD_AGENT_SHARE: u32 = 15;
 
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -207,7 +206,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 if j == 1 {
                     agents.reverse();
                 }
-                pairings.push((k, j, agents));
+                pairings.push((k, i, j, agents));
                 k += 1;
             }
             count += step;
@@ -232,7 +231,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
 
         // Use `rayon` for parallel execution
-        pairings.clone().into_par_iter().for_each(|(i, j, agents)| {
+        pairings.clone().into_par_iter().for_each(|(k, i, j, agents)| {
             let game = Arc::clone(&game_arc);
             let results_mutex = Arc::clone(&results_mutex);
             let print_games_mutex = Arc::clone(&print_games_mutex);
@@ -242,18 +241,18 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             let comp_moves_sum_mutex = Arc::clone(&comp_moves_sum_mutex);
 
             // Decide whether to print or not
-            let game_res_log = if i == print_agent || pairings[i].0 == best_agents_arc.len() - 1 {
+            let game_res_log = if k == print_agent || i == best_agents_arc.len() - 1 {
                 let agents_ref = vec![&agents[0], &agents[1]];
                 let mut str = String::new();
                 if j == 0 {
-                    writeln!(&mut str, "best_agent vs agent: {}", pairings[i].0).unwrap();
+                    writeln!(&mut str, "best_agent vs agent: {}", i).unwrap();
                 } else {
-                    writeln!(&mut str, "agent: {} vs best_agent", pairings[i].0).unwrap();
+                    writeln!(&mut str, "agent: {} vs best_agent", i).unwrap();
                 }
                 let res = run_game(&game, agents_ref, true, true);
-                for i in 0..res.1.len() {
-                    let (state, agent_move) = res.1[i].clone();
-                    writeln!(&mut str, "Turn {}: state: {:?}, agent_move: {:?}", i, state, agent_move).unwrap();
+                for h in 0..res.1.len() {
+                    let (state, agent_move) = res.1[h].clone();
+                    writeln!(&mut str, "Turn {}: state: {:?}, agent_move: {:?}", h, state, agent_move).unwrap();
                 }
                 writeln!(&mut str, "game_res: {:?}", res.0).unwrap();
                 println!("{}", str);
@@ -267,19 +266,19 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
             // Update the results, moves and performances safely
             let mut results_lock = results_mutex.lock().unwrap();
-            results_lock[i / 2] += game_res[j];
-            if pairings[i].0 == print_agent || pairings[i].0 == best_agents_arc.len() - 1 {
+            results_lock[k / 2] += game_res[j];
+            if k == print_agent || i == best_agents_arc.len() - 1 {
                 let mut print_games_lock = print_games_mutex.lock().unwrap();
                 if j == 0 {
-                    print_games_lock.push((self.cycle as usize, pairings[i].0, game_res_log.clone()));
+                    print_games_lock.push((self.cycle as usize, i, game_res_log.clone()));
                 } else {
-                    print_games_lock.push((pairings[i].0, self.cycle as usize, game_res_log.clone()));
+                    print_games_lock.push((i, self.cycle as usize, game_res_log.clone()));
                 }
             }
             let mut comp_moves_lock = comp_moves_mutex.lock().unwrap();
-            comp_moves_lock[i] = game_res_log.2.iter().sum::<u32>();
+            comp_moves_lock[k] = game_res_log.2.iter().sum::<u32>();
             let mut comp_performances_lock = comp_performances_mutex.lock().unwrap();
-            comp_performances_lock[i] = game_res_log.3[j] / game_res_log.2[j].max(1);
+            comp_performances_lock[k] = game_res_log.3[j] / game_res_log.2[j].max(1);
             let mut comp_performance_sum_lock = comp_performance_sum_mutex.lock().unwrap();
             *comp_performance_sum_lock += game_res_log.3[j];
             let mut comp_moves_sum_lock = comp_moves_sum_mutex.lock().unwrap();

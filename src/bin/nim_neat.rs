@@ -14,12 +14,12 @@ const USE_BIN: bool = false;
 
 fn main() {
     let nim_func = Nim::run_nim_strict_random;
-    let func_str = "run_nim_strict_random";
-    let comp_games = 250;
-    let initial_state = vec![10; 2];
+    let func_str = "run_nim2_strict_random";
+    let comp_games = 50;
+    let initial_state = vec![8];
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
-    let stats_csv = "stats_single.csv";
-    let best_agent_games_txt = "best_agent_games_single.txt";
+    let stats_csv = "stats.csv";
+    let best_agent_games_txt = "best_agent_games.txt";
     let params_csv = "params.csv";
     let nim_config = Nim::new(initial_state.clone());
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
@@ -29,7 +29,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population("population.bin").unwrap()
     } else {
-        Population::new(2500, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
+        Population::new(100, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
@@ -43,7 +43,7 @@ fn main() {
 
     population.save_params_csv(params_csv, func_str, comp_games, initial_state.clone());
 
-    for _ in 0..1000000 {
+    for _ in 0..1000 {
         //let mut population = Population::load_population("population.bin").unwrap();
         //population.run_game = Nim::run_nim_strict;
         
@@ -68,7 +68,7 @@ fn main() {
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
         println!("edge_count: {}", best_agent.nn.edge_count);
-        //print the competition results in green if stack_10, in white if stacks_2x10 and in red if 0
+        //print the competition results in green if stack_8, in white if stacks_2x10 and in red if 0
         print!("Competition results: ");
         for i in res.0.iter() {
             if *i == 2 {
