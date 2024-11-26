@@ -432,39 +432,49 @@ contents={%
     The field of AI research in ENNs is largely studied and is often linked to games.
     In the following table, we can find some examples of ENN models that have been tested on games:
 
+    \footnotesize
     \begin{center}
-        \hspace*{-2cm}\begin{tabular}{ || l l l l l l || }
-            \hline
-            \makecell{\textbf{Author(s)}} &
-            \makecell{\textbf{Year}} &
-            \makecell{\textbf{Model}} &
-            \makecell{\textbf{Game/Benchmark}} &
-            \makecell{\textbf{Computation}} &
-            \makecell{\textbf{Accuracy}} \\
-            \hline\hline
-            \makecell{Stanley, Kenneth O.\\and Miikkulainen, Risto\footcite{neat_02}} &
-            \makecell{2002} &
-            \makecell{NEAT} &
-            \makecell{Double Pole Balancing\\With Velocities} &
-            \makecell{3600\\evaluations} &
-            \makecell{100\%} \\
-            \hline
-            \makecell{Banaz Anwer Qader\\et al.\footcite{dama_22}} &
-            \makecell{2022} &
-            \makecell{NEAT} &
-            \makecell{Dama} &
-            \makecell{$>$5000\\generations} &
-            \makecell{81.25\%\\(wins against humans)} \\
-            \hline
-            \makecell{Richards, Norman\\et al.\footcite{go_98}} &
-            \makecell{1998} &
-            \makecell{SANE} &
-            \makecell{Go} &
-            \makecell{260\\generations} &
-            \makecell{$>$75\%\\(vs Wally, 9$\times$9 board)} \\
-            \hline
+        \hspace*{-2cm}\begin{tabular}{|| l l l l l ||}
+          \hline
+          \makecell{\textbf{Author(s) \& Year}} &
+          \makecell{\textbf{Model}} &
+          \makecell{\textbf{Game/Benchmark}} &
+          \makecell{\textbf{Computation}} &
+          \makecell{\textbf{Accuracy}} \\
+          \hline\hline
+          \makecell{\cite{Neat_02}} &
+          \makecell{NEAT} &
+          \makecell{Double Pole Balancing\\With Velocities} &
+          \makecell{3600\\evaluations} &
+          \makecell{100\%} \\
+          \hline
+          \makecell{\cite{dama_22}} &
+          \makecell{NEAT} &
+          \makecell{Dama} &
+          \makecell{$>$5000\\generations} &
+          \makecell{81.25\%\\(wins against humans)} \\
+          \hline
+          \makecell{\cite{go_98}} &
+          \makecell{SANE} &
+          \makecell{Go} &
+          \makecell{260\\generations} &
+          \makecell{$>$75\%\\(vs Wally, 9$\times$9 board)} \\
+          \hline
+          \makecell{\cite{capture_02}} &
+          \makecell{Custom\\ENN} &
+          \makecell{Capture Game\\(subgame of Go)} &
+          \makecell{100+\\generations\\(distributed)} &
+          \makecell{No significant\\progress yet} \\
+          \hline
+          \makecell{\cite{backgammon_07}} &
+          \makecell{Genetic\\ENN} &
+          \makecell{Backgammon} &
+          \makecell{256 pop,\\100–200\\generations} &
+          \makecell{62.4\%\\(vs Pubeval)} \\
+          \hline
         \end{tabular}\hspace*{-2cm}
     \end{center}
+    \normalsize
 
 
 

@@ -353,7 +353,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             Err(err) => return Err(Box::new(err)),
         };
 
-        match wtr.write_record(["time", "avg_layers", "avg_hidden_layer_size", "avg_moves", /*"best_agent_layer_sizes",*/ "best_agent_fitness", "best_agent_wins_percentage", "best_agent_avg_performance"]) {
+        match wtr.write_record(["generation", "time", "avg_layers", "avg_hidden_layer_size", "avg_moves", /*"best_agent_layer_sizes",*/ "best_agent_fitness", "best_agent_wins_percentage", "best_agent_avg_performance"]) {
             Ok(_) => Ok(()),
             Err(err) => Err(Box::new(err)),
         }
@@ -386,6 +386,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
 
         wtr.write_record(&[
+            self.cycle.to_string(),
             self.total_elapsed.to_string(),
             avg_layers.to_string(),
             avg_hidden_layer_size.to_string(),
