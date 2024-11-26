@@ -26,6 +26,9 @@ linenos
 \usepgfplotslibrary{external}
 \tikzexternalize
 
+%CSV files
+\usepackage{filecontents}
+
 %Definitions
 \usepackage{amsthm}
 \usepackage{mdframed}
@@ -672,10 +675,334 @@ contents={%
     Now we can test our ENN algorithm with the games and different parameters.
     The general approach is to start by training the ENNs on easy problems whilst observing the effect of different parameters on the result.
     We therefore start with the game Simple Nim.
+    I will walk you through my tests and provide the most important information.
+    You can gain insight into the full data about parameters and results on my GitHub.
             \subsection{Simple Nim}\label{subsec:simple-nim-results}
-    The easiest Simple Nim problem that still is a problem is a single stack with three matches.
+                \subsubsection{Stack: 3, Test 1}
+    First we test the ENNs on a problem where the only stack contains 2 matches.
+    This is the easiest problem we can still consider a game - with one match per stack the only one legal move, so it doesn't involve any decision-making.
+    The winning strategy of course is to only take one match and leave the opponent with only one match on the stack.
+    We start our first test with a relatively small population of 100 agents and try to simplify all other parameters:
+    \\
+    \texttt{run\_nim\_strict}, initial state: \texttt{[2]}, population size: \texttt{100}, comp games: \texttt{50}, mutation min: \texttt{0}, mutation max: \texttt{1}, fitness exponent: \texttt{1}, best agent share:
+    \texttt{0}, random agent share: \texttt{0}, random old agent share: \texttt{0}, best agent tournament games: \texttt{50}, add\_connection\_rand: \texttt{1}, add\_node\_rand: \texttt{1}, change\_weight\_rand: \texttt{1}, change\_bias\_rand: \texttt{1}, shift\_weight\_rand: \texttt{1}, shift\_bias\_rand: \texttt{1}
+    It is also important to note that we start with one-hot output encoding, since this means that the output stays in the desired range.
+    \\ \\
+    Now, we'll run it and see how it goes:
+    \\
+    \newcommand{\csvpath}{../data/simple_nim/stack_2/t_1/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=49,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 10,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_1_t_1}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
 
-    \subsection{Nim}
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+
+    As we can see, the best agent already plays the game perfectly after one generation.
+    We can also observe this in our saved games, where the best agent correctly plays the move [0, 1] (first value is the stack, second value the number of matches removed):
+    \begin{minted}{}
+    Generation: 1
+    Best agent layer sizes: [1, 3]
+    Agent 1 vs Agent 0:
+    Turn: 0: state: [2], agent_move: [0, 1]
+    Turn: 1: state: [1], agent_move: [0, 2]
+    Game result: [1, 0]
+    \end{minted}
+    The best agent wins percentage in the above plot(\ref{fig:sn_stack_1_t_1}) is a steady 50\%, since all games are played both ways and the first agent always wins the game.
+    We can also see, on line 2 of our output, that the topology didn't evolve for our best agent, which makes sense since it is a very simple task.
+            \subsubsection{Stack: 8, Test 1}
+    Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8.
+    Let's see if our ENNs found the winning move:
+    \\
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=1000,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8_t_1}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    The ENNs were again able to find the right moves but surprisingly, it took almost 1000 generations to reach that consistency.
+    This is remarkable, since all the NN has to do is to always output [0, 7], where the first parameter is set anyways and it only has to get a hang of the 7.
+    In a sample of 100 agents, we would expect there to be an agent that outputs the correct prediction.
+                \subsubsection{Stack 8, Test 2}
+    To fix the long learning process, we will now try to give better performing agents higher chance of reproduction.
+    We can do this by increasing the fitness exponent from 1 to 2.
+    Let's see how the ENNs do:
+    \\
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_2/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=1000,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8_t_2}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    The best agent average performance stalls very quickly at 50\%, which is much worse than the expected 100\%.
+    A quick look at the game output shows what happened:
+    \begin{minted}{}
+    Generation: 997
+    Best agent layer sizes: [1, 9]
+    Agent 99 vs Agent 997:
+    Turn: 0: state: [8], agent_move: [0, 5]
+    Turn: 1: state: [3], agent_move: [0, 2]
+    Turn: 2: state: [1], agent_move: [0, 2]
+    Game result: [0, 1]
+    \end{minted}
+    The best agent seems to have got stuck in a local minimum where the agents play the move [0, 5] when the stack size is 7.
+    This might have originated in an early generation, where an agent with this move pattern and large fitness, which was amplified by the fitness exponent, took over the whole population.
+    Fortunately, we have some strategies ready to use, which lower the risk of local minima.
+    It is also important to note that the other two times I repeated the experiment, the ENN once learned the right move as quickly as in the first test and the other time learned it even faster.
+                \subsubsection{Stack: 8, Test 3}
+    One way to combat the problem of local minima, is to base the composition of new generations not only on old agents with great performance, but also on new random agents, old best agents, and random agents from the previous generation.
+    We will set the share for each of those to 15\%.
+    \\
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_3/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=1000,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8_t_3}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    Et voilà!
+    The ENNs now learned the game in less than 30 generations.
+    An interesting to note is that we get a spike down to 50\% twice.
+    These might be due to a bad agent being successful during evaluation since it randomly got paired with other bad agents.
+                \subsubsection{Stack: 1--8, Test 1}
+    Now, we'll try the same configuration but with a random amount of matches between 1 and 8 on the stack with in the initial state.
+    The winning strategy would be, to always play the amount of matches on the stack minus one, which forces the opponent to take the last match from the stack.
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=1000,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8r_t_1}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    Now, the performance stalls somewhere above 60\%, which isn't optimal.
+    Again, a look at the games themselves helps us understand what happened:
+    \begin{minted}{}
+    Generation: 4
+    Best agent layer sizes: [1, 9]
+    Agent 1 vs Agent 4:
+    Turn: 0: state: [5], agent_move: [0, 1]
+    Turn: 1: state: [4], agent_move: [0, 1]
+    Turn: 2: state: [3], agent_move: [0, 1]
+    Turn: 3: state: [2], agent_move: [0, 1]
+    Turn: 4: state: [1], agent_move: [0, 8]
+    \end{minted}
+    In the 4th generation the NNs learned a first strategy, which was to always subtract one match from the stack.
+    This strategy works optimally in early populations, since it has generally a better chance of winning against agents that always subtract more matches per move.
+    However, this wasn't the final stage for the agents as we can see in generation 993:
+    \begin{minted}{}
+    Agent 993 vs agent: 992
+    Turn 0: state: [8], agent_move: [0, 2]
+    Turn 1: state: [6], agent_move: [0, 2]
+    Turn 2: state: [4], agent_move: [0, 2]
+    Turn 3: state: [2], agent_move: [0, 1]
+    Turn 4: state: [1], agent_move: [0, 1]
+    game_res: [0, 1]
+    \end{minted}
+    The agents now learned to subtract either one or two matches from the stack.
+    Of course, this is still suboptimal and in that case, the local minimum seems to persist.
+    I tried to run the algorithm for more generations, and played with other parameters but the NNs never learn to adapt to predicting moves with more than 2 matches subtracted.
+    Only after I changed the output encoding, did the things start to change.
+                \subsubsection{Stack 1--8, Test 2}
+    We run the same configuration, only that use direct encoding instead of one-hot encoding for the output:
+    \\
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_2/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=1000,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8r_t_2}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    The ENNs did indeed learn to play the correct moves, which we can verify in the game logs:
+    \begin{minted}{}
+    agent: 997 vs best_agent
+    Turn 0: state: [6], agent_move: [0, 5]
+    Turn 1: state: [1], agent_move: [0, 1]
+    game_res: [1, 0]
+    \end{minted}
+    So why did this change affect the result that heavily?
+    If we look at the NN structure we had a single output neuron for each possible amount of matches we can subtract in one-hot encoding.
+    During the evolution process, the connections to the neurons for output 1 and 2 got stronger than the other ones since it lead to a competitive advantage.
+    This unfortunately also meant, that the NN was practically unable to adapt to activate the other output neurons.
+    In fact, this behaviour would have been entirely predictable, since there is no mathematical way to model an NN that solves this problem with one-hot encoding except for NNs with large amount of hidden nodes.
+    Yet NNs with large amount of hidden nodes are unlikely to develop with my ENNs since they don't show a competitive advantage instantly.
+            \subsection{Nim}
+    We now already have gained a lot of insight about the functioning of ENNs and are therefore ready for the normal version of Nim.
         \section{Complexification}
     \chapter{Wrapping Up}
         \section{Auto Review}
