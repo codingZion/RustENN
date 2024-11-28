@@ -678,7 +678,7 @@ contents={%
     I will walk you through my tests and provide the most important information.
     You can gain insight into the full data about parameters and results on my GitHub.
             \subsection{Simple Nim}\label{subsec:simple-nim-results}
-                \subsubsection{Stack: 3, Test 1}
+                \subsubsection{Stack: 3, Configuration 1}
     First we test the ENNs on a problem where the only stack contains 2 matches.
     This is the easiest problem we can still consider a game - with one match per stack the only one legal move, so it doesn't involve any decision-making.
     The winning strategy of course is to only take one match and leave the opponent with only one match on the stack.
@@ -739,7 +739,7 @@ contents={%
     \end{minted}
     The best agent wins percentage in the above plot(\ref{fig:sn_stack_1_t_1}) is a steady 50\%, since all games are played both ways and the first agent always wins the game.
     We can also see, on line 2 of our output, that the topology didn't evolve for our best agent, which makes sense since it is a very simple task.
-            \subsubsection{Stack: 8, Test 1}
+            \subsubsection{Stack: 8, Configuration 1}
     Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8.
     Let's see if our ENNs found the winning move:
     \\
@@ -782,7 +782,7 @@ contents={%
     The ENNs were again able to find the right moves but surprisingly, it took almost 1000 generations to reach that consistency.
     This is remarkable, since all the NN has to do is to always output [0, 7], where the first parameter is set anyways and it only has to get a hang of the 7.
     In a sample of 100 agents, we would expect there to be an agent that outputs the correct prediction.
-                \subsubsection{Stack 8, Test 2}
+                \subsubsection{Stack 8, Configuration 2}
     To fix the long learning process, we will now try to give better performing agents higher chance of reproduction.
     We can do this by increasing the fitness exponent from 1 to 2.
     Let's see how the ENNs do:
@@ -838,7 +838,7 @@ contents={%
     This might have originated in an early generation, where an agent with this move pattern and large fitness, which was amplified by the fitness exponent, took over the whole population.
     Fortunately, we have some strategies ready to use, which lower the risk of local minima.
     It is also important to note that the other two times I repeated the experiment, the ENN once learned the right move as quickly as in the first test and the other time learned it even faster.
-                \subsubsection{Stack: 8, Test 3}
+                \subsubsection{Stack: 8, Configuration 3}
     One way to combat the problem of local minima, is to base the composition of new generations not only on old agents with great performance, but also on new random agents, old best agents, and random agents from the previous generation.
     We will set the share for each of those to 15\%.
     \\
@@ -882,7 +882,7 @@ contents={%
     The ENNs now learned the game in less than 30 generations.
     An interesting to note is that we get a spike down to 50\% twice.
     These might be due to a bad agent being successful during evaluation since it randomly got paired with other bad agents.
-                \subsubsection{Stack: 1--8, Test 1}
+                \subsubsection{Stack: 1--8, Configuration 1}
     Now, we'll try the same configuration but with a random amount of matches between 1 and 8 on the stack with in the initial state.
     The winning strategy would be, to always play the amount of matches on the stack minus one, which forces the opponent to take the last match from the stack.
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1/stats.csv} % Rename the macro
@@ -949,7 +949,7 @@ contents={%
     Of course, this is still suboptimal and in that case, the local minimum seems to persist.
     I tried to run the algorithm for more generations, and played with other parameters but the NNs never learn to adapt to predicting moves with more than 2 matches subtracted.
     Only after I changed the output encoding, did the things start to change.
-                \subsubsection{Stack 1--8, Test 2}
+                \subsubsection{Stack 1--8, Configuration 2}
     We run the same configuration, only that use direct encoding instead of one-hot encoding for the output:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_2/stats.csv} % Rename the macro
