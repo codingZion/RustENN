@@ -22,12 +22,16 @@ linenos
 
 %Graphs
 \usepackage{pgfplots}
+\usepackage{subcaption} % For subfigures
 \pgfplotsset{width=15cm,height=7.5cm,compat=1.9}
 \usepgfplotslibrary{external}
 \tikzexternalize
 
 %CSV files
 \usepackage{filecontents}
+
+% For adjusting margins locally
+\usepackage{changepage}
 
 %Definitions
 \usepackage{amsthm}
@@ -75,6 +79,9 @@ linenos
     bottom=30mm,
 %    total={6in, 8in}
 }
+% To adjust figure placement
+\usepackage{adjustbox}
+
 
 %Background image
 \usepackage[pages=some]{background}
@@ -742,35 +749,44 @@ contents={%
     We can also see, on line 2 of our output, that the topology didn't evolve for our best agent, which makes sense since it is a very simple task.
             \subsubsection{Stack: 8, Configuration 1}
     Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8.
-    Let's see if our ENNs found the winning move:
+    In this configuration, my four tests produced following results:
     \\
-    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
-    \begin{center}
+
+
+
+
+
+
+
+\begin{figure}[htbp!]
+
+    \centering
+    \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
+    % First graph
+    \begin{adjustbox}{valign=c,margin=-3cm 0pt 0pt 0pt} % Shift content left by 2cm
+           \begin{minipage}{1.1\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
         \begin{tikzpicture}
-            \begin{axis} [
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
+            \begin{axis}[
+                title={Test 1},
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                xmin=0, xmax=1000,
+                ymin=0, ymax=150,
                 no markers,
                 xtick distance = 200,
                 ytick distance = 25,
-                legend pos=north west, % Adjust legend position
+                legend pos=north west,
                 xlabel={Generation},
                 ylabel={Performance},
             ]
-                \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8_t_1}
-                % First plot
                 \addplot table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
-
-                % Second plot
+                \addlegendentry{Best agent performance \%}
                 \addplot table [
                 x=generation,
                 y=best_agent_wins_percentage,
@@ -779,7 +795,123 @@ contents={%
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
-    \end{center}
+    \end{subfigure}
+    \hfill
+    % Second graph
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.1/stats.csv} % Rename the macro
+
+        \begin{tikzpicture}
+            \begin{axis}[
+                title={Test 2},
+                grid=both,
+                xmin=0, xmax=1000,
+                ymin=0, ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west,
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{Best agent performance \%}
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}
+
+    \vspace{1em}
+
+    % Third graph
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.2/stats.csv} % Rename the macro
+
+            \begin{axis}[
+                title={Test 3},
+                grid=both,
+                xmin=0, xmax=1000,
+                ymin=0, ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west,
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{Best agent performance \%}
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}
+    \hfill
+    % Fourth graph
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \begin{tikzpicture}
+            \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.3/stats.csv} % Rename the macro
+
+            \begin{axis}[
+                title={Test 4},
+                grid=both,
+                xmin=0, xmax=1000,
+                ymin=0, ymax=150,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 25,
+                legend pos=north west,
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{Best agent performance \%}
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{subfigure}
+    \caption{Performance metrics over generations in a 2x2 grid.}
+    \label{fig:performance_metrics}
+
+\end{minipage}
+    \end{adjustbox}
+
+\end{figure}
+
+\setlength{\oddsidemargin}{0pt} % Reset to default
+\setlength{\textwidth}{15.5cm} % Reset to default
+
+
     The ENNs were again able to find the right moves but surprisingly, it took almost 1000 generations to reach that consistency.
     This is remarkable, since all the NN has to do is to always output [0, 7], where the first parameter is set anyways and it only has to get a hang of the 7.
     In a sample of 100 agents, we would expect there to be an agent that outputs the correct prediction.
