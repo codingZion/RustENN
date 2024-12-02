@@ -13,10 +13,10 @@ macro_rules! println {
 const USE_BIN: bool = false;
 
 fn main() {
-    let nim_func = Nim::run_nim_strict;
-    let func_str = "run_nim_strict";
+    let nim_func = Nim::run_nim_strict_random;
+    let func_str = "run_nim_strict_random";
     let comp_games = 50;
-    let initial_state = vec![2];
+    let initial_state = vec![8];
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats.csv";
     let best_agent_games_txt = "best_agent_games.txt";

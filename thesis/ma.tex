@@ -751,13 +751,6 @@ contents={%
     Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8.
     In this configuration, my four tests produced following results:
     \\
-
-
-
-
-
-
-
 \begin{figure}[htbp!]
 
     \centering
@@ -911,12 +904,72 @@ contents={%
 \setlength{\oddsidemargin}{0pt} % Reset to default
 \setlength{\textwidth}{15.5cm} % Reset to default
 
-
-    The ENNs were again able to find the right moves but surprisingly, it took almost 1000 generations to reach that consistency.
-    This is remarkable, since all the NN has to do is to always output [0, 7], where the first parameter is set anyways and it only has to get a hang of the 7.
+    In only one of four tests did the ENNs learn how to play the correct move and this also only after over 100 generations.
+    The other tests ended in the best agent performance settling on 25\%.
+    If we look at the games the NNs played, we also see how we get to this number:
+    \begin{minted}{}
+    Agent 999 vs Agent 998:
+    Turn: 0: state: [8], agent_move: [0, 1]
+    Turn: 1: state: [7], agent_move: [0, 1]
+    Turn: 2: state: [6], agent_move: [0, 1]
+    Turn: 3: state: [5], agent_move: [0, 1]
+    Turn: 4: state: [4], agent_move: [0, 1]
+    Turn: 5: state: [3], agent_move: [0, 1]
+    Turn: 6: state: [2], agent_move: [0, 1]
+    Turn: 7: state: [1], agent_move: [0, 1]
+    \end{minted}
+    Out of 8 moves, only the last two moves are perfect.
+    Such performance is remarkably bad since all the NN has to do is to always output [0, 7], where the first parameter is set anyway, and it only has to get a hang of the 7.
     In a sample of 100 agents, we would expect there to be an agent that outputs the correct prediction.
-                \subsubsection{Stack 8, Configuration 2}
-    To fix the long learning process, we will now try to give better performing agents higher chance of reproduction.
+    All of this seems contradicting, especially if we consider that the NNs were able to find the right move with 2 matches instantly.
+    However, there is one important detail to consider in this test:
+    If the starting agent doesn't play perfectly in the first move (it subtracts fewer than 7 matches), the second agent instantly gains a winning position and would have to play the move N-1 matches.
+    Therefore, we either get lucky and end up with an entire population of agents that always subtract 7 matches, or you need agents that are adapted to all cases.
+    Our final goal is to train the NNs to be like the latter option whereas the former solution seems more like a local minimum which is therefore undesirable.
+    We will now change the stack to have a variable amount of matches, since this simplification turned out to be a hindrance.
+    \subsubsection{Stack 1--8, Configuration 1}
+    We will repeat the previous test but with a variable amount of matches between 1 and 8:
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1.1/stats.csv} % Rename the macro
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis} [
+                grid=both,
+                xmin=0,
+                xmax=49,
+                ymin=0,
+                ymax=150,
+                no markers,
+                xtick distance = 10,
+                ytick distance = 25,
+                legend pos=north west, % Adjust legend position
+                xlabel={Generation},
+                ylabel={Performance},
+            ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8r_t_1.1}
+                % First plot
+                \addplot table [
+                x=generation,
+                y=best_agent_avg_performance,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+
+                % Second plot
+                \addplot table [
+                x=generation,
+                y=best_agent_wins_percentage,
+                col sep=comma,
+                ] {\csvpath};
+                \addlegendentry{\( \text{Best agent wins \%} \)}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
+    
+    In all tests, the NNs got stuck in a local minimum
+    
+    \subsubsection{Stack 8, Configuration 2}
+    To eliminate agents , we will now try to give better performing agents higher chance of reproduction.
     We can do this by increasing the fitness exponent from 1 to 2.
     Let's see how the ENNs do:
     \\
@@ -956,7 +1009,7 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    The best agent average performance stalls very quickly at 50\%, which is much worse than the expected 100\%.
+    The best agent average performance stalls again at 25\%, which means nothing has changed to before.
     A quick look at the game output shows what happened:
     \begin{minted}{}
     Generation: 997
