@@ -756,7 +756,7 @@ contents={%
     \centering
     \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
     % First graph
-    \begin{adjustbox}{valign=c,margin=-3cm 0pt 0pt 0pt} % Shift content left by 2cm
+    \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
            \begin{minipage}{1.1\textwidth}
     \begin{subfigure}[b]{0.45\textwidth}
         \centering
@@ -901,8 +901,6 @@ contents={%
 
 \end{figure}
 
-\setlength{\oddsidemargin}{0pt} % Reset to default
-\setlength{\textwidth}{15.5cm} % Reset to default
 
     In only one of four tests did the ENNs learn how to play the correct move and this also only after over 100 generations.
     The other tests ended in the best agent performance settling on 25\%.
@@ -966,176 +964,189 @@ contents={%
         \end{tikzpicture}
     \end{center}
     
-    In all tests, the NNs got stuck in a local minimum
+    In all tests, the NNs got stuck in a local minimum, where the NN only played the move where it subtracts one match, except for test 2, where it was also able to remove 4 matches:
+    \begin{minted}{}
+    Agent 999 vs Agent 998:
+    Turn: 0: state: [7], agent_move: [0, 4]
+    Turn: 1: state: [3], agent_move: [0, 1]
+    Turn: 2: state: [2], agent_move: [0, 1]
+    Turn: 3: state: [1], agent_move: [0, 1]
+    \end{minted}
+    In any case, the NNs have got stuck in a local minimum.
+    Such local minima originate in an early generations, where the agents that always subtracted one match were the most successful since it is the best strategy for undeveloped NNs that only play one move.
+    After reaching that local minimum, there wasn't a competitor that could assert itself, either because of a flaw in the selection process or because none were created in first place.
+    We will therefore try to modify some parameters and look if they can help overcoming that problem.
     
-    \subsubsection{Stack 8, Configuration 2}
-    To eliminate agents , we will now try to give better performing agents higher chance of reproduction.
-    We can do this by increasing the fitness exponent from 1 to 2.
-    Let's see how the ENNs do:
-    \\
-    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_2/stats.csv} % Rename the macro
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{axis} [
-                grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8_t_2}
-                % First plot
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+    \subsubsection{Stack 1--8, Configuration 2--5}
+    To overcome local minima, we can use following strategies:
+    \begin{itemize}
+        \item \textbf{Fitness Exponent:} Increasing the fitness exponent to \textit{ex.} 2 might help successful mutations reproduce better and therefore overcome a large population of similar NNs.
+        \item \textbf{Population Composition:} We can add other kinds of agents to the new population like best agents from older generations, randomly selected agents from the last generation, or newly generated random agents.
+        This might help the development of new and possibly more complex strategies without the need for instant return in performance.
+        \item \textbf{Population Size:} A larger population means more agents with different strategies can exist, evolve and finally help overcoming local minima.
+    \end{itemize}
+    We now test the effect of these parameters with following 4 configurations:
+    \begin{enumerate}
+        \item Fitness exponent set to 2
+        \item Old best agents, random agents, and new agents each make up 15\% of the population
+        \item Population size set to 10000
+        \item All parameters combined
+    \end{enumerate}
+    \begin{figure}[htbp!]
 
-                % Second plot
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{center}
-    The best agent average performance stalls again at 25\%, which means nothing has changed to before.
-    A quick look at the game output shows what happened:
-    \begin{minted}{}
-    Generation: 997
-    Best agent layer sizes: [1, 9]
-    Agent 99 vs Agent 997:
-    Turn: 0: state: [8], agent_move: [0, 5]
-    Turn: 1: state: [3], agent_move: [0, 2]
-    Turn: 2: state: [1], agent_move: [0, 2]
-    Game result: [0, 1]
-    \end{minted}
-    The best agent seems to have got stuck in a local minimum where the agents play the move [0, 5] when the stack size is 7.
-    This might have originated in an early generation, where an agent with this move pattern and large fitness, which was amplified by the fitness exponent, took over the whole population.
-    Fortunately, we have some strategies ready to use, which lower the risk of local minima.
-    It is also important to note that the other two times I repeated the experiment, the ENN once learned the right move as quickly as in the first test and the other time learned it even faster.
-                \subsubsection{Stack: 8, Configuration 3}
-    One way to combat the problem of local minima, is to base the composition of new generations not only on old agents with great performance, but also on new random agents, old best agents, and random agents from the previous generation.
-    We will set the share for each of those to 15\%.
-    \\
-    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_3/stats.csv} % Rename the macro
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{axis} [
-                grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8_t_3}
-                % First plot
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+        \centering
+        \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
+        % First graph
+        \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
+            \begin{minipage}{1.1\textwidth}
+                \begin{subfigure}[b]{0.45\textwidth}
+                    \centering
+                    \begin{tikzpicture}
+                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
+                        \begin{axis}[
+                            title={Fitness exponent: 2},
+                            grid=both,
+                            xmin=0, xmax=1000,
+                            ymin=0, ymax=150,
+                            no markers,
+                            xtick distance = 200,
+                            ytick distance = 25,
+                            legend pos=north west,
+                            xlabel={Generation},
+                            ylabel={Performance},
+                        ]
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_avg_performance,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Best agent performance \%}
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_wins_percentage,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{\( \text{Best agent wins \%} \)}
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{subfigure}
+                \hfill
+                % Second graph
+                \begin{subfigure}[b]{0.45\textwidth}
+                    \centering
+                    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.1/stats.csv} % Rename the macro
 
-                % Second plot
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{center}
-    Et voilà!
-    The ENNs now learned the game in less than 30 generations.
-    An interesting to note is that we get a spike down to 50\% twice.
-    These might be due to a bad agent being successful during evaluation since it randomly got paired with other bad agents.
-                \subsubsection{Stack: 1--8, Configuration 1}
-    Now, we'll try the same configuration but with a random amount of matches between 1 and 8 on the stack with in the initial state.
-    The winning strategy would be, to always play the amount of matches on the stack minus one, which forces the opponent to take the last match from the stack.
-    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1/stats.csv} % Rename the macro
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{axis} [
-                grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8r_t_1}
-                % First plot
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+                    \begin{tikzpicture}
+                        \begin{axis}[
+                            title={New population composition},
+                            grid=both,
+                            xmin=0, xmax=1000,
+                            ymin=0, ymax=150,
+                            no markers,
+                            xtick distance = 200,
+                            ytick distance = 25,
+                            legend pos=north west,
+                            xlabel={Generation},
+                            ylabel={Performance},
+                        ]
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_avg_performance,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Best agent performance \%}
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_wins_percentage,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{\( \text{Best agent wins \%} \)}
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{subfigure}
 
-                % Second plot
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{center}
-    Now, the performance stalls somewhere above 60\%, which isn't optimal.
-    Again, a look at the games themselves helps us understand what happened:
-    \begin{minted}{}
-    Generation: 4
-    Best agent layer sizes: [1, 9]
-    Agent 1 vs Agent 4:
-    Turn: 0: state: [5], agent_move: [0, 1]
-    Turn: 1: state: [4], agent_move: [0, 1]
-    Turn: 2: state: [3], agent_move: [0, 1]
-    Turn: 3: state: [2], agent_move: [0, 1]
-    Turn: 4: state: [1], agent_move: [0, 8]
-    \end{minted}
-    In the 4th generation the NNs learned a first strategy, which was to always subtract one match from the stack.
-    This strategy works optimally in early populations, since it has generally a better chance of winning against agents that always subtract more matches per move.
-    However, this wasn't the final stage for the agents as we can see in generation 993:
-    \begin{minted}{}
-    Agent 993 vs agent: 992
-    Turn 0: state: [8], agent_move: [0, 2]
-    Turn 1: state: [6], agent_move: [0, 2]
-    Turn 2: state: [4], agent_move: [0, 2]
-    Turn 3: state: [2], agent_move: [0, 1]
-    Turn 4: state: [1], agent_move: [0, 1]
-    game_res: [0, 1]
-    \end{minted}
-    The agents now learned to subtract either one or two matches from the stack.
-    Of course, this is still suboptimal and in that case, the local minimum seems to persist.
-    I tried to run the algorithm for more generations, and played with other parameters but the NNs never learn to adapt to predicting moves with more than 2 matches subtracted.
-    Only after I changed the output encoding, did the things start to change.
-                \subsubsection{Stack 1--8, Configuration 2}
+                \vspace{1em}
+
+                % Third graph
+                \begin{subfigure}[b]{0.45\textwidth}
+                    \centering
+                    \begin{tikzpicture}
+                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.2/stats.csv} % Rename the macro
+
+                        \begin{axis}[
+                            title={Population size: 10000},
+                            grid=both,
+                            xmin=0, xmax=1000,
+                            ymin=0, ymax=150,
+                            no markers,
+                            xtick distance = 200,
+                            ytick distance = 25,
+                            legend pos=north west,
+                            xlabel={Generation},
+                            ylabel={Performance},
+                        ]
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_avg_performance,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Best agent performance \%}
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_wins_percentage,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{\( \text{Best agent wins \%} \)}
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{subfigure}
+                \hfill
+                % Fourth graph
+                \begin{subfigure}[b]{0.45\textwidth}
+                    \centering
+                    \begin{tikzpicture}
+                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.3/stats.csv} % Rename the macro
+
+                        \begin{axis}[
+                            title={All combined},
+                            grid=both,
+                            xmin=0, xmax=1000,
+                            ymin=0, ymax=150,
+                            no markers,
+                            xtick distance = 200,
+                            ytick distance = 25,
+                            legend pos=north west,
+                            xlabel={Generation},
+                            ylabel={Performance},
+                        ]
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_avg_performance,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Best agent performance \%}
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_wins_percentage,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{\( \text{Best agent wins \%} \)}
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{subfigure}
+
+
+            \end{minipage}
+        \end{adjustbox}
+        \caption{Performance metrics over generations in a 2x2 grid.}
+        \label{fig:performances-2}
+
+
+    \end{figure}
+
+
+    However, there is one more thing we can change.
+                \subsubsection{Stack 1--8, Configuration 6}
     We run the same configuration, only that use direct encoding instead of one-hot encoding for the output:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_2/stats.csv} % Rename the macro
