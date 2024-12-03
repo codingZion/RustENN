@@ -21,7 +21,7 @@ pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>
 
 pub const MOVE_FITNESS: bool = false;
 
-pub const FITNESS_EXP: f64 = 1.5;
+pub const FITNESS_EXP: f64 = 1.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
@@ -304,19 +304,20 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
 
     pub fn evolve(&mut self) {
+        let mut rng = rand::thread_rng();
         let mut new_agents = Vec::new();
         //add old best agents to new population
         let mut best_agents = self.best_agents.clone();
         for _ in 0..self.size / 100 * BEST_AGENT_SHARE {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
-                new_agents.push(best_agents[i].clone().mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize));
+                new_agents.push(best_agents[i].clone().mutate(rng.gen_range(self.mutation_rate_range.0..self.mutation_rate_range.1 + 1)));
             }
         }
 
         //add random old agent to new population
         for _ in 0..self.size / 100 * RANDOM_OLD_AGENT_SHARE {
-            new_agents.push(self.agents[(rand::random::<u32>() % self.size) as usize].clone().mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize));
+            new_agents.push(self.agents[(rand::random::<u32>() % self.size) as usize].clone().mutate(rng.gen_range(self.mutation_rate_range.0..self.mutation_rate_range.1 + 1)));
         }
 
         //add random agents to new population
@@ -338,7 +339,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 index += 1;
             }
             let mut agent = self.agents[index].clone();
-            agent.mutate((rand::random::<f64>() * (self.mutation_rate_range.1 - self.mutation_rate_range.0) as f64 + self.mutation_rate_range.0 as f64) as usize);
+            agent.mutate(rng.gen_range(self.mutation_rate_range.0..self.mutation_rate_range.1 + 1));
             new_agents.push(agent);
         }
         self.agents.clone_from(&new_agents);

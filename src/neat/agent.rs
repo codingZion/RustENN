@@ -413,8 +413,8 @@ impl Agent {
         for _ in 0..mutations {
             let mut rng = rand::thread_rng();
             let mut sum = 0.0;
-            for i in 0..MUTATION_TYPES.len() {
-                sum += MUTATION_TYPES[i].weight;
+            for i in MUTATION_TYPES {
+                sum += i.weight;
             }
             let mut rand = rng.gen_range(0.0..sum);
             let mut i = 0;
