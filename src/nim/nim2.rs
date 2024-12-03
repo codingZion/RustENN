@@ -49,7 +49,7 @@ impl Nim {
             }
             turns_vec[turn % agents.len()] += 1;
             let old_state = state.clone();
-            state[agent_move[0]] -= agent_move[1] as u32;
+            state[agent_move[0] as usize] -= agent_move[1] as u32;
             if (obj_eval) { perfect_play[turn % agents.len()] += self.is_perfect_play(old_state.clone(), state.clone()) as u32; }
             turn += 1;
             if turn > 500 {
@@ -77,7 +77,7 @@ impl Nim {
             if print_game {
                 //println!("turn: {}, agent: {}", turn, turn % agents.len());
                 //println!("state: {:?}, agent_move: {:?}", state, agent_move);
-                history.push((state.clone(), [output[0] as usize, output[1] as usize]));
+                history.push((state.clone(), [output[0] as isize, output[1] as isize]));
             }
             turn += 1;
             if state.len() as f64 <= output[0] || output[0] < 0. || state[output[0] as usize] < output[1] as u32 || output[1] < 1. {
@@ -150,9 +150,9 @@ impl Nim {
         input
     }
 
-    fn get_output(output: Vec<f64>, state: Vec<u32>) -> [usize; 2] {
-        let mut res = [(output[0].max(0.) as usize).min(state.len() - 1), 0];
-        res[1] = (output[1].max(1.) as usize).min(state[res[0]] as usize);
+    fn get_output(output: Vec<f64>, state: Vec<u32>) -> [isize; 2] {
+        let mut res = [(output[0].max(0.) as isize).min(state.len() as isize - 1), 0];
+        res[1] = (output[1].max(1.) as isize).min(state[res[0] as usize] as isize);
         res
     }
     

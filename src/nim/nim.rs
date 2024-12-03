@@ -50,7 +50,7 @@ impl Nim {
             }
             turns_vec[turn % agents.len()] += 1;
             let old_state = state.clone();
-            state[agent_move[0]] -= agent_move[1] as u32;
+            state[agent_move[0] as usize] -= agent_move[1] as u32;
             if (obj_eval) { perfect_play[turn % agents.len()] += self.is_perfect_play(old_state.clone(), state.clone()) as u32; }
             turn += 1;
             if turn > 500 {
@@ -82,7 +82,7 @@ impl Nim {
                 history.push((state.clone(), agent_move));
             }
             turn += 1;
-            if state[agent_move[0]] < agent_move[1] as u32 {
+            if state[agent_move[0] as usize] < agent_move[1] as u32 {
                 if print_game {
                     //println!("invalid move!");
                 }
@@ -93,7 +93,7 @@ impl Nim {
             }
             if obj_eval { turns_vec[turn % agents.len()] += 1; }
             let old_state = state.clone();
-            state[agent_move[0]] -= agent_move[1] as u32;
+            state[agent_move[0] as usize] -= agent_move[1] as u32;
             if obj_eval { perfect_play[turn % agents.len()] += self.is_perfect_play(old_state, state.clone()) as u32; }
             if turn > 500 {
                 //println!("turns exceeded 500!");
@@ -151,38 +151,38 @@ impl Nim {
         input
     }
     
-    fn get_output(output: Vec<f64>, state: Vec<u32>) -> [usize; 2] {
+    fn get_output(output: Vec<f64>, state: Vec<u32>) -> [isize; 2] {
         let size = state.len();
-        let mut res = [0, size];
+        let mut res = [0, size as isize];
         for i in 0..size {
-            if (output[i] > output[res[0]] && state[i] > 0) || state[res[0]] == 0 {
-                res[0] = i;
+            if (output[i] > output[res[0] as usize] && state[i] > 0) || state[res[0] as usize] == 0 {
+                res[0] = i as isize;
             }
         }
         for i in size..output.len() {
-            if output[i] > output[res[1]] {
-                res[1] = i;
+            if output[i] > output[res[1] as usize] {
+                res[1] = i as isize;
             }
         }
-        res[1] -= size - 1;
-        res[1] = res[1].min(state[res[0]] as usize);
+        res[1] -= size as isize - 1;
+        res[1] = res[1].min(state[res[0] as usize] as isize);
         res
     }
 
-    fn get_output_raw(output: Vec<f64>, state: Vec<u32>) -> [usize; 2] {
+    fn get_output_raw(output: Vec<f64>, state: Vec<u32>) -> [isize; 2] {
         let size = state.len();
-        let mut res = [0, size];
+        let mut res = [0, size as isize];
         for i in 0..size {
-            if output[i] > output[res[0]]  {
-                res[0] = i;
+            if output[i] > output[res[0] as usize]  {
+                res[0] = i as isize;
             }
         }
         for i in size..output.len() {
-            if output[i] > output[res[1]] {
-                res[1] = i;
+            if output[i] > output[res[1] as usize] {
+                res[1] = i as isize;
             }
         }
-        res[1] -= size - 1;
+        res[1] -= size as isize - 1;
         res
     }
 }

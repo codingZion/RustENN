@@ -17,7 +17,7 @@ use std::sync::atomic::{AtomicU32, AtomicUsize, Ordering};
 
 // For random number generation
 
-pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [usize; 2])>, Vec<u32>, Vec<u32>);
+pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [isize; 2])>, Vec<u32>, Vec<u32>);
 
 pub const MOVE_FITNESS: bool = false;
 
@@ -25,9 +25,8 @@ pub const FITNESS_EXP: f64 = 1.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
-pub const BEST_AGENT_SHARE: u32 = 15;
+pub const BEST_AGENT_SHARE: u32 =  15;
 pub const RANDOM_AGENT_SHARE: u32 = 15;
-
 pub const RANDOM_OLD_AGENT_SHARE: u32 = 15;
 
 
@@ -178,7 +177,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     //compete_best_agents() but multithreaded
-    pub fn compete_best_agents_mt(&mut self, game: &T, agent: &Agent) -> (Vec<u32>, Vec<(usize, usize, GameResLog)>) {
+    pub fn compete_best_agents(&mut self, game: &T, agent: &Agent) -> (Vec<u32>, Vec<(usize, usize, GameResLog)>) {
         let game_arc = Arc::new(game.clone());
         let best_agents_arc = Arc::new(self.best_agents.clone()); // Clone `self.best_agents` into the `Arc`
 
@@ -241,7 +240,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             let comp_moves_sum_mutex = Arc::clone(&comp_moves_sum_mutex);
 
             // Decide whether to print or not
-            let game_res_log = if k == print_agent || i == best_agents_arc.len() - 1 {
+            let game_res_log = if k == print_agent - print_agent % 2 || k == print_agent - print_agent % 2 + 1 || i == best_agents_arc.len() - 1 {
                 let agents_ref = vec![&agents[0], &agents[1]];
                 let mut str = String::new();
                 if j == 0 {
@@ -346,7 +345,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         self.cycle += 1;
     }
 
-    pub fn create_stats_csv(&self, filename: &str) -> Result<(), Box<csv::Error>> {
+    pub fn create_stats_csv(&self, filename: String) -> Result<(), Box<csv::Error>> {
         let writer_result = csv::Writer::from_path(filename);
         let mut wtr = match writer_result {
             Ok(writer) => writer,
@@ -359,7 +358,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
     }
 
-    pub fn save_stats_csv(&self, filename: &str) -> csv::Result<()> {
+    pub fn save_stats_csv(&self, filename: String) -> csv::Result<()> {
         let file = OpenOptions::new()
             .write(true)
             .append(true)
@@ -398,7 +397,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         )
     }
 
-    pub fn create_best_agent_games_txt(&self, filename: &str) {
+    pub fn create_best_agent_games_txt(&self, filename: String) {
         OpenOptions::new()
             .write(true)
             .create(true)
@@ -406,7 +405,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             .open(filename)
             .unwrap();
     }
-    pub fn save_best_agent_games_txt(&self, filename: &str, games: Vec<(usize, usize, GameResLog)>) {
+    pub fn save_best_agent_games_txt(&self, filename: String, games: Vec<(usize, usize, GameResLog)>) {
         let mut file = OpenOptions::new()
             .write(true)
             .append(true)
@@ -427,7 +426,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     // function that saves itself to a bincode file with serde and bincode crate
-    pub fn save_population(&self, filename: &str) -> JoinHandle<Result<(), Box<std::io::Error>>> {
+    pub fn save_population(&self, filename: String) -> JoinHandle<Result<(), Box<std::io::Error>>> {
         let filename = filename.to_string();
         let temp_file = filename.clone().add(".tmp");
         let population = self.clone();
@@ -443,7 +442,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         })
     }
 
-    pub fn load_population(filename: &str) -> Result<Population<T>, Box<std::io::Error>> {
+    pub fn load_population(filename: String) -> Result<Population<T>, Box<std::io::Error>> {
         let file = OpenOptions::new()
             .read(true)
             .open(filename)
@@ -452,7 +451,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         Ok(res)
     }
 
-    pub fn save_params_csv(&self, filename: &str, func_str: &str, comp_games: usize, initial_state: Vec<u32>) {
+    pub fn save_params_csv(&self, filename: String, func_str: &str, comp_games: usize, initial_state: Vec<u32>) {
         let mut wtr = csv::Writer::from_path(filename).unwrap();
 
         wtr.write_record([

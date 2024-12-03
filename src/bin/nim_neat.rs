@@ -1,6 +1,6 @@
 use rust_neat::neat::population::Population;
 use rust_neat::nim::nim2::Nim;
-use std::thread;
+use std::{fs, thread};
 use std::time::SystemTime;
 //mute println
 /*
@@ -16,7 +16,9 @@ fn main() {
     let nim_func = Nim::run_nim_strict_random;
     let func_str = "run_nim2_strict_random";
     let comp_games = 50;
-    let initial_state = vec![8;2];
+    let initial_state = vec![8;3];
+    let dir_name = "data_out/";
+    fs::create_dir_all(dir_name).expect("Couldn't create Directory");
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats.csv";
     let best_agent_games_txt = "best_agent_games.txt";
@@ -27,7 +29,7 @@ fn main() {
     //start timer
     let mut last = SystemTime::now();
     let mut population = if USE_BIN {
-        Population::load_population("population.bin").unwrap()
+        Population::load_population(dir_name.to_owned() + "population.bin").unwrap()
     } else {
         Population::new(2500, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
@@ -36,12 +38,12 @@ fn main() {
         population.run_game = nim_func;
     } else {
         //population.create_best_agent_tournament_csv(best_agent_tournament_csv);
-        population.create_stats_csv(stats_csv);
-        population.create_best_agent_games_txt(best_agent_games_txt);
+        population.create_stats_csv(dir_name.to_owned() + stats_csv);
+        population.create_best_agent_games_txt(dir_name.to_owned() + best_agent_games_txt);
     }
     let mut saver= thread::spawn(|| {Ok(())});
 
-    population.save_params_csv(params_csv, func_str, comp_games, initial_state.clone());
+    population.save_params_csv(dir_name.to_owned() + params_csv, func_str, comp_games, initial_state.clone());
 
     for _ in 0..1000 {
         //let mut population = Population::load_population("population.bin").unwrap();
@@ -58,10 +60,10 @@ fn main() {
 
 
         //saver.join().unwrap();
-        let res = population.compete_best_agents_mt(&nim_config, &best_agent);
+        let res = population.compete_best_agents(&nim_config, &best_agent);
         if saver.is_finished() {
             saver.join().unwrap_or(Ok(())).expect("Saving failed!");
-            saver = population.save_population("population.bin");
+            saver = population.save_population(dir_name.to_owned() + "population.bin");
             println!("Saving population {}!", population.cycle);
         }
         println!("best fitness: {}", best_agent.fitness);
@@ -87,8 +89,8 @@ fn main() {
         population.total_elapsed += last.elapsed().unwrap().as_secs_f64();
         last = SystemTime::now();
         //population.save_best_agent_tournament_csv(best_agent_tournament_csv);
-        population.save_stats_csv(stats_csv);
-        population.save_best_agent_games_txt(best_agent_games_txt, res.1);
+        population.save_stats_csv(dir_name.to_owned() + stats_csv);
+        population.save_best_agent_games_txt(dir_name.to_owned() + best_agent_games_txt, res.1);
         population.best_agents.push(best_agent.clone());
         population.evolve();  // Now you can mutate population
     }
