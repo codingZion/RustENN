@@ -16,7 +16,7 @@ fn main() {
     let nim_func = Nim::run_nim_strict;
     let func_str = "run_nim_strict";
     let comp_games = 50;
-    let initial_state = vec![8];
+    let initial_state = vec![2];
     let dir_name = "data_out/";
     fs::create_dir_all(dir_name).expect("Couldn't create Directory");
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";

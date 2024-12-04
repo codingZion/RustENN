@@ -295,7 +295,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         // Calculate the averages
         self.best_agents_comp_avg_moves = self.best_agents_comp_moves.iter().sum::<u32>() as f64 / self.best_agents_comp_moves.len() as f64;
         //self.best_agent_avg_performances = self.best_agent_performances.iter().sum::<u32>() as f64 / self.best_agent_performances.len() as f64;
-        self.best_agent_avg_performances = comp_performance_sum_mutex.lock().unwrap().clone() as f64 / comp_moves_sum_mutex.lock().unwrap().clone() as f64;
+        self.best_agent_avg_performances = *comp_performance_sum_mutex.lock().unwrap() as f64 / *comp_moves_sum_mutex.lock().unwrap() as f64;
 
         (final_results, print_games)
     }

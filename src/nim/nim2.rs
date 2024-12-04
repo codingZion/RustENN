@@ -79,7 +79,6 @@ impl Nim {
                 //println!("state: {:?}, agent_move: {:?}", state, agent_move);
                 history.push((state.clone(), [output[0] as isize, output[1] as isize]));
             }
-            turn += 1;
             if state.len() as f64 <= output[0] || output[0] < 0. || state[output[0] as usize] < output[1] as u32 || output[1] < 1. {
                 if print_game {
                     //println!("invalid move!");
@@ -87,6 +86,7 @@ impl Nim {
                 if obj_eval && state.iter().sum::<u32>() > 1 {
                     turns_vec[turn % agents.len()] += 1;
                 }
+                turn += 1;
                 break;
             }
             let agent_move = [output[0] as usize, output[1] as usize];
@@ -94,12 +94,13 @@ impl Nim {
             let old_state = state.clone();
             state[agent_move[0]] -= agent_move[1] as u32;
             if obj_eval { perfect_play[turn % agents.len()] += self.is_perfect_play(old_state, state.clone()) as u32; }
+            turn += 1;
             if turn > 500 {
                 //println!("turns exceeded 500!");
                 return (vec![0; agents.len()], history, turns_vec, perfect_play);
             }
         }
-        let winner = (turn as isize - 2).abs() as usize % agents.len();
+        let winner = (turn as isize - 2).unsigned_abs() % agents.len();
         let mut res = vec![0; agents.len()];
         res[winner] = 1;
         (res, history, turns_vec, perfect_play)
