@@ -181,10 +181,10 @@ contents={%
     That is how I got to my Matura Thesis, which aims to develop such ML models that learn without labeled data with and use those to learn board games.
 
         \section{Thesis Statement}\label{sec:thesis-statement}
-    This Thesis will explore the field of Neural Networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
-    The solution this Thesis will focus on are Evolutionary Neural Networks (ENNs), a combination of Neural Networks and Genetic Algorithms.
+    This thesis will explore the field of neural networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
+    The solution this Thesis will focus on are evolutionary neural networks (ENNs), a combination of Neural Networks and Genetic Algorithms.
     \\ \\
-    In this Thesis, I develop my own simplified implementation of ENNs and then train them on some board games.
+    In this thesis, I develop my own simplified implementation of ENNs and then train them on some board games.
     The research effort consists of testing the ENN algorithm with different Parameters and Features to see how well it can learn to play the games in different configurations.
     My approach also draws inspiration from the NEAT Algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002, where the NNs start minimally in the first generation and then develop complexity over time.\footcite[p.105-106]{Neat_02}
     The first game I will train the ENNs on is Nim, a simple game where two players take turns removing matches from different stacks.
@@ -203,10 +203,11 @@ contents={%
     Inside the brain, around 86 million neurons\footcite{caruso_23} form connections to each other through which they activate other neurons with electric and chemical signals.
     In a neuron, the signals of connected neurons add up and when they reach a certain threshold, the neuron is activated and fires a new signal to its own connections\footcite{Newman_23}.
     The neuron then resets after a certain amount of cooldown time.
-    With this web of neurons inside the brain, animals can process information from nerve signals from the body and output them again as nerve signals instructing the body.
+    \\
+    With this web of neurons inside the brain, animals can process the information from nerve signals from the body and output them again as nerve signals instructing the body.
             \subsection{Feed Forward Neural Networks (FNNs)}\label{subsec:feed-forward-neural-networks-(fnns)}
-    So how do we apply those ideas about neural networks learned from the biology of a brain to a program that runs on a computer?
-    The first step is to simplify the chaos of neurons in the brain and organize them in layers of neurons.
+    So how do we apply these ideas about neural networks learned from the biology of a brain to a program that runs on a computer?
+    The first step is to simplify the chaos of neurons in the brain and organize them into layers of neurons.
     We get an input layer, an output layer and optional so-called hidden layers in between.
     As a next step, in each layer, we connect its neurons to neurons of following layers, typically exclusively to neurons of the next layer.
     \\
@@ -223,20 +224,24 @@ contents={%
         \label{definition:Topology}
     \end{mydef}
     \noindent
-    For the neural network to perform functions, we also need to assign a weight to all the connections.
+    For the neural network to perform functions, we also need to assign a weight to all connections.
     This weight value ranges from -1 to 1 and can be thought of as the strength of a connection between neurons.
     \\
     In terms of computer science, this structure now resembles a directed, weighted graph, which is why we will call the neurons nodes and their connections edges from now on.
+    \begin{mydef}{Nodes/Edges}
+        In a neural network, a node receives, computes and sends information, whereas an edge forms the connections between nodes to exchange information.
+        \label{definition:Nodes-Edges}
+    \end{mydef}
     \\ \\
     Now let's see, how information gets computed by a neural network by using the example of a computer vision NN, that recognizes digits on a black/white image:
-    First, we need a way to encode the information into values for the nodes of the input layer, in our example the Brightness values of the single pixels.
-    We assign these values to the nodes of the input layer.
+    First, we need a way to encode the input image into values for the nodes of the input layer.
+    In our example, we might use the Brightness values of the single pixels, which we directly assign to the nodes of the input layer.
     \\
-    Then, for each node of the input layer, we look for all edges connected to that node.
-    For each of these edges we multiply its weight by the value of the input node and add the result to the other node connected by the edge.
+    Then, for each node of the input layer, we look for all connected edges.
+    For each of these edges we multiply its weight by the value of the input node and add the result to the node on the receiving end.
     \\
-    After iterating through all the nodes of the one layer, we move the next layer.
-    Now, the value of the nodes in this layer is the sum accumulated by the value of all connected nodes multiplied the weight of that connection:
+    After iterating through all the nodes of one layer, we move the next layer.
+    At this point, the value of the nodes in this layer is the sum accumulated by the values of all connected nodes multiplied by the weight of that connection:
     \begin{equation}
         v_x = \sum_{i=0}^{N}v_i * w_i\label{eq:sum_connected_nodes}
     \end{equation}
@@ -245,13 +250,13 @@ contents={%
         \begin{itemize}
             \item N is the number of connected nodes
             \item $v_x$ is the value of the current node
-            \item $v_i$ is the value of the current node
+            \item $v_i$ is the value of the connected node i
             \item $w_i$ is the weight of the edge connecting the current node to node i
         \end{itemize}
     }
     \noindent
     Additionally, we can add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.
-    Afterward, an activation function is applied to the value of the nodes to fit the value of the node inside a preferred range.
+    Finally, an activation function $\sigma(x)$ is applied to the value of the nodes to fit the value of the node inside a preferred range.
     This activation function can also be thought of as the threshold of stimulation for a neuron to fire.
     Two examples for activation functions are:
     \begin{itemize}
@@ -293,7 +298,7 @@ contents={%
     \end{tikzpicture}
     \end{center}
     \\ \\
-    The final function for the value of one node is therefore:
+    The complete function for the value of one node is therefore:
     \begin{equation}
         v_x = \sigma\left(\sum_{i=0}^{N}v_i * w_i + r_x\right)\label{eq:value_node}
     \end{equation}
@@ -305,13 +310,13 @@ contents={%
         \end{itemize}
     }
     \noindent
-    Now this value $v_x$ can be used in upcoming layers.
-    When we reach the final layer after iterating through all the nodes and layers of the NN, we can read out its computed output.
-    This output again is encoded in node values like the input and therefore needs to be decoded for the result.
-    In the example of a digit detecting NN, we could encode the output with 10 output nodes, each representing one digit.
+    Now this value $v_x$ is again sent through its connections to nodes from upcoming layers.
+    After iterating through all the nodes and layers of the NN, we reach the final layer of the NN, where we can read out its computed output.
+    This output again is encoded in node values like we did with the input and therefore needs to be decoded for the final result.
+    In the example of a digit detecting NN, we could use 10 output nodes, each representing one digit.
     The result could be decoded by using the output node with the highest value as result.
-    This kind of output encoding, where all possible result get their own node is called One-hot encoding.
-    With this kind of output encoding, the values of the output nodes can be interpreted as a certainty value for a specific result to be correct.
+    This kind of output encoding where all possible result get their own node is called one-hot encoding.
+    With one-hot output encoding, the values of the output nodes can be interpreted as a certainty value for a specific result to be correct.
             \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
     Now that we have established how a NN works, it is important to understand why this kind of algorithm is revolutionary to computer science.
     \\ \\
@@ -680,14 +685,14 @@ contents={%
     The sum of all points an agent has collected is then divided by the amount of moves it has made to get the final performance score.
 
     \section{Findings}\label{sec:first-findings}
-    Now we can test our ENN algorithm with the games and different parameters.
+    Now we will test our ENN algorithm with the games and different parameters.
     The general approach is to start by training the ENNs on easy problems whilst observing the effect of different parameters on the result.
-    We therefore start with the game Simple Nim.
-    I will walk you through my tests and provide the most important information.
-    You can gain insight into the full data about parameters and results on my GitHub.
+    Each test is repeated at least 3 times to try to reduce the impact of randomness on the results.
+    As we walk through the different testing configurations, we will discuss just one of the tests as long as all tests showed similar results.
+    However, all testing data can be inspected on my GitHub.
             \subsection{Simple Nim}\label{subsec:simple-nim-results}
     For the Simple Nim game, I will run each test for 1000 generations, since ENNs should be able to solve this simple game quite quickly.
-                \subsubsection{Stack: 3, Configuration 1}
+                \subsubsection{Stack: 2, Configuration 1}
     First we test the ENNs on a problem where the only stack contains 2 matches.
     This is the easiest problem we can still consider a game - with one match per stack the only one legal move, so it doesn't involve any decision-making.
     The winning strategy of course is to only take one match and leave the opponent with only one match on the stack.
@@ -705,7 +710,7 @@ contents={%
             \begin{axis} [
                 grid=both,
                 xmin=0,
-                xmax=49,
+                xmax=50,
                 ymin=0,
                 ymax=150,
                 no markers,
@@ -723,7 +728,7 @@ contents={%
                 y=best_agent_avg_performance,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+                \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
                 \addplot table [
@@ -746,75 +751,38 @@ contents={%
     Turn: 1: state: [1], agent_move: [0, 2]
     Game result: [1, 0]
     \end{minted}
-    The best agent wins percentage in the above plot(\ref{fig:sn_stack_1_t_1}) is a steady 50\%, since all games are played both ways and the first agent always wins the game.
+    The best agent wins percentage in the plot above is a steady 50\%, since all games are played both ways and the first agent always wins the game.
     We can also see, on line 2 of our output, that the topology didn't evolve for our best agent, which makes sense since it is a very simple task.
             \subsubsection{Stack: 8, Configuration 1}
-    Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8.
-    In this configuration, my four tests produced following results:
+    Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8:
     \\
-\begin{figure}[htbp!]
-
-    \centering
-    \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
-    % First graph
-    \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
-           \begin{minipage}{1.1\textwidth}
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
     \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
-            \begin{axis}[
-                title={Test 1},
-                grid=both,
-                xmin=0, xmax=1000,
-                ymin=0, ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west,
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{Best agent performance \%}
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{subfigure}
-    \hfill
-    % Second graph
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.1/stats.csv} % Rename the macro
-
+    \begin{center}
         \begin{tikzpicture}
-            \begin{axis}[
-                title={Test 2},
+            \begin{axis} [
                 grid=both,
-                xmin=0, xmax=1000,
-                ymin=0, ymax=150,
+                xmin=0,
+                xmax=1000,
+                ymin=0,
+                ymax=150,
                 no markers,
                 xtick distance = 200,
                 ytick distance = 25,
-                legend pos=north west,
+                legend pos=north west, % Adjust legend position
                 xlabel={Generation},
                 ylabel={Performance},
             ]
+                \caption{Performance of the best agent over generations.}
+                \label{fig:sn_stack_8r_t_1}
+                % First plot
                 \addplot table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{Best agent performance \%}
+                \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
+
+                % Second plot
                 \addplot table [
                 x=generation,
                 y=best_agent_wins_percentage,
@@ -823,89 +791,8 @@ contents={%
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
-    \end{subfigure}
-
-    \vspace{1em}
-
-    % Third graph
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
-            \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.2/stats.csv} % Rename the macro
-
-            \begin{axis}[
-                title={Test 3},
-                grid=both,
-                xmin=0, xmax=1000,
-                ymin=0, ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west,
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{Best agent performance \%}
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{subfigure}
-    \hfill
-    % Fourth graph
-    \begin{subfigure}[b]{0.45\textwidth}
-        \centering
-        \begin{tikzpicture}
-            \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1.3/stats.csv} % Rename the macro
-
-            \begin{axis}[
-                title={Test 4},
-                grid=both,
-                xmin=0, xmax=1000,
-                ymin=0, ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west,
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{Best agent performance \%}
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{subfigure}
-    \caption{Performance metrics over generations in a 2x2 grid.}
-    \label{fig:performance_metrics}
-
-\end{minipage}
-    \end{adjustbox}
-
-\end{figure}
-
-
-    In only one of four tests did the ENNs learn how to play the correct move and this also only after over 100 generations.
-    The other tests ended in the best agent performance settling on 25\%.
-    If we look at the games the NNs played, we also see how we get to this number:
+    \end{center}
+    The accuracy never gets much higher than 60\% and if we look at the games the NNs played, we can derive how it got to this number:
     \begin{minted}{}
     Agent 999 vs Agent 998:
     Turn: 0: state: [8], agent_move: [0, 1]
@@ -926,6 +813,13 @@ contents={%
     Therefore, we either get lucky and end up with an entire population of agents that always subtract 7 matches, or you need agents that are adapted to all cases.
     Our final goal is to train the NNs to be like the latter option whereas the former solution seems more like a local minimum which is therefore undesirable.
     We will now change the stack to have a variable amount of matches, since this simplification turned out to be a hindrance.
+    \subsubsection{Remark: Unnecessary Topology}
+    If we look at the topology metrics of one of the tests, we realize that complexity of the NNs exploded without any visible improvement in performance:
+
+    We get an average amount of over 20 hidden layers with on average 2 nodes.
+    It doesn't make sense for the NNs to have such complexity for such a simple problem as it only increases the needed computations.
+    We will therefore reduce the chance for a new nodes and edges to form by a factor of 10 each.
+    Let's see if this change impacted the performance and topology of the NNs:
     \subsubsection{Stack 1--8, Configuration 1}
     We will repeat the previous test but with a variable amount of matches between 1 and 8:
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1.1/stats.csv} % Rename the macro
@@ -952,7 +846,7 @@ contents={%
                 y=best_agent_avg_performance,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+                \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
                 \addplot table [
@@ -1022,7 +916,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1056,7 +950,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1092,7 +986,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1126,7 +1020,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1174,7 +1068,7 @@ contents={%
                 y=best_agent_avg_performance,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+                \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
                 \addplot table [
@@ -1218,7 +1112,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1252,7 +1146,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1288,7 +1182,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1322,7 +1216,7 @@ contents={%
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent performance \%}
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
                             \addplot table [
                             x=generation,
                             y=best_agent_wins_percentage,
@@ -1375,7 +1269,7 @@ contents={%
                 y=best_agent_avg_performance,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \%} \)}
+                \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
                 \addplot table [

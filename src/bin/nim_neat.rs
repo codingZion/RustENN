@@ -1,5 +1,5 @@
 use rust_neat::neat::population::Population;
-use rust_neat::nim::nim2::Nim;
+use rust_neat::nim::nim::Nim;
 use std::{fs, thread};
 use std::time::SystemTime;
 //mute println
@@ -13,16 +13,18 @@ macro_rules! println {
 const USE_BIN: bool = false;
 
 fn main() {
-    let nim_func = Nim::run_nim_strict_random;
-    let func_str = "run_nim2_strict_random";
+    let nim_func = Nim::run_nim_strict;
+    let func_str = "run_nim_strict";
     let comp_games = 50;
-    let initial_state = vec![8;3];
+    let initial_state = vec![8];
     let dir_name = "data_out/";
     fs::create_dir_all(dir_name).expect("Couldn't create Directory");
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
     let stats_csv = "stats.csv";
     let best_agent_games_txt = "best_agent_games.txt";
     let params_csv = "params.csv";
+    let population_file = "population.bin";
+    let tmp_prefix = "z_";
     let nim_config = Nim::new(initial_state.clone());
     println!("input size: {}, output size: {}", nim_config.input_size, nim_config.output_size);
     
@@ -31,7 +33,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population(dir_name.to_owned() + "population.bin").unwrap()
     } else {
-        Population::new(2500, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 0usize))
+        Population::new(100, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
@@ -63,14 +65,13 @@ fn main() {
         let res = population.compete_best_agents(&nim_config, &best_agent);
         if saver.is_finished() {
             saver.join().unwrap_or(Ok(())).expect("Saving failed!");
-            saver = population.save_population(dir_name.to_owned() + "population.bin");
+            saver = population.save_population(population_file, tmp_prefix, dir_name.parse().unwrap());
             println!("Saving population {}!", population.cycle);
         }
         println!("best fitness: {}", best_agent.fitness);
         //println!("best agent: {:?}", best_agent);
         println!("layer_sizes: {:?}", best_agent.nn.layer_sizes);
         println!("edge_count: {}", best_agent.nn.edge_count);
-        //print the competition results in green if stack_8, in white if stacks_2x10 and in red if 0
         print!("Competition results: ");
         for i in res.0.iter() {
             if *i == 2 {
@@ -94,5 +95,9 @@ fn main() {
         population.best_agents.push(best_agent.clone());
         population.evolve();  // Now you can mutate population
     }
-
+    saver.join().unwrap_or(Ok(())).expect("Saving failed!");
+    population.save_population(population_file, tmp_prefix, dir_name.parse().unwrap());
+    let tmp_file = dir_name.to_owned() + &*tmp_prefix.to_owned() + &*population_file.to_owned() + ".tmp";
+    println!("{}", tmp_file);
+    fs::remove_file(tmp_file).expect("File removal failed");
 }

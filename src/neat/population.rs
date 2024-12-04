@@ -1,7 +1,6 @@
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::fmt::Write as FmtWrite;
-use std::ops::Add;
 use crate::neat::agent::{Agent, MUTATION_TYPES};
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -266,7 +265,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             // Update the results, moves and performances safely
             let mut results_lock = results_mutex.lock().unwrap();
             results_lock[k / 2] += game_res[j];
-            if k == print_agent || i == best_agents_arc.len() - 1 {
+            if k == print_agent - print_agent % 2 || k == print_agent - print_agent % 2 + 1 || i == best_agents_arc.len() - 1 {
                 let mut print_games_lock = print_games_mutex.lock().unwrap();
                 if j == 0 {
                     print_games_lock.push((self.cycle as usize, i, game_res_log.clone()));
@@ -427,9 +426,9 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
     }
 
     // function that saves itself to a bincode file with serde and bincode crate
-    pub fn save_population(&self, filename: String) -> JoinHandle<Result<(), Box<std::io::Error>>> {
-        let filename = filename.to_string();
-        let temp_file = filename.clone().add(".tmp");
+    pub fn save_population(&self, filename: &str, tmp_prefix: &str, directory: String) -> JoinHandle<Result<(), Box<std::io::Error>>> {
+        let final_file = directory.clone() + filename;
+        let temp_file =directory.to_owned() + &*tmp_prefix.to_owned() + &*filename.to_owned() + ".tmp";
         let population = self.clone();
         thread::spawn(move || {
             let file = OpenOptions::new()
@@ -438,7 +437,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
                 .open(&temp_file)
                 .unwrap();
             bincode::serialize_into(file, &population).unwrap();
-            std::fs::rename(temp_file, filename).unwrap();
+            std::fs::copy(temp_file, final_file).unwrap();
             Ok(())
         })
     }
