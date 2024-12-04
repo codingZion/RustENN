@@ -25,9 +25,9 @@ pub const FITNESS_EXP: f64 = 1.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
-pub const BEST_AGENT_SHARE: u32 =  15;
-pub const RANDOM_AGENT_SHARE: u32 = 15;
-pub const RANDOM_OLD_AGENT_SHARE: u32 = 15;
+pub const BEST_AGENT_SHARE: u32 =  0;
+pub const RANDOM_AGENT_SHARE: u32 = 0;
+pub const RANDOM_OLD_AGENT_SHARE: u32 = 0;
 
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -307,7 +307,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         let mut new_agents = Vec::new();
         //add old best agents to new population
         let mut best_agents = self.best_agents.clone();
-        for _ in 0..self.size / 100 * BEST_AGENT_SHARE {
+        for _ in 0..(self.size / 100 * BEST_AGENT_SHARE).min(self.size) {
             if !best_agents.is_empty() {
                 let i = rand::random::<u64>() as usize % best_agents.len();
                 new_agents.push(best_agents[i].clone().mutate(rng.gen_range(self.mutation_rate_range.0..self.mutation_rate_range.1 + 1)));
@@ -315,12 +315,12 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
         }
 
         //add random old agent to new population
-        for _ in 0..self.size / 100 * RANDOM_OLD_AGENT_SHARE {
+        for _ in 0..(self.size / 100 * RANDOM_OLD_AGENT_SHARE).min(self.size) {
             new_agents.push(self.agents[(rand::random::<u32>() % self.size) as usize].clone().mutate(rng.gen_range(self.mutation_rate_range.0..self.mutation_rate_range.1 + 1)));
         }
 
         //add random agents to new population
-        for _ in 0..self.size / 100 * RANDOM_AGENT_SHARE {
+        for _ in 0..(self.size / 100 * RANDOM_AGENT_SHARE).min(self.size) {
             new_agents.push(Agent::new(self.inputs, self.outputs));
         }
 
@@ -342,6 +342,7 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
             new_agents.push(agent);
         }
         self.agents.clone_from(&new_agents);
+        println!("Population size: {}", self.agents.len());
         self.cycle += 1;
     }
 
