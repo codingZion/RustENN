@@ -26,6 +26,8 @@ linenos
 \pgfplotsset{width=15cm,height=7.5cm,compat=1.9}
 \usepgfplotslibrary{external}
 \tikzexternalize
+\usetikzlibrary{external}
+\tikzexternalize % activate!
 
 %CSV files
 \usepackage{filecontents}
@@ -320,41 +322,42 @@ contents={%
             \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
     Now that we have established how a NN works, it is important to understand why this kind of algorithm is revolutionary to computer science.
     \\ \\
-    An algorithm is a set of functions applied in a certain order onto an input to receive a result.
-    Traditionally, this algorithm was programmed with the help of mathematical operations, logic functions, loops, system functions and data structures, which are then converted into binary code for the processor.
+    An algorithm processes an input with a set of functions applied in a certain order to calculate an output.
+    Traditionally, a computer algorithm gets programmed with the help of mathematical operations, logic functions, loops, system functions and data structures, which are then converted into binary code for the processor.
     Of course, this also applies in the context of NNs, however, there is also a third layer of abstraction on top, which simulates the functioning of a brain with neurons.
-    Since the traditional algorithm only enables the neurons in the NN, the third neuron-based layer is what computes the actual function of the NN\@.
+    Since the traditional algorithm only enables the neurons of a NN, the third neuron-based layer is what computes the actual function of the NN\@.
     Therefore, NNs resemble more the functioning of a brain than a traditional algorithm.
-    This difference results in implications for the functioning of an NN:
+    \\ \\
+    This difference has implications for the functioning of an NN:
     Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
     With NNs, the algorithm is based on different parameters for nodes and edges, which make it an unpredictable blackbox.
-    Additionally, NNs don't represent actual functions but try to approximate them instead.
-    This means it is hard to prove a neural network to be always accurate and is the reason why we often call the result of NNs its prediction.
+    In the top layer of abstraction, there are no concrete functions but only neuron activation that approximates a function instead.
+    This means it is hard to prove a neural network to be always accurate and is also the reason why we often call the result of NNs its prediction.
+    \begin{mydef}{NN Prediction}
+        The output of a NN is called its prediction for some input.
+    \end{mydef}
             \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
-    We already know how a NN can make a prediction for a given input with the help of parameters, which encode for the structure and weights/biases of the NN.\@
-    But how do we find such parameters for a given problem?
+    We already know how a NN with certain parameters can make a prediction for a given input.
+    But how do we find such parameters encoding for the structure and weights/biases of the NN?
     The answer is to use machine learning, which trains the model to perform a certain task with the help of training data.
     \begin{mydef}{Machine Learning}
-        Machine Learning is a subset of artificial intelligence that involves the use of algorithms and statistical techniques to optimize artificially intelligent models for a given problem.
+        Machine learning (ML) is a subset of artificial intelligence that involves the use of algorithms and statistical techniques to optimize artificially intelligent models for a given problem.
     \end{mydef}
     One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient ways to train a NN.\@
-    \begin{mydef}{Backpropagation}
-        The backpropagation algorithm is an algorithm that can optimize parameters for weights and biases of a NN within a fixed topology for a certain problem with the help of labeled data.
-    \end{mydef}
     Backpropagation uses a training and test set containing unlabeled data for a problem.
     But what does a test set with unlabeled data mean in the context of machine learning?
     \begin{mydef}{(Un)labeled Data}
         Labeled data for a machine learning problem is a set of data with sample problems and the respective solutions.
         Unlabeled data instead only contains the sample problems.
     \end{mydef}
-    The Machine Learning Process starts with an NN with fixed topology and random weights/biases.
-    Then, you give the NN the training problems, whose predictions will be random at first.
-    However, with the help of the corresponding solutions, you can refine the predictions of the NN by adjusting the parameters in a way that would let the NN make the correct prediction for the given problem.
-    This is done by starting from the prediction of a certain problem its solution and propagating back through the whole NN until reaching the input layer.
-    More specifically, you compute a cost function of
-    The NN shouldn't be adapted only to a single problem but should be able to make accurate predictions for the whole training set as well as for unknown problems.
-    To therefore prevent overcorrecting a NN for a single problem, we have to factor in a learning rate significantly smaller than 1 onto our correction.
-    No we can train the NN on the whole training set for many generations, until the NN starts to make accurate predictions for the whole.
+    The machine learning process of backpropagation starts with an NN with fixed topology and random weights/biases.
+    First, the NN is given the training problems for which it will make random predictions.
+    We will then refine these random predictions with the help of the sample solutions.
+    This is done by looping back through the NN from the output layer to the input layer, always adjusting the weights and biases that the NN would finally make the right prediction for this problem.
+    However, the NN shouldn't be adapted only to a single problem but make accurate predictions for the whole training set and unknown problems.
+    To therefore prevent overcorrecting a NN for single problems, we have to factor in a learning rate that is significantly smaller than 1 for our correction.
+    \\ \\
+    The NN is trained on the whole training set for many generations, until the NN starts to make accurate predictions for all problems.
     To test the performance on unknown problems we can use a separate test set, which the NN wasn't trained on.
 
         \section{Evolutionary Computation (EC) \& Genetic Algorithms (GAs)}\label{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}
@@ -363,27 +366,27 @@ contents={%
     \begin{mydef}{Evolutionary Computation}
     Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
     \end{mydef}
-    One scenario for EC might be for example if you have a large set of data points of an unknown polynomial function with noise and outliers.
-    If you want to find the underlying polynomial function, you could then employ Evolutionary Computation to find the best fitting parameters for such polynomial.
-    So how do you find these parameters?
+    EC is commonly used where the perfect parameters for some function can't be calculated but the performance of a certain set can be determined.
+    One example scenario for EC might be if you have a large set of data points of an unknown polynomial function with noise and outliers.
+    If you want to find the parameters for the underlying polynomial, you could then employ EC to find the best fitting parameters.
+    Let's see how EC finds these parameters.
     \\ \\
-    You start with an initial population of agents with a random set of parameters.
-    For each generation of your population you will then repeat following steps:
+    The process starts with an initial population of agents with random sets of parameters.
+    EC then repeats following steps, forming a new generation of the population in each iteration:
     \begin{itemize}
-        \item Fitness: First, you need to find out how good each agent (and its parameters) performs in the function they try to optimize for.
-        The fitness evaluation can be done with an objective cost function or a competition between the agents, which evaluates their relative performances.
-        In our example, the cost function might be the sum of the absolute differences between the data points and the output of the polynomial function.
-        \item Selection: As a next step, you rank the agents performances to then pick the ones that have performed the best.
-        \item Reproduction: The best agents pick is the part of the population that survives.
-        These agents will then be replicated by copying their parameters (non-mating) of by merging parameters from different agents (crossover).
-        \item Mutation: The agents parameters will then be mutated by either completely overwriting certain parameters with new random parameters or by shifting the existing parameters by a random number.
+        \item \textbf{Fitness evaluation:} First, EC needs to find out how good each agent with its parameters perform in the problem.
+        We call the performance of an agent its fitness, which we either evaluate objectively with a cost function or relatively with a competition between agents.
+        In our example, the cost function might check the prediction of the NN for the given data points, calculate its absolute differences to the values of the data points, and use the total sum as cost.
+        \item \textbf{Selection:} As a next step, the agents that performed well are selected to be part of the next generation.
+        \item \textbf{Reproduction:} The selected agents will then be replicated by directly copying their parameters (non-mating) or by merging parameters from different agents (crossover).
+        \item \textbf{Mutation:} The agents parameters will then be mutated by either completely overwriting certain parameters with new random parameters or by shifting the existing parameters by a random number.
     \end{itemize}
     After a certain number of generations, you will then have the best performing set of parameters for a given problem.
     There is also one popular addition to EC, which draws inspiration from nature again:
     \begin{mydef}{Genetic Algorithm}
     A Genetic Algorithm (GA) is an implementation of EC that uses a genetic representation of the parameters.
     \end{mydef}
-    Its main idea is to have genes that only encode indirectly for the parameters, and that can be on and off.
+    Its main idea is to have genes that only encode indirectly for the parameters, and can be turned on or off.
             \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
     We know from the previous Chapter(\ref{subsec:mutation}) that EC starts with an initial population of agents with random sets of parameters, which all have a cost determined by the cost function.
     Agents with relatively low cost survive the round and then get replicated a few times, mutated and again selected by cost.
@@ -691,7 +694,7 @@ contents={%
     As we walk through the different testing configurations, we will discuss just one of the tests as long as all tests showed similar results.
     However, all testing data can be inspected on my GitHub.
             \subsection{Simple Nim}\label{subsec:simple-nim-results}
-    For the Simple Nim game, I will run each test for 1000 generations, since ENNs should be able to solve this simple game quite quickly.
+    For the Simple Nim game, I will run each test for 1000 generations, since ENNs should be able to solve this simple game rather quickly.
                 \subsubsection{Stack: 2, Configuration 1}
     First we test the ENNs on a problem where the only stack contains 2 matches.
     This is the easiest problem we can still consider a game - with one match per stack the only one legal move, so it doesn't involve any decision-making.
@@ -748,7 +751,7 @@ contents={%
     Best agent layer sizes: [1, 3]
     Agent 1 vs Agent 0:
     Turn: 0: state: [2], agent_move: [0, 1]
-    Turn: 1: state: [1], agent_move: [0, 2]
+    Turn: 1: state: [1], agent_move: [0, 1]
     Game result: [1, 0]
     \end{minted}
     The best agent wins percentage in the plot above is a steady 50\%, since all games are played both ways and the first agent always wins the game.
@@ -773,7 +776,7 @@ contents={%
                 ylabel={Performance},
             ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8r_t_1}
+                \label{fig:sn_stack_8_t_1}
                 % First plot
                 \addplot table [
                 x=generation,
@@ -792,37 +795,157 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    The accuracy never gets much higher than 60\% and if we look at the games the NNs played, we can derive how it got to this number:
+    The accuracy of the best run got up to 70\% and if we look at the games recorded in generation 982, we can see why it didn't get to 100\%.
     \begin{minted}{}
-    Agent 999 vs Agent 998:
-    Turn: 0: state: [8], agent_move: [0, 1]
-    Turn: 1: state: [7], agent_move: [0, 1]
-    Turn: 2: state: [6], agent_move: [0, 1]
-    Turn: 3: state: [5], agent_move: [0, 1]
-    Turn: 4: state: [4], agent_move: [0, 1]
-    Turn: 5: state: [3], agent_move: [0, 1]
-    Turn: 6: state: [2], agent_move: [0, 1]
-    Turn: 7: state: [1], agent_move: [0, 1]
+    Generation: 982
+    Best agent layer sizes: [1, 3, 1, 5, 6, 3, 2, 7, 3, 5, 3, 5, 1, 2, 8, 4, 7, 1, 2, 4, 4, 1, 9]
+    Agent 39 vs Agent 982:
+    Turn: 0: state: [8], agent_move: [0, 3]
+    Turn: 1: state: [5], agent_move: [0, 5]
+    Game result: [1, 0]
+    Agent 982 vs Agent 39:
+    Turn: 0: state: [8], agent_move: [0, 7]
+    Turn: 1: state: [1], agent_move: [0, 1]
+    Game result: [1, 0]
+    Agent 981 vs Agent 982:
+    Turn: 0: state: [8], agent_move: [0, 7]
+    Turn: 1: state: [1], agent_move: [0, 5]
+    Game result: [1, 0]
+    Agent 982 vs Agent 981:
+    Turn: 0: state: [8], agent_move: [0, 7]
+    Turn: 1: state: [1], agent_move: [0, 1]
+    Game result: [1, 0]
     \end{minted}
-    Out of 8 moves, only the last two moves are perfect.
-    Such performance is remarkably bad since all the NN has to do is to always output [0, 7], where the first parameter is set anyway, and it only has to get a hang of the 7.
-    In a sample of 100 agents, we would expect there to be an agent that outputs the correct prediction.
-    All of this seems contradicting, especially if we consider that the NNs were able to find the right move with 2 matches instantly.
-    However, there is one important detail to consider in this test:
-    If the starting agent doesn't play perfectly in the first move (it subtracts fewer than 7 matches), the second agent instantly gains a winning position and would have to play the move N-1 matches.
-    Therefore, we either get lucky and end up with an entire population of agents that always subtract 7 matches, or you need agents that are adapted to all cases.
-    Our final goal is to train the NNs to be like the latter option whereas the former solution seems more like a local minimum which is therefore undesirable.
+    The best agents of generation 982 and 981 each learned to play the correct move [0, 7] when they started.
+    However, if the opponent didn't play perfectly, which means not removing less matches, the current best agent would have got a winning position but often didn't find the correct move.
+    An example for this is on line 5, where the best agent from generation 982 should have removed 4 instead of 5 matches to win.
+    \\
+    Our final goal is to train the NNs to be adapted to all cases whereas this solution seems more like a local minimum which is therefore undesirable.
     We will now change the stack to have a variable amount of matches, since this simplification turned out to be a hindrance.
     \subsubsection{Remark: Unnecessary Topology}
     If we look at the topology metrics of one of the tests, we realize that complexity of the NNs exploded without any visible improvement in performance:
-
+    \begin{center}
+        \begin{tikzpicture}
+            \begin{axis}[
+                title={Topology},
+                grid=both,
+                xmin=0, xmax=1000,
+                ymin=0, ymax=50,
+                no markers,
+                xtick distance = 200,
+                ytick distance = 10,
+                legend pos=north west,
+                xlabel={Generation},
+                ylabel={Complexity},
+            ]
+                \addplot table [
+                x=generation,
+                y=avg_layers,
+                col sep=comma,
+                green,
+                ] {\csvpath};
+                \addlegendentry{Average layers}
+                \addplot table [
+                x=generation,
+                y=avg_hidden_layer_size,
+                col sep=comma,
+                yellow,
+                ] {\csvpath};
+                \addlegendentry{Average hidden layer size}
+            \end{axis}
+        \end{tikzpicture}
+    \end{center}
     We get an average amount of over 20 hidden layers with on average 2 nodes.
     It doesn't make sense for the NNs to have such complexity for such a simple problem as it only increases the needed computations.
     We will therefore reduce the chance for a new nodes and edges to form by a factor of 10 each.
     Let's see if this change impacted the performance and topology of the NNs:
+    \\
+    \begin{figure}[H]
+
+        \centering
+        \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
+        % First graph
+        \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
+            \begin{minipage}{1.1\textwidth}
+                \begin{subfigure}[b]{0.45\textwidth}
+                    \centering
+                    \begin{tikzpicture}
+                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
+                        \begin{axis}[
+                            title={Performance},
+                            grid=both,
+                            xmin=0, xmax=1000,
+                            ymin=0, ymax=150,
+                            no markers,
+                            xtick distance = 200,
+                            ytick distance = 25,
+                            legend pos=north west,
+                            xlabel={Generation},
+                            ylabel={Performance},
+                        ]
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_avg_performance,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Best agent perfect play \% (accuracy)}
+                            \addplot table [
+                            x=generation,
+                            y=best_agent_wins_percentage,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{\( \text{Best agent wins \%} \)}
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{subfigure}
+                \hfill
+                % Second graph
+                \begin{subfigure}[b]{0.45\textwidth}
+                    \centering
+                    \begin{tikzpicture}
+                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
+                        \begin{axis}[
+                        title={Topology},
+                        grid=both,
+                        xmin=0, xmax=1000,
+                        ymin=0, ymax=50,
+                        no markers,
+                        xtick distance = 200,
+                        ytick distance = 10,
+                        legend pos=north west,
+                        xlabel={Generation},
+                        ylabel={Complexity},
+                        ]
+                        \addplot table [
+                        x=generation,
+                        y=avg_layers,
+                        col sep=comma,
+                        green,
+                        ] {\csvpath};
+                        \addlegendentry{Average layers}
+                        \addplot table [
+                        x=generation,
+                        y=avg_hidden_layer_size,
+                        col sep=comma,
+                        yellow,
+                        ] {\csvpath};
+                        \addlegendentry{Average hidden layer size}
+                        \end{axis}
+                    \end{tikzpicture}
+                \end{subfigure}
+
+            \end{minipage}
+        \end{adjustbox}
+        \caption{Performance metrics over generations in a 2x2 grid.}
+        \label{fig:performances-1}
+    \end{figure}
+    \\
+    Our modifications didn't impact the performance of the NN, but definitely helped keeping the topological complexity in a reasonable bound.
+    We will keep these modifications moving on.
+
     \subsubsection{Stack 1--8, Configuration 1}
     We will repeat the previous test but with a variable amount of matches between 1 and 8:
-    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1.1/stats.csv} % Rename the macro
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1.2/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
             \begin{axis} [
@@ -858,16 +981,17 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    In my tests, the best agent perfect play performance stalls at some value between 25\% and 60\%.
-    All NNs across the tests only played the move where it subtracts one match, except for test 2, where it was also able to remove 4 matches:
+    In my tests, the best agent perfect play performance always reaches a value ranging from 20\% to 65\% where it remained stable.
+    The NNs were only able to learn the moves where they subtract 1, 2 and 4 matches but no others.
     \begin{minted}{}
-    Agent 999 vs Agent 998:
-    Turn: 0: state: [7], agent_move: [0, 4]
-    Turn: 1: state: [3], agent_move: [0, 1]
+    Agent 996 vs Agent 995:
+    Turn: 0: state: [8], agent_move: [0, 4]
+    Turn: 1: state: [4], agent_move: [0, 2]
     Turn: 2: state: [2], agent_move: [0, 1]
-    Turn: 3: state: [1], agent_move: [0, 1]
+    Turn: 3: state: [1], agent_move: [0, 8]
     \end{minted}
-    In any case, the NNs have got stuck in a local minimum.
+    Their performance of the different tests just depended on how many moves the NNs learned.
+    In any case however, the NNs have got stuck in a local minimum.
     Such local minima originate in an early generations, where the agents that always subtracted one match were the most successful since it is the best strategy for undeveloped NNs that only play one move.
     After reaching that local minimum, there wasn't a competitor that could assert itself, either because of a flaw in the selection process or because none were created in first place.
     We can also see how homogeneous the NNs across generations have become by looking at the wins of the best agent against former best agents, which always settled at 50\%, revealing that they all use the same strategy.
@@ -888,7 +1012,7 @@ contents={%
         \item Population size set to 2500
         \item All parameters combined
     \end{enumerate}
-    \begin{figure}[htbp!]
+    \begin{figure}[H]
 
         \centering
         \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
