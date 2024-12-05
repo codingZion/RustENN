@@ -800,26 +800,27 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    The accuracy of the best run only got up to 35\% and if we look at the games recorded in generation 982, we can see why it didn't get to 100\%.
+    The accuracy of the runs got up to around 30\% and if we look at the games recorded in generation 982, we can see why it didn't get to 100\%.
     \begin{minted}{}
-    Agent 999 vs Agent 719:
+    Agent 998 vs Agent 999:
     Turn: 0: state: [8], agent_move: [0, 2]
     Turn: 1: state: [6], agent_move: [0, 2]
-    Turn: 2: state: [4], agent_move: [0, 1]
-    Turn: 3: state: [3], agent_move: [0, 2]
-    Turn: 4: state: [1], agent_move: [0, 1]
+    Turn: 2: state: [4], agent_move: [0, 2]
+    Turn: 3: state: [2], agent_move: [0, 1]
+    Turn: 4: state: [1], agent_move: [0, 3]
     \end{minted}
-    The best agent only learned to play the correct moves where it subtracts one or two matches.
-    It seems that all the NNs have to do is subtract 7 matches instantly, so why couldn't it learn this one move, when it could in the previous configuration?
+    The best agent only learned to play the moves where it subtracts one or two matches.
+    This seems quite bad since seemingly all the NNs have to do is to play [0, 7] instantly.
+    So why couldn't it learn this one move, when it could do it with stack size 2?
     The problem is that if the starting player subtracts less than 7 matches, the other player would get in winning position where it has to adapt and play subtract N - 1 matches.
-    A population might evolve where all agents only subtract 7 matches, however this seems more like a local minimum and our final goal is to develop NNs that can play the whole game.
+    There might evolve a population where all agents only subtract 7 matches, however this seems more like a local minimum and our final goal is to develop NNs that can play the whole game.
     This simplification turns out to be a hindrance, so we will change the stack to have a variable amount of matches.
     \subsubsection{Remark: Unnecessary Topology}
     If we look at the topology metrics of one of the tests, we realize that complexity of the NNs exploded without any visible improvement in performance:
     \begin{center}
         \begin{tikzpicture}
             \begin{axis}[
-                title={Topology},
+                title=\textbf{Topology},
                 grid=both,
                 xmin=0, xmax=1000,
                 ymin=0, ymax=50,
@@ -830,18 +831,16 @@ contents={%
                 xlabel={Generation},
                 ylabel={Complexity},
             ]
-                \addplot table [
+                \addplot[violet] table [
                 x=generation,
                 y=avg_layers,
                 col sep=comma,
-                green,
                 ] {\csvpath};
                 \addlegendentry{Average layers}
-                \addplot table [
+                \addplot[teal] table [
                 x=generation,
                 y=avg_hidden_layer_size,
                 col sep=comma,
-                yellow,
                 ] {\csvpath};
                 \addlegendentry{Average hidden layer size}
             \end{axis}
@@ -864,7 +863,7 @@ contents={%
                     \begin{tikzpicture}
                         \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
                         \begin{axis}[
-                            title={Performance},
+                            title=\textbf{Performance},
                             grid=both,
                             xmin=0, xmax=1000,
                             ymin=0, ymax=150,
@@ -897,7 +896,7 @@ contents={%
                     \begin{tikzpicture}
                         \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
                         \begin{axis}[
-                        title={Topology},
+                        title=\textbf{Topology},
                         grid=both,
                         xmin=0, xmax=1000,
                         ymin=0, ymax=50,
@@ -908,18 +907,16 @@ contents={%
                         xlabel={Generation},
                         ylabel={Complexity},
                         ]
-                        \addplot table [
+                        \addplot[violet] table [
                         x=generation,
                         y=avg_layers,
                         col sep=comma,
-                        green,
                         ] {\csvpath};
                         \addlegendentry{Average layers}
-                        \addplot table [
+                        \addplot[teal] table [
                         x=generation,
                         y=avg_hidden_layer_size,
                         col sep=comma,
-                        yellow,
                         ] {\csvpath};
                         \addlegendentry{Average hidden layer size}
                         \end{axis}
@@ -973,22 +970,22 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    In my tests, the best agent perfect play performance always reaches a value ranging from 20\% to 65\% where it remained stable.
-    The NNs were only able to learn the moves where they subtract 1, 2 and 4 matches but no others.
+    In my tests, the best agent perfect play performance always reaches a value ranging from 40\% to 75\% where it remained stable.
+    The NNs were only able to learn the moves where they subtract 1, 2 and 3 matches but no others.
     \begin{minted}{}
-    Agent 996 vs Agent 995:
-    Turn: 0: state: [8], agent_move: [0, 4]
-    Turn: 1: state: [4], agent_move: [0, 2]
-    Turn: 2: state: [2], agent_move: [0, 1]
-    Turn: 3: state: [1], agent_move: [0, 8]
+    Agent 998 vs Agent 999:
+    Turn: 0: state: [6], agent_move: [0, 3]
+    Turn: 1: state: [3], agent_move: [0, 2]
+    Turn: 2: state: [1], agent_move: [0, 1]
     \end{minted}
-    Their performance of the different tests just depended on how many moves the NNs learned.
+    The performance of NNs in different tests just depended on how many moves the NNs learned.
     In any case however, the NNs have got stuck in a local minimum.
-    Such local minima originate in an early generations, where the agents that always subtracted one match were the most successful since it is the best strategy for undeveloped NNs that only play one move.
+    Such local minima originate in an early generations where the agents aren't highly developed, which means they often only play one move.
+    The agents that only subtracted one match were therefore the most successful and reproduced the most.
     After reaching that local minimum, there wasn't a competitor that could assert itself, either because of a flaw in the selection process or because none were created in first place.
-    We can also see how homogeneous the NNs across generations have become by looking at the wins of the best agent against former best agents, which always settled at 50\%, revealing that they all use the same strategy.
-    To help overcoming that problem, We will therefore try to modify some parameters.
-    
+    We can also see how homogeneous the NNs across generations have become by looking at the wins of the best agent against former best agents, which always settles at 50\%, revealing that they all use the same strategy.
+    We will therefore try to modify some parameters to see if anything helps against such local minima.
+
     \subsubsection{Stack 1--8, Configuration 2--5}
     To overcome local minima, we can use following strategies:
     \begin{itemize}
@@ -1016,7 +1013,7 @@ contents={%
                     \begin{tikzpicture}
                         \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_2/stats.csv} % Rename the macro
                         \begin{axis}[
-                            title={Fitness exponent: 2},
+                            title=\textbf{Fitness exponent: 2},
                             grid=both,
                             xmin=0, xmax=1000,
                             ymin=0, ymax=150,
@@ -1050,7 +1047,7 @@ contents={%
 
                     \begin{tikzpicture}
                         \begin{axis}[
-                            title={New population composition (each 15\%)},
+                            title=\textbf{New population composition (each 15\%)},
                             grid=both,
                             xmin=0, xmax=1000,
                             ymin=0, ymax=150,
@@ -1086,7 +1083,7 @@ contents={%
                         \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_4/stats.csv} % Rename the macro
 
                         \begin{axis}[
-                            title={Population size: 2500},
+                            title=\textbf{Population size: 2500},
                             grid=both,
                             xmin=0, xmax=1000,
                             ymin=0, ymax=150,
@@ -1120,7 +1117,7 @@ contents={%
                         \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_5/stats.csv} % Rename the macro
 
                         \begin{axis}[
-                            title={All combined},
+                            title=\textbf{All combined},
                             grid=both,
                             xmin=0, xmax=1000,
                             ymin=0, ymax=150,
@@ -1155,7 +1152,7 @@ contents={%
 
 
     \end{figure}
-    As we can see in the graphs, the Performance didn't reach 100\% in any configuration and the NNs remained stuck in a local minimum with the best agents always winning 50\% against previous best agents.
+    As we can see in the graphs, the performance didn't reach 100\% in any configuration and the NNs remained stuck in a local minimum with the best agents always winning 50\% against previous best agents.
     However, there is still something we can change.
                 \subsubsection{Stack 1--8, Configuration 6}
     We run the simple configuration as in configuration 1, only that we changed the output encoding (explained in chapter~\ref{subsec:nim-implementation}) from one-hot to direct encoding:
@@ -1196,217 +1193,16 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    It seems that this change didn't help the NNs learn the game either.
-    Still, we can again modify the ENN parameters which might influence the learning process.
-                \subsubsection{Stack 1--8, Configuration 7--10}
-    We will repeat the tests from configuration 2--5, just with one-hot encoding enabled this time:
-    \begin{figure}[H]
-
-        \centering
-        \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
-        % First graph
-        \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
-            \begin{minipage}{1.1\textwidth}
-                \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
-                    \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_7/stats.csv} % Rename the macro
-                        \begin{axis}[
-                            title={Fitness exponent: 2},
-                            grid=both,
-                            xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
-                            no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_avg_performance,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_wins_percentage,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{\( \text{Best agent wins \%} \)}
-                        \end{axis}
-                    \end{tikzpicture}
-                \end{subfigure}
-                \hfill
-                % Second graph
-                \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
-                    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_8/stats.csv} % Rename the macro
-
-                    \begin{tikzpicture}
-                        \begin{axis}[
-                            title={New population composition (each 15\%)},
-                            grid=both,
-                            xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
-                            no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_avg_performance,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_wins_percentage,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{\( \text{Best agent wins \%} \)}
-                        \end{axis}
-                    \end{tikzpicture}
-                \end{subfigure}
-
-                \vspace{1em}
-
-                % Third graph
-                \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
-                    \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_9/stats.csv} % Rename the macro
-
-                        \begin{axis}[
-                            title={Population size: 2500},
-                            grid=both,
-                            xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
-                            no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_avg_performance,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_wins_percentage,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{\( \text{Best agent wins \%} \)}
-                        \end{axis}
-                    \end{tikzpicture}
-                \end{subfigure}
-                \hfill
-                % Fourth graph
-                \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
-                    \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_10/stats.csv} % Rename the macro
-
-                        \begin{axis}[
-                            title={All combined},
-                            grid=both,
-                            xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
-                            no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_avg_performance,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
-                            x=generation,
-                            y=best_agent_wins_percentage,
-                            col sep=comma,
-                            ] {\csvpath};
-                            \addlegendentry{\( \text{Best agent wins \%} \)}
-                        \end{axis}
-                    \end{tikzpicture}
-                \end{subfigure}
-
-
-            \end{minipage}
-        \end{adjustbox}
-        \caption{Performance metrics over generations in a 2x2 grid.}
-        \label{fig:performances-3}
-
-
-    \end{figure}
+    Now finally got it working!
+    The best agent's performance reaches 100\% after 13 generations.
     \\
-    Finally, we have got NNs solving the problem!
-    The configuration with new survival distribution reached maximal accuracy after around 400 generations whereas the one with larger population size after around 30 generations.
-    However this difference in generations needed is at least partially due to the large amount of agents in the latter configuration, which have more computations per generations and therefore naturally compensate for needed generations.
-    \\ \\
-    The configuration with large fitness exponent still got stuck in a local minimum and the combined configuration surprisingly did only as well as the configuration with large population.
-    Maybe, the fitness exponent actually hindered the combined configuration, which is why I will do one more test.
-                \subsubsection{Stack 1--8, Configuration 11}
-    We will now combine the new population composition with 15\% for each kind with the population size of 2500 agents:
-    \\
-    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_11/stats.csv} % Rename the macro
-    \begin{center}
-        \begin{tikzpicture}
-            \begin{axis} [
-                grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
-                no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
-                \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8r_t_11}
-                % First plot
-                \addplot table [
-                x=generation,
-                y=best_agent_avg_performance,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
-
-                % Second plot
-                \addplot table [
-                x=generation,
-                y=best_agent_wins_percentage,
-                col sep=comma,
-                ] {\csvpath};
-                \addlegendentry{\( \text{Best agent wins \%} \)}
-            \end{axis}
-        \end{tikzpicture}
-    \end{center}
-    It seems that we have finally found the perfect configuration!
-    The NNs already play perfectly after only one generation.
-    \\ \\
     So why did the change of output encoding affect the result that heavily?
+    \\ \\
     If we look at the NN structure we had a single output neuron for each possible amount of matches we can subtract in one-hot encoding.
     During the evolution process, the connections to the neurons for output 1 and 2 got stronger than the other ones since it lead to a competitive advantage.
     This unfortunately also meant, that the NN was practically unable to adapt to activate the other output neurons.
     In fact, this behaviour would have been entirely predictable, since there is no mathematical way to model an NN that solves this problem with one-hot encoding except for NNs with large amount of hidden nodes.
     Yet NNs with large amount of hidden nodes are unlikely to develop with my ENNs since they don't show a competitive advantage instantly.
-
     \subsection{Nim}
     We now already have gained a lot of insight about the functioning of ENNs and are therefore ready for the normal version of Nim.
 
