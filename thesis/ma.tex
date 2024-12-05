@@ -167,24 +167,24 @@ contents={%
     \tableofcontents
     \chapter{Introduction}\label{ch:introduction}
     \section{Preface}\label{sec:preface}
-    Ever since I got into Computer Science a few years ago, I was fascinated by the idea of algorithms that solved various problems.
+    Ever since I got into computer science a few years ago, I was fascinated by the idea of algorithms that solved various problems.
     Therefore, I participated in the SOI (Swiss Olympiad in Informatics) where we were taught everything about developing and programming algorithms and their data structures.
     \\ \\
-    In recent years although, a new field of Computer Science has gained a lot of attention, where these algorithms are not programmed by humans, but evolved by a computer.
-    This field called Machine Learning immediately got my excitement and two years ago a friend of mine and I had our first practical experience with it.
+    In recent years although, a new field of computer science has gained a lot of attention, where these algorithms are not programmed by humans, but evolved by a computer.
+    This field called machine learning immediately got my excitement and two years ago a friend of mine and I had our first practical experience with it.
     We developed a simple neural network, which helped us predict the color of a lego brick in front of a color sensor based on the RGB values in various lighting conditions.
     \\ \\
-    A neural network (NN) forms the basis of most Machine Learning models and I will therefore explain it in much detail in the following chapters.
-    In simple terms however, a NN is a strongly simplified artificial model of the human brain consisting of an interconnected web of Neurons through which information flows and gets computed.
+    A neural network (NN) forms the basis of most machine learning models and I will therefore explain it in much detail in the following chapters.
+    In simple terms however, a NN is a strongly simplified artificial model of the human brain consisting of an interconnected web of neurons through which information flows and gets computed.
     \\ \\
     Although the NN we developed two years ago already learned on its self, we still had to provide and label data for it to learn from.
     This meant that we had to manually scan the RGB values of the lego bricks and assign them the color they represented.
     In this case, this was the most efficient solution, however there are cases where you train a model where such data is unavailable or you simply want them to develop their own approach for a problem without predefined solutions.
-    That is how I got to my Matura Thesis, which aims to develop such ML models that learn without labeled data with and use those to learn board games.
+    That is how I got to my matura thesis, which aims to develop such ML models that learn without labeled data with and use those to learn board games.
 
         \section{Thesis Statement}\label{sec:thesis-statement}
     This thesis will explore the field of neural networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
-    The solution this Thesis will focus on are evolutionary neural networks (ENNs), a combination of Neural Networks and Genetic Algorithms.
+    The solution this Thesis will focus on are evolutionary neural networks (ENNs), a combination of neural networks and evolutionary competition.
     \\ \\
     In this thesis, I develop my own simplified implementation of ENNs and then train them on some board games.
     The research effort consists of testing the ENN algorithm with different Parameters and Features to see how well it can learn to play the games in different configurations.
@@ -564,59 +564,65 @@ contents={%
         pub rank: isize,
     }
     \end{minted}
-    The function \mintinline{rust}{mutate(&mut self, mutations: usize) -> Self {} } has a number of mutations as a parameter which it applies to the NN of the Agent.
+    The function \mintinline{rust}{mutate(&mut self, mutations: usize) -> Self {} } has a number of mutations as a parameter which it applies to the NN of the agent.
     For each mutation, it randomly selects one of the following mutations: Change weights/biases, Shift weights/biases, Add edges, Add nodes.
-    All of these mutations have already been described in the last Chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
+    All of these mutations have already been described in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
     \begin{itemize}
-        \item When inserting a new node between two connected nodes (mutation 4.), the inserted node will be added to a random layer in between the previously connected nodes.
+        \item When inserting a new node in between of two connected nodes (mutation 4.), the inserted node will be added to a random layer in between of the previously connected nodes.
         If the previously connected nodes are in neighboring layers, we create a new layer in between for the new node.
-        %\item random selection details
-        \item The shift mutation adds to the initial value a random float in the range 0.0 to 1.0 squared with random sign:
-        $v_{new} = v_{old} + rand(-1, 1) * rand(0..1)^2$
-        \item random weighted selection
+        \item The shift mutation adds to the initial value a random float in the range 0.0 to 1.0 squared with a random sign.
+        This gives us following function: \\
+        $v_{new} = shift(v_{old}) = v_{old} + rand(-1, 1) * rand_{float}(0..1)^2$
+        \item The amount of mutations performed per NN is randomly selected in a range, which we can define as parameters (see section~\ref{subsec:enn-parameters}).
+        \item The type of mutation that is performed is randomly determined for each mutation.
+        We can also assign a weight to each mutation as parameters which represent its probability to be selected relatively to the weight of the other mutations (see again section~\ref{subsec:enn-parameters}).
     \end{itemize}
 
             \subsection{Evolutionary Computation}\label{subsec:natural-slection}
-    The EC process starts with an initial population of Agents with new, minimal NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in \ref{subsec:neural-network}).
+    The EC process starts with an initial population of agents with new, minimal NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in \ref{subsec:neural-network}).
     As we already established before (see~\ref{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}), we now repeat the steps of performance evaluation, selection and mutation.
-                \subsubsection{Competition and Fitness}
-    In my case, the fitness evaluation works by letting the agents of a population compete against each other in the games.
-    However, I can't let every agent play against all other agents, since the needed time increases quadratically with population size.
-    My solution therefore is to use my circular Pairing algorithm.
-    This algorithm, I first define a number of opponents each agent needs to play against.
-    For each of those games, I generate a new distance, where I now loop through my list of agents and pair agent i with agent i + distance.
-    I also check before, that the distance isn't a multiple of any distance we had previously, since this would result in the same agents being paired twice.
-    \\ \\
+                \subsubsection{Competition}
+    In this case, the fitness evaluation works by letting the agents of a population compete against each other in the games.
+    However, we can't let every agent play every other agent since the needed time increases quadratically with population size.
+    My solution therefore is to use my circular pairing algorithm.
+    This algorithm has a predefined number of opponents each agent needs to play against (see~\ref{subsec:enn-parameters}).
+    For each of this predefined number of games, it generates a new distance which it then uses to pair each $\textrm{agent}_i$ with the $\textrm{agent}_{i+distance}$.
+    It also checks that the distance isn't a multiple of any distance it had previously since this would result in the same agents being paired twice.
+    Each game is played twice with both players starting once while keeping the same initial state.
+                \subsubsection{Fitness Evaluation}
     Now, we need to evaluate the fitness of the agents with the fitness function.
-    The main idea for the fitness function is to simply count the number of wins an agents has made during the competition.
-    Of course, there are other possibilities to evaluate the performance of the agents that may represent an agents performance more accurately.
-    The reason why I still first try to use the number of wins as fitness is because it is a generally applicable function to any game.
+    The main idea for the fitness function is to simply count the number of wins an agent has made during the competition.
+    Of course, there are other possibilities to evaluate the performance of an agent that represent their performance more accurately.
+    The reason why we still first try to use the number of wins as fitness is because it is a generally applicable function to any game.
     Counting the number of wins doesn't require a deeper understanding of the game, which is very useful in games that are indeterministic.
     This also enables the ENNs to find their own new strategy for the game, which is finally the goal of AI training.
                 \subsubsection{Natural Selection}
-    After the fitness evaluation, we now can test the performance of the generation (in the next section~\ref{subsec:performance-tests}) and then generate the new population.
-    The new population is made up by some portion of each of following:
+    After the fitness evaluation, we can test the performance of the generation (details in section~\ref{subsec:performance-tests}) and then generate the new population.
+    The new population is made up by some portion of each of the following:
     \begin{itemize}
-        \item Agents from the last generation:
+        \item \textbf{Agents from the last generation:}
         The main part of the new population will be drawn from agents from the old generation with high fitness.
-        This works by drawing all needed agents randomly with the probability of an agent being drawn being its fitness.
+        This works by selecting all needed agents randomly using the fitness of our agents as their relative probability of being drawn.
         We can also raise the fitness to some power to either allow more or less survival of non top-performing agents.
-        \item Random agents from the last generation:
-        Some fraction of the new population is made up of randomly selected agents from the last generation, which might help counter a population with the top performing agents stuck in local minimum.
-        \item New random agents:
-        Another fraction of the new population is made up of newly generated random agents, which might help counter overly complex NNs and also local minima in a population.
+        \item \textbf{Random agents from the last generation:}
+        Some fraction of the new population is made up of randomly selected agents from the last generation which might help counter a population with the top performing agents stuck in local minimum.
+        \item \textbf{New random agents:}
+        Another fraction of the new population is made up of newly generated, random agents which might help counter overly complex NNs and also local minima in a population.
+        \item \textbf{Old best agents:}
+        The last part of the new population is made up of best agents from previous generations which help counter populations stuck in a local minimum.
     \end{itemize}
     Now that we have generated our new population, we can start over the whole process.
             \subsection{ENN Parameters}\label{subsec:enn-parameters}
-    As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), my research involves testing my implementation with several configurations of different parameters and then evaluate their performance with the stats described in the following section(\ref{subsec:performance-tests}).
+    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), my research involves testing my implementation with several configurations of different parameters and then evaluate their performance with the stats described in the following section(\ref{subsec:performance-tests}).
     Here is a list of all possible parameters influencing my ENNs:
     \begin{itemize}
-        \item General: Size of the population
-        \item Game: Initial state of the game, game function that decodes the NN prediction and executes the move on the current state
-        \item Competition: Number of opponents per agent
-        \item Selection: Fitness exponent, share of old best agents, random agents from last generation and new random agents making up the new population besides agents selected by fitness
-        \item Mutation: Min and max amount of mutations per agent, weight/probability of the different mutations
-        \item Evaluation: Number of games from the best agent against old best agents
+        \item \textbf{General:} Size of the population
+        \item \textbf{Game:} Initial state of the game, game function that encodes the state for the NN, decodes its prediction, and executes the move on the current state
+        \item \textbf{Competition:} Number of opponents per agent
+        \item \textbf{Selection:} Fitness exponent, share of old best agents, random agents from last generation and new random agents making up the new population besides agents selected by fitness
+        \item \textbf{Mutation:} Min and max amount of mutations per agent, weight/probability of the different mutations
+        \item \textbf{Evaluation:} Number of games from the best agent against old best agents
+
     \end{itemize}
     For each test, we then save a file with the information about the value of all these parameters.
 
@@ -624,59 +630,59 @@ contents={%
     To see how the Agents perform in the games, we need to track some stats and games.
     We save following data every generation after the competition phase:
     \begin{itemize}
-        \item The fitness of the best agent: This stat shows us, how much better the best agent performs relatively to the average agent
-        \item Wins against older generation: We pair the best agent against an evenly distributed set of the best agents from past generations to track relative performance to the past.
+        \item \textbf{Fitness of the best agent:} This stat shows us how much better the best agent performs relatively to the average agent.
+        \item \textbf{Wins against older generations:} We pair the best agent against an evenly distributed set of the best agents from past generations to track relative performance to the past.
         As long as this number is above 50\%, we should expect improvement over older generations.
-        \item Objective grading: This stat is the performance evaluation of the best agent based on some algorithm that either plays mathematically perfect or (in non-deterministic games) is generally accepted to play well.
-        It is important to note that we primarily don't use this algorithm for the fitness function, because of the points previously mentioned in section~\ref{subsec:natural-slection}.
-        \item Number of turns: We track the average number of turns the agents needed while playing their competition games.
+        \item \textbf{Objective grading:} This stat is the performance evaluation of the best agent based on some algorithm that either plays mathematically perfect or (in non-deterministic games) is generally accepted to play well.
+        It is important to note that we primarily don't use this algorithm for the fitness function because of the points previously mentioned in section~\ref{subsec:natural-slection}.
+        \item \textbf{Number of turns:} We track the average number of turns the agents needed while playing their competition games.
         In Nim, low turn count generally means better play.
-        \item Average amount of hidden layers and nodes per hidden layer: We track these stats to see how complex the topologies of our NNs in the population are.
-        \item Best agent layer sizes and edges: We track these topological stats to see how complex the best solution is.
-        \item Best agent games: We track the whole game turn for turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from previous generations.
-        With this game logs, we can see what moves our agents make in real games and try to grasp their tactics and strategies.
+        \item \textbf{Average amount of hidden layers and nodes per hidden layer:} We track these stats to see how complex the topologies of our NNs in the population are.
+        \item \textbf{Best agent layer sizes and edges:} We track these topological stats to see how complex the best solution is.
+        \item \textbf{Best agent games:} We track the whole games turn after turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from a previous generation.
+        With these game logs, we can see what moves our agents make in real games and try to derive their tactics and strategies.
     \end{itemize}
             \subsection{Nim}\label{subsec:nim-implementation}
-    For the nim game, I implemented a few different game modes as well as objectively perfectly playing dynamic programming algorithm.
+    For the nim game, there are a few different game modes as well as an objectively perfectly playing dynamic programming algorithm.
     Let's first look at the general idea of how a game is played.
                 \subsubsection{General Approach}
     Each game starts with a first game state, which is derived from the initial state parameter.
-    A game state is a list where the length is the amount of stacks in that game and each value $v_i$ stands for the amount of matches on the i-th stack.
-    Then, the competing agents take turns playing their moves.
-    In one turn, the agent whose turn it is, reads the current game state as input and then makes a prediction for its move.
+    A game state is a list where its length is the amount of stacks in that game and each value $v_i$ stands for the amount of matches on the i-th stack.
+    Then, the competing agents take turns predicting their moves.
+    On their turn, the active agent reads the current game state as input and predicts its next move.
     A move indicates the stack where the matches are removed as well as the number of removed matches.
-    Then the game computes the new game state after the move or ends the game if all stacks are empty.
+    Then the game function computes the new game state after the move or ends the game if all stacks are empty.
 
                 \subsubsection{Encoding and Decoding}
     Our input is directly encoded into the input layer of the NNs, which means the input layer has the same size as the state.
-    The values of the input nodes are directly copied from the game state list and therefore also represent the amount of matches on the i-th stack.
+    The values of the input nodes are directly copied from the game state list and therefore also represent the amount of matches on each stack.
     \\ \\
-    For the output, I implemented two different ways of encoding.
+    For output encoding, there is two different implementations.
     \begin{itemize}
-        \item Direct encoding: We have two output nodes where the value for the first represents the index of the stack and the second value represents the amount of matches that are removed.
-        \item One-hot encoding: The first $N$ output nodes encode for the index and the following nodes encode for the amount of matches removed.
-        For both the nodes encoding for index and amount the node with the highest value is finally used as output.
+        \item \textbf{Direct encoding:} We have two output nodes where the value for the first represents the index of the stack and the second value represents the amount of matches that are removed.
+        \item \textbf{One-hot encoding:} The first $N$ output nodes encode for the index and the following nodes encode for the amount of matches removed.
+        For both the nodes encoding for index and amount removed, the node with the highest value is finally used as output.
         The output layer therefore has length $l = N + \max(state_{initial})$, where $N$ is the amount of stacks and $\max(state_{initial})$ is the highest possible amount of matches on a stack.
     \end{itemize}
     Direct encoding is the more straight forward approach with lower NN topology whereas one-hot encoding ensures that the output stays in a reasonable range.
                 \subsubsection{Game Modes}
     There are game modes \texit{Simple Nim} and \texit{Nim} with some configuration possibilities:
     \\
-    In \texit{Nim}, each stack of the initial state can hold matches whereas in \textit{Simple Nim}, the value of all stacks but one randomly chosen stack is set to 0.
+    In \texit{Nim}, each stack of the initial state can hold matches whereas in Simple Nim, the value of all stacks but one randomly chosen stack is set to 0.
     \\
-    The stack sizes in the initial state equal the corresponding value from the initial state list parameter except for the configuration \textit{random}, where the stack sizes of the initial state are randomly selected with the corresponding value in the initial state list parameter as upper bound.
+    The stack sizes in the initial state equal the corresponding values from the initial state parameter except for the configuration \textit{random}, where the stack sizes of the initial state are randomly selected with the corresponding values in the initial state parameter as upper bound.
     \\
     Another configuration involves the output decoding.
     With strict grading, illegal moves lead to a game loss, whereas in safe grading, the closest legal move to the illegal prediction is played.
                 \subsubsection{Objective Grading}
-    To have an exact measure of performance, I implemented a Dynamic Programming (DP) algorithm that knows the best moves for each given state.
+    To have an exact measure of performance, we use a dynamic programming (DP) algorithm that knows the best moves for each given state.
     It works by first defining a base case, which in case of Nim is every stack being empty and the result a loss.
     Then, it starts with the initial state and tries out all possible moves using recursion.
     For each state it tries to find a move that forces the opponent into a losing position.
-    If it can find such move, the position is winning, but if all moves lead to winning position for the opponent, the algorithm returns the position with the highest minimum moves for the opponent to win.
+    If it can find such a move, the position is winning, but if all moves lead to winning position for the opponent, the algorithm returns the position with the maximal moves needed for the opponent to win.
     It also stores the result for each already computed state, so that all other paths that lead to that position can use the precomputed result.
     \\ \\
-    Now, that we know for all positions if they're winning, we can use this to grade moves of our agents:
+    Now that we know for all positions if they're winning, we can use this to grade the moves of our agents:
     For each move, an agent gets one point if
     \begin{itemize}
         \item the agent had a winning state and made a move that got the opponent into a losing state,
@@ -696,13 +702,13 @@ contents={%
             \subsection{Simple Nim}\label{subsec:simple-nim-results}
     For the Simple Nim game, I will run each test for 1000 generations, since ENNs should be able to solve this simple game rather quickly.
                 \subsubsection{Stack: 2, Configuration 1}
-    First we test the ENNs on a problem where the only stack contains 2 matches.
-    This is the easiest problem we can still consider a game - with one match per stack the only one legal move, so it doesn't involve any decision-making.
-    The winning strategy of course is to only take one match and leave the opponent with only one match on the stack.
+    First we test the ENNs on a problem with one stack containing 2 matches.
+    This is the easiest problem we can still consider a game - with one match on the stack there is only one legal move, so it doesn't involve much decision-making.
+    The winning strategy of course is to only take one match and leave the opponent with the last match on the stack.
     We start our first test with a relatively small population of 100 agents and try to simplify all other parameters:
     \\
-    \texttt{run\_nim\_strict}, initial state: \texttt{[2]}, population size: \texttt{100}, comp games: \texttt{50}, mutation min: \texttt{0}, mutation max: \texttt{1}, fitness exponent: \texttt{1}, best agent share:
-    \texttt{0}, random agent share: \texttt{0}, random old agent share: \texttt{0}, best agent tournament games: \texttt{50}, add\_connection\_rand: \texttt{1}, add\_node\_rand: \texttt{1}, change\_weight\_rand: \texttt{1}, change\_bias\_rand: \texttt{1}, shift\_weight\_rand: \texttt{1}, shift\_bias\_rand: \texttt{1}
+    \texttt{game function: run\_nim\_strict}, initial state: \texttt{[2]}, population size: \texttt{100}, competition games: \texttt{50}, mutation min: \texttt{0}, mutation max: \texttt{1}, fitness exponent: \texttt{1}, best agent share:
+    \texttt{0}, random agent share: \texttt{0}, random old agent share: \texttt{0}, best agent tournament games: \texttt{50}, add\_connection\_rand: \texttt{1}, add\_node\_rand: \texttt{1}, change\_weight\_rand: \texttt{1}, change\_bias\_rand: \texttt{1}, shift\_weight\_rand: \texttt{1}, shift\_bias\_rand: \texttt{1}\\
     It is also important to note that we start with one-hot output encoding, since this means that the output stays in the desired range.
     \\ \\
     Now, we'll run it and see how it goes:
@@ -754,10 +760,9 @@ contents={%
     Turn: 1: state: [1], agent_move: [0, 1]
     Game result: [1, 0]
     \end{minted}
-    The best agent wins percentage in the plot above is a steady 50\%, since all games are played both ways and the first agent always wins the game.
-    We can also see, on line 2 of our output, that the topology didn't evolve for our best agent, which makes sense since it is a very simple task.
+    The best agent wins percentage in the plot above is a steady 50\% since all games are played both ways and the first agent always wins the game.
             \subsubsection{Stack: 8, Configuration 1}
-    Now, since the stack size with 2 has already worked fine, we will now try the same configuration but with an increased initial stack size 8:
+    Since the stack size with 2 has already worked fine, we will now try the same configuration with an increased initial stack size of 8 matches:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
     \begin{center}
