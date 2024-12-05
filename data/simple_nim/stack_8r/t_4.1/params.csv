@@ -1,2 +1,2 @@
 game func,initial state,population size,comp games,mutation min,mutation max,fitness exponent,best agent share,random agent share,random old agent share,best agent tournament games,add_connection_rand,add_node_rand,change_weight_rand,change_bias_rand,shift_weight_rand,shift_bias_rand
-run_nim_strict_random,[8],2500,50,0,1,1,0,0,0,50,0.1,0.1,1,1,1,1
+run_nim_strict_random,[8],2500,50,0,1,1,0,0,0,50,0.05,0.05,1,1,1,1

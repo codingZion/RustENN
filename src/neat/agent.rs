@@ -21,11 +21,11 @@ pub const MUTATION_TYPES:[MutationType; 6] = [
     MutationType {
         mutation: NeuralNetwork::add_connection_rand,
         //weight: 1.5,
-        weight: 1.,
+        weight: 0.05,
     },
     MutationType {
         mutation: NeuralNetwork::add_node_rand,
-        weight: 1.,
+        weight: 0.05,
     },
     MutationType {
         mutation: NeuralNetwork::change_weight_rand,

@@ -24,9 +24,9 @@ pub const FITNESS_EXP: f64 = 1.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 
-pub const BEST_AGENT_SHARE: u32 =  0;
-pub const RANDOM_AGENT_SHARE: u32 = 0;
-pub const RANDOM_OLD_AGENT_SHARE: u32 = 0;
+pub const BEST_AGENT_SHARE: u32 =  15;
+pub const RANDOM_AGENT_SHARE: u32 = 15;
+pub const RANDOM_OLD_AGENT_SHARE: u32 = 15;
 
 
 #[derive(Clone, Serialize, Deserialize)]

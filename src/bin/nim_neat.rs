@@ -1,5 +1,5 @@
 use rust_neat::neat::population::Population;
-use rust_neat::nim::nim::Nim;
+use rust_neat::nim::nim2::Nim;
 use std::{fs, thread};
 use std::time::SystemTime;
 //mute println
@@ -13,10 +13,10 @@ macro_rules! println {
 const USE_BIN: bool = false;
 
 fn main() {
-    let nim_func = Nim::run_nim_strict;
-    let func_str = "run_nim_strict";
+    let nim_func = Nim::run_nim_strict_random;
+    let func_str = "run_nim2_strict_random";
     let comp_games = 50;
-    let initial_state = vec![2];
+    let initial_state = vec![1000];
     let dir_name = "data_out/";
     fs::create_dir_all(dir_name).expect("Couldn't create Directory");
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
@@ -33,7 +33,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population(dir_name.to_owned() + "population.bin").unwrap()
     } else {
-        Population::new(100, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
+        Population::new(10000, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
