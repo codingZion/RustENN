@@ -388,65 +388,69 @@ contents={%
     \end{mydef}
     Its main idea is to have genes that only encode indirectly for the parameters, and can be turned on or off.
             \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
-    We know from the previous Chapter(\ref{subsec:mutation}) that EC starts with an initial population of agents with random sets of parameters, which all have a cost determined by the cost function.
-    Agents with relatively low cost survive the round and then get replicated a few times, mutated and again selected by cost.
+    We know from the previous section that EC starts with an initial population of agents with random sets of parameters, which all have a fitness determined by the cost function.
+    Agents with relatively low cost (or high fitness) survive the round and then get replicated a few times, mutated and again selected by cost.
     \\ \\
     This whole process strongly resembles a ball rolling down a hill in some terrain.
-    On any given point on the terrain, de ball will roll down to the next neighboring point that is the lowest of all.
-    Now, in EC the parameters for a function can be imagined as the horizontal coordinates for the ball meanwhile the cost of these parameters is the height at their location.
+    On any given point on the terrain, the ball will roll down in the direction that goes down the steepest (we will disregard the inertia of the ball).
+    If we apply this analogy to EC, the parameters for a function can be imagined as the horizontal coordinates for the ball meanwhile the cost of these parameters is the height at that location.
     The different mutations have parameters close to the original and can therefore be thought of as points close to the original in our terrain.
-    And as the ball rolls down to the lowest of all neighboring points in any moment, EC again chooses the set of parameters with the lowest cost every cycle.
-    This learning method is called Gradient Descent, as the algorithm evaluates all neighboring points and then follows this direction with the lowest cost and therefore steepest gradient.
+    As the ball rolls down to the lowest of all neighboring points in any moment, EC again chooses the set of parameters with the lowest cost every cycle.
+    Because of this, our ML process is called gradient descent, as the algorithm evaluates all neighboring points and then follows the direction with the lowest cost and therefore steepest gradient.
     \\ \\
-    So what does the ball example tell us about how EC learning works?
+    So what does the ball analogy tell us about how EC learning works?
     Imagine a hill with each a shallow and a deep valley next to it.
-    Depending on which side of the hill you place the ball in the beginning, it will roll in a different direction and end up in either of the two valleys with different height.
-    From this we can take away following things about EC learning:
+    Depending on which side of the hill you place the ball in the beginning, it will roll in a different direction and end up in either of the two valleys, which have different heights.
+    From this we can take away following things:
     \begin{itemize}
         \item (Minor) differences in the starting position can result in large differences in the end position and the respective cost.
-        \item Once in reached a point with no downwards gradient, innovation halts for that agent, even if there is a lower cost point somewhere.
+        \item Once a point with no downwards gradient is reached, innovation halts for that agent, even if there is a point with lower cost somewhere else.
         Such points are called local minima.
     \end{itemize}
+    \begin{mydef}{Local Minimum}
+        A local minimum is a point with minimal cost compared to its neighboring area and is therefore a halting point for gradient descent.
+    \end{mydef}
     The impact of starting position and local minima often pose a large problem for EC applications.
-    Strategies to reduce the impact of such, are therefore essential for the Algorithms success.
+    Strategies to reduce the impact of such are therefore essential for the algorithms success.
 
         \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
-    After having covered all the basics about NNs and EC, we can now combine those concepts to create the algorithm, that this thesis is about.
+    After having covered all the basics about NNs and EC, we can now combine those concepts to create the algorithm this thesis is about.
     \begin{mydef}{Evolutionary Neural Networks}
-        Evolutionary Neural Networks (ENNs) are Neural Networks that use Evolutionary Computation to optimize for its parameters for the NNs weights/biases and its topology.
+        Evolutionary neural networks (ENNs) are neural networks that use evolutionary computation to optimize for its parameters for the NNs weights/biases and its topology.
     \end{mydef}
     ENNs are useful for complex machine learning problems and also work for unlabeled training data as long as there is a fitness function.
-    Let's bring our knowledge about EC into the context of Neural Networks:
+    Let's bring evolutionary computation into the context of neural networks:
     The parameters ENNs encode for are for the weights, biases, nodes and edges of a Neural Network.
-    You could either directly encode the NNs parameters as a graph or indirectly as genes, which would make it a Genetic Algorithm.
+    You could either directly encode the NNs parameters as a graph or indirectly as genes, which would make it a genetic algorithm.
     ENNs still start with a random population of agents that are evaluated and selected by a fitness function.
     Then they are replicated (with crossover or non-mating) and finally mutated in following ways:
     \begin{enumerate}
-        \item Change weights/biases: A new random value is set for the weight or bias of a random existing edge or node.
-        \item Shift weights/biases: The value for an existing weight or bias of a random existing edge or node is altered by a random change but is kept close to the old value.
-        \item Add edges: A new edge is added between two random unconnected nodes.
-        \item Add nodes: A new node is added in between of a random existing edge.
-        The old edge is removed and two new edges with random weight are added between the new node and the two other nodes each.
-        \item Remove nodes/edges: A random node or edge in a way that doesn't cut off the input from the output layer.
+        \item \textbf{Change weights/biases:} A new random value is set for the weight or bias of a random existing edge or node.
+        \item \textbf{Shift weights/biases:} The value for an existing weight or bias of a random existing edge or node is altered by a random change but is kept close to the old value.
+        \item \textbf{Add edges:} A new edge is added between two random, previously unconnected nodes.
+        \item \textbf{Add nodes:} A new node is added in between of a random existing edge.
+        The old edge is removed and two new edges with random weights are added between the new node and the two other nodes each.
+        \item \textbf{Remove nodes/edges:} A random node or edge is removed in a way that doesn't cut off the input from the output layer.
     \end{{enumerate}}
     \section{Drawing Inspiration from the NEAT-Apporach}\label{sec:drawing-inspiration-from-the-neat-apporach}
-        As already stated in the Thesis Statement(\ref{sec:thesis-statement}), Neuroevolution of Augmenting Topologies is a ENN machine learning algorithm by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
-        One of its main innovations is that the initial population starts with NNs of lowest complexity and only increase topological complexity as its useful for the problem.
-        In specific, you start with NNs that have only the nodes of the input layer connected to the nodes of the output layer.
-        This should result in more efficient NNs for the problem, as the complexity is only increased when it improves the NNs performance.
-        The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.)as it is already minimal.
+        As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies is a ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
+        One of its main innovations is that the initial population starts with NNs of lowest complexity and the NNs only increase topological complexity as its useful for the problem.
+        In specific, we start with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
+        This should result in more efficient NNs for the problem as complexity is only increased when it improves the NNs performance.
+        The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.) as it is already minimal.
 
     \section{Games}\label{sec:games}
-    Let's also have a quick look at the games, this Thesis will train the ENNs on.
+    Let's also have a quick look at the games this Thesis will train the ENNs on.
     \subsection{Simple Nim}\label{subsec:simple-nim}
     This game is a simplified version of Nim, where two players take turns removing an arbitrary amount of matches from a single stack with some number of matches.
     The player who removes the last match loses.
     Therefore, the winning strategy simply is to remove all matches from the stack but one, which forces the opponent to remove the last match, which makes them lose.
     \subsection{Nim}\label{subsec:nim}
-    This game works similarly to Simple Nim (described in the last Section(\ref{subsec:simple-nim})) with the difference that there are multiple stacks with matches.
+    This game works similarly to Simple Nim with the difference that there are multiple stacks with matches.
     Now, the player who removes the last match from the last unemptied stack loses.
-    You can read up the winning strategy for Nim on Wikipedia\footcite{nim_23}.
-    The winning strategy is much more complex, which forces the ENNs to learn a more complex strategy.
+    The winning strategy for Nim is much more complex, which forces the ENNs to learn a more complex strategy.
+    You can read up the exact winning strategy on Wikipedia\footcite{nim_23} but the main point is that perfect play requires a complex algorithm.
+    We won't expect the ENNs to learn this algorithm fully but hopefully they will be able to approximate perfect play that it can beat human players that don't know the perfect strategy.
     \section{Related Work}\label{sec:related-work}
     The field of AI research in ENNs is largely studied and is often linked to games.
     In the following table, we can find some examples of ENN models that have been tested on games:
@@ -482,7 +486,7 @@ contents={%
           \makecell{\cite{capture_02}} &
           \makecell{Custom\\ENN} &
           \makecell{Capture Game\\(subgame of Go)} &
-          \makecell{100+\\generations\\(distributed)} &
+          \makecell{$>$100\\generations\\(distributed)} &
           \makecell{No significant\\progress yet} \\
           \hline
           \makecell{\cite{backgammon_07}} &
@@ -494,32 +498,29 @@ contents={%
         \end{tabular}\hspace*{-2cm}
     \end{center}
     \normalsize
-
-
-
     Note:
-    Although the amount of fitness evaluation is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations isn't indicated and cannot be calculated.
+    Although the amount of fitness evaluations is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations isn't indicated and cannot be derived.
 
     \chapter{Building my ENN}\label{ch:building-my-enn}
 
     \section{Algorithm Design}\label{sec:algorithm-design}
-    Now, we will have a detailed look at how I used the concepts described in the last Chapter(\ref{ch:introduction}) to build an Evolutionary Neural Network that plays board games.
-    First, I will explain the general Structure of my Code:
+    Now, we will have a detailed look at how to use the concepts described in the last chapter(\ref{ch:introduction}) to build an evolutionary neural network that plays Nim.
+    First, I will explain the general structure of my code:
         \subsection{Overview}\label{subsec:overview}
-    As already mentioned in the Thesis Statement(\ref{sec:thesis-statement}), this Project is written in the Rust Programming Language.
+    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language.
     If you don't understand the syntax of the code snippets, you can consult the online \("\)The Rust Programming Language\("\) booklet under: \url{https://doc.rust-lang.org/book/}
     \\ \\
-    My Codebase is divided into different modules as well as a bin folder with main files, one of which has to be selected to be executed at the beginning.
-    The other modules are divided into one module with the ENN algorithm, the other modules handle the different games, the ENNs learn to play.
+    My codebase is divided into different modules as well as a bin folder with main files.
+    The modules are divided into one module with the ENN algorithm, the other modules handle the different games, the ENNs learn to play.
     The ENN module is divided into two files:
     \begin{itemize}
-        \item agent.rs: This file handles the NNs and the mutations on the NNs
-        \item population.rs: This file handles the natural selection process and the data saving
+        \item \textbf{agent.rs:} This file handles the NNs and the mutations on the NNs
+        \item \textbf{population.rs:} This file handles the natural selection process and data saving
     \end{itemize}
-    The game modules provide the problems for the NNs handle the predictions of the NNs and finds the new game state after a move.
+    The game modules provide the problems for the NNs, handle the predictions of the NNs, and find the new game state after a move.
     It might also include an objective performance evaluation function to measure how well the NNs perform.
-    I will now explain all the functions bottom up, starting with the Neural Network.
-    I work with Rusts Structs which are similar to classes in other programming languages.
+    I will now explain all the functions bottom up, starting with the neural network.
+    I work with Rusts structs which are similar to classes in other programming languages.
             \subsection{Neural Network}\label{subsec:neural-network}
     The struct \textit{NeurualNetwork} (defined in agents.rs) most importantly contains a two-dimensional vector of nodes, which encodes all the information of the NN\@:
     \begin{minted}{rust}
@@ -528,7 +529,7 @@ contents={%
         pub nodes: Vec<Vec<Node>>,
     }
     \end{minted}
-    The Vector inside (\mintinline{rust}{Vec<Node>}) represents a layer of the NN and the outside Vector (\mintinline{rust}{Vec<Vec<Node>>}) contains all layers of the NN\@.
+    The vector inside (\mintinline{rust}{Vec<Node>}) represents a layer of the NN and the outside vector (\mintinline{rust}{Vec<Vec<Node>>}) contains all layers of the NN\@.
     A \textit{Node} contains its bias and a vector for the incoming and outgoing edges:
     \begin{minted}{rust}
     pub struct Node {
@@ -549,14 +550,13 @@ contents={%
     The most important functions of the \textit{NeuralNetwork} struct are:
     \begin{itemize}
         \item \mintinline{rust}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which initializes the NN with all input and output nodes connected to each other with random weights and biases.
-        \item \mintinline{rust}{predict(&self, input: Vec<f64>) -> Vec<f64>}, which computes the output of the NN for a given input with forward propagation algorithm described in the last Chapter(\ref{subsec:feed-forward-neural-networks-(fnns)}).
-        \item \mintinline{rust}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which computes the neuron activation described in the last Chapter(\ref{subsec:feed-forward-neural-networks-(fnns)}).
-        I use a variant of the \texit{ReLU} function, since the linearity for inputs above 0 of the ReLU function allows for more variety of neuron activation, which makes the NN more flexible and efficient.
-        The variant I use is the \texit{ELU} function, which additionally tackles the problem of dead neurons in \texit{ReLU} by allowing for negative values.
-        \item All mutation functions for the NN, which we will need in the next Subsection(\ref{subsec:mutation}).
+        \item \mintinline{rust}{predict(&self, input: Vec<f64>) -> Vec<f64>}, which computes the output of the NN for a given input with the forward propagation algorithm described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
+        \item \mintinline{rust}{activation_function(x: f64) -> f64}, which computes the neuron activation described in \ref{subsec:feed-forward-neural-networks-(fnns)}.
+        We use a variant of the \texit{ReLU} function, since the linearity for inputs above 0 in the ReLU function allows for more variety of neuron activation, which makes the NN more flexible and efficient.
+        The variant we use is the \texit{ELU} function, which additionally tackles the problem of dead neurons in \texit{ReLU} by allowing for negative values.
     \end{itemize}
             \subsection{Mutation}\label{subsec:mutation}
-    The mutation of the NNs is handled in the \textit{Agent} struct (defined in agent.rs), which includes a NN, its fitness and its Rank:
+    The mutation of the NNs is handled in the \textit{Agent} struct (defined in agent.rs), which includes a NN, its fitness, and its rank:
     \begin{minted}{rust}
     pub struct Agent {
         pub nn: NeuralNetwork,
@@ -795,33 +795,20 @@ contents={%
             \end{axis}
         \end{tikzpicture}
     \end{center}
-    The accuracy of the best run got up to 70\% and if we look at the games recorded in generation 982, we can see why it didn't get to 100\%.
+    The accuracy of the best run only got up to 35\% and if we look at the games recorded in generation 982, we can see why it didn't get to 100\%.
     \begin{minted}{}
-    Generation: 982
-    Best agent layer sizes: [1, 3, 1, 5, 6, 3, 2, 7, 3, 5, 3, 5, 1, 2, 8, 4, 7, 1, 2, 4, 4, 1, 9]
-    Agent 39 vs Agent 982:
-    Turn: 0: state: [8], agent_move: [0, 3]
-    Turn: 1: state: [5], agent_move: [0, 5]
-    Game result: [1, 0]
-    Agent 982 vs Agent 39:
-    Turn: 0: state: [8], agent_move: [0, 7]
-    Turn: 1: state: [1], agent_move: [0, 1]
-    Game result: [1, 0]
-    Agent 981 vs Agent 982:
-    Turn: 0: state: [8], agent_move: [0, 7]
-    Turn: 1: state: [1], agent_move: [0, 5]
-    Game result: [1, 0]
-    Agent 982 vs Agent 981:
-    Turn: 0: state: [8], agent_move: [0, 7]
-    Turn: 1: state: [1], agent_move: [0, 1]
-    Game result: [1, 0]
+    Agent 999 vs Agent 719:
+    Turn: 0: state: [8], agent_move: [0, 2]
+    Turn: 1: state: [6], agent_move: [0, 2]
+    Turn: 2: state: [4], agent_move: [0, 1]
+    Turn: 3: state: [3], agent_move: [0, 2]
+    Turn: 4: state: [1], agent_move: [0, 1]
     \end{minted}
-    The best agents of generation 982 and 981 each learned to play the correct move [0, 7] when they started.
-    However, if the opponent didn't play perfectly, which means not removing less matches, the current best agent would have got a winning position but often didn't find the correct move.
-    An example for this is on line 5, where the best agent from generation 982 should have removed 4 instead of 5 matches to win.
-    \\
-    Our final goal is to train the NNs to be adapted to all cases whereas this solution seems more like a local minimum which is therefore undesirable.
-    We will now change the stack to have a variable amount of matches, since this simplification turned out to be a hindrance.
+    The best agent only learned to play the correct moves where it subtracts one or two matches.
+    It seems that all the NNs have to do is subtract 7 matches instantly, so why couldn't it learn this one move, when it could in the previous configuration?
+    The problem is that if the starting player subtracts less than 7 matches, the other player would get in winning position where it has to adapt and play subtract N - 1 matches.
+    A population might evolve where all agents only subtract 7 matches, however this seems more like a local minimum and our final goal is to develop NNs that can play the whole game.
+    This simplification turns out to be a hindrance, so we will change the stack to have a variable amount of matches.
     \subsubsection{Remark: Unnecessary Topology}
     If we look at the topology metrics of one of the tests, we realize that complexity of the NNs exploded without any visible improvement in performance:
     \begin{center}
@@ -857,7 +844,7 @@ contents={%
     \end{center}
     We get an average amount of over 20 hidden layers with on average 2 nodes.
     It doesn't make sense for the NNs to have such complexity for such a simple problem as it only increases the needed computations.
-    We will therefore reduce the chance for a new nodes and edges to form by a factor of 10 each.
+    We will therefore reduce the chance for a new nodes and edges to form by a factor of 20 each.
     Let's see if this change impacted the performance and topology of the NNs:
     \\
     \begin{figure}[H]
