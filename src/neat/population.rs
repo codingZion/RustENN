@@ -20,7 +20,7 @@ pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [isize; 2])>, Vec<u32>, Vec<u32>
 
 pub const MOVE_FITNESS: bool = false;
 
-pub const FITNESS_EXP: f64 = 1.;
+pub const FITNESS_EXP: f64 = 2.;
 
 pub const BEST_AGENT_TOURNAMENT_MAX: usize = 50;
 

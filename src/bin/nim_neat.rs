@@ -13,10 +13,10 @@ macro_rules! println {
 const USE_BIN: bool = false;
 
 fn main() {
-    let nim_func = Nim::run_nim_strict_random;
+    let nim_func = Nim::run_nim_strict_single;
     let func_str = "run_nim2_strict_random";
     let comp_games = 50;
-    let initial_state = vec![1000];
+    let initial_state = vec![8;4];
     let dir_name = "data_out/";
     fs::create_dir_all(dir_name).expect("Couldn't create Directory");
     //let best_agent_tournament_csv = "best_agent_tournament_single.csv";
@@ -40,7 +40,7 @@ fn main() {
         population.run_game = nim_func;
     } else {
         //population.create_best_agent_tournament_csv(best_agent_tournament_csv);
-        population.create_stats_csv(dir_name.to_owned() + stats_csv);
+        population.create_stats_csv(dir_name.to_owned() + stats_csv).expect("CSV couldn't be created!");
         population.create_best_agent_games_txt(dir_name.to_owned() + best_agent_games_txt);
     }
     let mut saver= thread::spawn(|| {Ok(())});
