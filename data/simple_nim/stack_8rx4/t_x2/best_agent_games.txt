@@ -1,0 +1,3904 @@
+Generation: 0
+Best agent layer sizes: [4, 2]
+
+Generation: 1
+Best agent layer sizes: [4, 2]
+Agent 1 vs Agent 0:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, -2]
+Game result: [0, 1]
+Agent 0 vs Agent 1:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 2
+Best agent layer sizes: [4, 2]
+Agent 2 vs Agent 0:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 2 vs Agent 1:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [8, 3]
+Game result: [0, 1]
+Agent 0 vs Agent 2:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [8, 0]
+Game result: [0, 1]
+Agent 1 vs Agent 2:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, -1]
+Game result: [0, 1]
+
+Generation: 3
+Best agent layer sizes: [4, 2]
+Agent 0 vs Agent 3:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 3 vs Agent 2:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [5, 2]
+Game result: [0, 1]
+Agent 3 vs Agent 0:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [7, 3]
+Game result: [0, 1]
+Agent 2 vs Agent 3:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 4
+Best agent layer sizes: [4, 2]
+Agent 1 vs Agent 4:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [7, 3]
+Game result: [0, 1]
+Agent 4 vs Agent 3:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, -3]
+Game result: [0, 1]
+Agent 3 vs Agent 4:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 4 vs Agent 1:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 5
+Best agent layer sizes: [4, 2]
+Agent 5 vs Agent 2:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 5 vs Agent 4:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 0]
+Game result: [0, 1]
+Agent 4 vs Agent 5:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 2 vs Agent 5:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [6, 2]
+Game result: [0, 1]
+
+Generation: 6
+Best agent layer sizes: [4, 2]
+Agent 6 vs Agent 0:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, -3]
+Game result: [0, 1]
+Agent 0 vs Agent 6:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 6 vs Agent 5:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 5 vs Agent 6:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, -2]
+Game result: [0, 1]
+
+Generation: 7
+Best agent layer sizes: [4, 2]
+Agent 7 vs Agent 6:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 6 vs Agent 7:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 2 vs Agent 7:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 7 vs Agent 2:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 8
+Best agent layer sizes: [4, 2]
+Agent 8 vs Agent 1:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 0]
+Game result: [0, 1]
+Agent 1 vs Agent 8:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 7 vs Agent 8:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 8 vs Agent 7:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 9
+Best agent layer sizes: [4, 2]
+Agent 1 vs Agent 9:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, -3]
+Game result: [0, 1]
+Agent 9 vs Agent 1:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 9 vs Agent 8:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 8 vs Agent 9:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 10
+Best agent layer sizes: [4, 2]
+Agent 10 vs Agent 9:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 8 vs Agent 10:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 10 vs Agent 8:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 9 vs Agent 10:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 11
+Best agent layer sizes: [4, 2]
+Agent 11 vs Agent 6:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 6 vs Agent 11:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 11 vs Agent 10:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 10 vs Agent 11:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 0]
+Game result: [0, 1]
+
+Generation: 12
+Best agent layer sizes: [4, 2]
+Agent 12 vs Agent 8:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 12 vs Agent 11:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 11 vs Agent 12:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 8 vs Agent 12:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 13
+Best agent layer sizes: [4, 2]
+Agent 13 vs Agent 4:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 13 vs Agent 12:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 12 vs Agent 13:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 4 vs Agent 13:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 14
+Best agent layer sizes: [4, 2]
+Agent 14 vs Agent 5:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, -3]
+Game result: [0, 1]
+Agent 5 vs Agent 14:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 14 vs Agent 13:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 13 vs Agent 14:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 15
+Best agent layer sizes: [4, 2]
+Agent 15 vs Agent 9:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 14 vs Agent 15:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, -3]
+Game result: [0, 1]
+Agent 15 vs Agent 14:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 9 vs Agent 15:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 16
+Best agent layer sizes: [4, 2]
+Agent 16 vs Agent 15:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 15 vs Agent 16:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 16 vs Agent 12:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 12 vs Agent 16:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 17
+Best agent layer sizes: [4, 2]
+Agent 10 vs Agent 17:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 17 vs Agent 10:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 0]
+Game result: [1, 0]
+Agent 17 vs Agent 16:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 16 vs Agent 17:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 18
+Best agent layer sizes: [4, 2]
+Agent 18 vs Agent 13:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 13 vs Agent 18:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 17 vs Agent 18:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 18 vs Agent 17:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 19
+Best agent layer sizes: [4, 2]
+Agent 19 vs Agent 18:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [3, 0]
+Game result: [0, 1]
+Agent 18 vs Agent 19:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 9 vs Agent 19:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 19 vs Agent 9:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+
+Generation: 20
+Best agent layer sizes: [4, 1, 2]
+Agent 20 vs Agent 10:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 10 vs Agent 20:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 19 vs Agent 20:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [6, -2]
+Game result: [0, 1]
+Agent 20 vs Agent 19:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 21
+Best agent layer sizes: [4, 1, 2]
+Agent 21 vs Agent 17:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 21 vs Agent 20:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 20 vs Agent 21:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 17 vs Agent 21:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 22
+Best agent layer sizes: [4, 2]
+Agent 22 vs Agent 13:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 13 vs Agent 22:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 22 vs Agent 21:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 21 vs Agent 22:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 23
+Best agent layer sizes: [4, 2]
+Agent 23 vs Agent 5:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 5 vs Agent 23:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 23 vs Agent 22:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 22 vs Agent 23:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 24
+Best agent layer sizes: [4, 1, 2]
+Agent 24 vs Agent 0:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 0]
+Game result: [1, 0]
+Agent 0 vs Agent 24:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 24 vs Agent 23:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 23 vs Agent 24:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 25
+Best agent layer sizes: [4, 2]
+Agent 25 vs Agent 17:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 25 vs Agent 24:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 17 vs Agent 25:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 24 vs Agent 25:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 26
+Best agent layer sizes: [4, 2]
+Agent 26 vs Agent 5:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 5 vs Agent 26:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 25 vs Agent 26:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 26 vs Agent 25:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 27
+Best agent layer sizes: [4, 2]
+Agent 27 vs Agent 26:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 18 vs Agent 27:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 27 vs Agent 18:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 26 vs Agent 27:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 28
+Best agent layer sizes: [4, 1, 2]
+Agent 2 vs Agent 28:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 28 vs Agent 2:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 28 vs Agent 27:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 27 vs Agent 28:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 29
+Best agent layer sizes: [4, 2]
+Agent 29 vs Agent 28:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 28 vs Agent 29:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [3, 4]
+Game result: [0, 1]
+Agent 29 vs Agent 23:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 23 vs Agent 29:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 30
+Best agent layer sizes: [4, 2]
+Agent 0 vs Agent 30:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [4, 0]
+Game result: [0, 1]
+Agent 30 vs Agent 0:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 30 vs Agent 29:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 29 vs Agent 30:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+
+Generation: 31
+Best agent layer sizes: [4, 1, 2]
+Agent 9 vs Agent 31:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, -1]
+Game result: [0, 1]
+Agent 31 vs Agent 9:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 31 vs Agent 30:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 30 vs Agent 31:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+
+Generation: 32
+Best agent layer sizes: [4, 2]
+Agent 31 vs Agent 32:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 32 vs Agent 31:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 32 vs Agent 30:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 30 vs Agent 32:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 33
+Best agent layer sizes: [4, 2]
+Agent 33 vs Agent 31:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 31 vs Agent 33:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 33 vs Agent 32:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 32 vs Agent 33:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 34
+Best agent layer sizes: [4, 2]
+Agent 34 vs Agent 18:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 18 vs Agent 34:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 33 vs Agent 34:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [7, 3]
+Game result: [0, 1]
+Agent 34 vs Agent 33:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 35
+Best agent layer sizes: [4, 2]
+Agent 35 vs Agent 2:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 2 vs Agent 35:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 34 vs Agent 35:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 35 vs Agent 34:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [2, 4]
+Turn: 1: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [1, 0]
+
+Generation: 36
+Best agent layer sizes: [4, 2]
+Agent 36 vs Agent 3:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 3 vs Agent 36:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, -1]
+Game result: [0, 1]
+Agent 36 vs Agent 35:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 35 vs Agent 36:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 37
+Best agent layer sizes: [4, 2]
+Agent 37 vs Agent 16:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 16 vs Agent 37:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 37 vs Agent 36:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 36 vs Agent 37:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 38
+Best agent layer sizes: [4, 2]
+Agent 38 vs Agent 34:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 34 vs Agent 38:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 38 vs Agent 37:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 37 vs Agent 38:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+
+Generation: 39
+Best agent layer sizes: [4, 2]
+Agent 39 vs Agent 32:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 32 vs Agent 39:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 39 vs Agent 38:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 38 vs Agent 39:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 40
+Best agent layer sizes: [4, 2]
+Agent 40 vs Agent 39:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 5]
+Game result: [0, 1]
+Agent 39 vs Agent 40:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 21 vs Agent 40:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 40 vs Agent 21:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 41
+Best agent layer sizes: [4, 1, 2]
+Agent 41 vs Agent 10:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 10 vs Agent 41:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 41 vs Agent 40:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 40 vs Agent 41:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 42
+Best agent layer sizes: [4, 1, 2]
+Agent 42 vs Agent 32:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 32 vs Agent 42:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 41 vs Agent 42:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 42 vs Agent 41:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 43
+Best agent layer sizes: [4, 1, 2]
+Agent 43 vs Agent 20:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 20 vs Agent 43:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 43 vs Agent 42:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 42 vs Agent 43:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 44
+Best agent layer sizes: [4, 2]
+Agent 29 vs Agent 44:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 44 vs Agent 29:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 44 vs Agent 43:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 43 vs Agent 44:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 45
+Best agent layer sizes: [4, 2]
+Agent 45 vs Agent 44:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 45 vs Agent 16:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 44 vs Agent 45:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 16 vs Agent 45:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 46
+Best agent layer sizes: [4, 2]
+Agent 1 vs Agent 46:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 46 vs Agent 1:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 46 vs Agent 45:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 45 vs Agent 46:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 47
+Best agent layer sizes: [4, 1, 2]
+Agent 47 vs Agent 26:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [4, 4]
+Game result: [0, 1]
+Agent 26 vs Agent 47:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 47 vs Agent 46:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 46 vs Agent 47:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 48
+Best agent layer sizes: [4, 2]
+Agent 9 vs Agent 48:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 48 vs Agent 9:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 48 vs Agent 47:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 47 vs Agent 48:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 49
+Best agent layer sizes: [4, 1, 2]
+Agent 49 vs Agent 48:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [4, 4]
+Game result: [0, 1]
+Agent 49 vs Agent 29:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 29 vs Agent 49:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 48 vs Agent 49:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 50
+Best agent layer sizes: [4, 1, 2]
+Agent 50 vs Agent 39:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 39 vs Agent 50:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 50 vs Agent 49:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 49 vs Agent 50:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 51
+Best agent layer sizes: [4, 1, 2]
+Agent 51 vs Agent 21:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 51 vs Agent 50:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 21 vs Agent 51:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 50 vs Agent 51:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 52
+Best agent layer sizes: [4, 2]
+Agent 1 vs Agent 52:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [3, 1]
+Turn: 1: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 52 vs Agent 1:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 52 vs Agent 51:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 51 vs Agent 52:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 53
+Best agent layer sizes: [4, 2]
+Agent 53 vs Agent 31:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 5]
+Game result: [0, 1]
+Agent 31 vs Agent 53:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [3, 4]
+Game result: [0, 1]
+Agent 53 vs Agent 52:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 52 vs Agent 53:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 54
+Best agent layer sizes: [4, 2]
+Agent 35 vs Agent 54:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 54 vs Agent 35:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 54 vs Agent 53:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 53 vs Agent 54:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 55
+Best agent layer sizes: [4, 2]
+Agent 55 vs Agent 54:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 55 vs Agent 19:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 54 vs Agent 55:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 19 vs Agent 55:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 56
+Best agent layer sizes: [4, 2]
+Agent 56 vs Agent 36:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 56 vs Agent 55:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 55 vs Agent 56:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 36 vs Agent 56:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 57
+Best agent layer sizes: [4, 2]
+Agent 47 vs Agent 57:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 57 vs Agent 47:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 56 vs Agent 57:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 57 vs Agent 56:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 58
+Best agent layer sizes: [4, 2]
+Agent 58 vs Agent 5:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 5 vs Agent 58:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 57 vs Agent 58:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 58 vs Agent 57:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 59
+Best agent layer sizes: [4, 1, 2]
+Agent 59 vs Agent 58:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 58 vs Agent 59:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 59 vs Agent 17:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 17 vs Agent 59:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 60
+Best agent layer sizes: [4, 2]
+Agent 60 vs Agent 59:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 60 vs Agent 26:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 26 vs Agent 60:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 59 vs Agent 60:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 61
+Best agent layer sizes: [4, 2]
+Agent 34 vs Agent 61:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 61 vs Agent 34:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 60 vs Agent 61:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 61 vs Agent 60:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 62
+Best agent layer sizes: [4, 2]
+Agent 14 vs Agent 62:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 0]
+Game result: [0, 1]
+Agent 62 vs Agent 14:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 62 vs Agent 61:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 61 vs Agent 62:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 63
+Best agent layer sizes: [4, 2]
+Agent 63 vs Agent 52:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 52 vs Agent 63:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 63 vs Agent 62:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 62 vs Agent 63:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 64
+Best agent layer sizes: [4, 1, 2]
+Agent 16 vs Agent 64:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 64 vs Agent 63:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 63 vs Agent 64:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 64 vs Agent 16:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [3, 3]
+Game result: [0, 1]
+
+Generation: 65
+Best agent layer sizes: [4, 1, 2]
+Agent 65 vs Agent 11:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [3, 4]
+Game result: [0, 1]
+Agent 11 vs Agent 65:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 64 vs Agent 65:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [3, 3]
+Game result: [0, 1]
+Agent 65 vs Agent 64:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 66
+Best agent layer sizes: [4, 2]
+Agent 66 vs Agent 22:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 22 vs Agent 66:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 65 vs Agent 66:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 66 vs Agent 65:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 67
+Best agent layer sizes: [4, 1, 2]
+Agent 67 vs Agent 60:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 60 vs Agent 67:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 67 vs Agent 66:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [4, 4]
+Game result: [0, 1]
+Agent 66 vs Agent 67:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 68
+Best agent layer sizes: [4, 1, 2]
+Agent 68 vs Agent 32:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 68 vs Agent 67:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 67 vs Agent 68:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 32 vs Agent 68:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 69
+Best agent layer sizes: [4, 2]
+Agent 69 vs Agent 15:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 15 vs Agent 69:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 69 vs Agent 68:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 68 vs Agent 69:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 70
+Best agent layer sizes: [4, 2]
+Agent 70 vs Agent 26:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 26 vs Agent 70:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 70 vs Agent 69:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 69 vs Agent 70:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 71
+Best agent layer sizes: [4, 2, 2]
+Agent 71 vs Agent 48:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [0, -1]
+Game result: [0, 1]
+Agent 48 vs Agent 71:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 71 vs Agent 70:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 70 vs Agent 71:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+
+Generation: 72
+Best agent layer sizes: [4, 2]
+Agent 72 vs Agent 41:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 41 vs Agent 72:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 71 vs Agent 72:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [0, -3]
+Game result: [0, 1]
+Agent 72 vs Agent 71:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 73
+Best agent layer sizes: [4, 2]
+Agent 36 vs Agent 73:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 73 vs Agent 72:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 72 vs Agent 73:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 73 vs Agent 36:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 0]
+Game result: [0, 1]
+
+Generation: 74
+Best agent layer sizes: [4, 2]
+Agent 74 vs Agent 38:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 38 vs Agent 74:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 74 vs Agent 73:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 73 vs Agent 74:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 0]
+Game result: [0, 1]
+
+Generation: 75
+Best agent layer sizes: [4, 2]
+Agent 75 vs Agent 16:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 16 vs Agent 75:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 75 vs Agent 74:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 74 vs Agent 75:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+
+Generation: 76
+Best agent layer sizes: [4, 2]
+Agent 41 vs Agent 76:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 76 vs Agent 41:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 75 vs Agent 76:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 76 vs Agent 75:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 77
+Best agent layer sizes: [4, 2]
+Agent 77 vs Agent 76:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 77 vs Agent 7:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 7 vs Agent 77:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 76 vs Agent 77:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 78
+Best agent layer sizes: [4, 2]
+Agent 78 vs Agent 3:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 77 vs Agent 78:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 78 vs Agent 77:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 3 vs Agent 78:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 79
+Best agent layer sizes: [4, 1, 2]
+Agent 69 vs Agent 79:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 79 vs Agent 69:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 79 vs Agent 78:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 78 vs Agent 79:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 80
+Best agent layer sizes: [4, 1, 2]
+Agent 80 vs Agent 22:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 22 vs Agent 80:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 80 vs Agent 79:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 79 vs Agent 80:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 81
+Best agent layer sizes: [4, 2]
+Agent 81 vs Agent 72:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 81 vs Agent 80:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 80 vs Agent 81:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 72 vs Agent 81:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 82
+Best agent layer sizes: [4, 1, 2]
+Agent 45 vs Agent 82:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 82 vs Agent 45:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 82 vs Agent 81:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 81 vs Agent 82:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 83
+Best agent layer sizes: [4, 2]
+Agent 83 vs Agent 28:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 28 vs Agent 83:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 83 vs Agent 82:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 82 vs Agent 83:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 84
+Best agent layer sizes: [4, 2]
+Agent 84 vs Agent 80:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 80 vs Agent 84:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 84 vs Agent 83:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 83 vs Agent 84:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 85
+Best agent layer sizes: [4, 1, 2]
+Agent 85 vs Agent 61:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 61 vs Agent 85:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 85 vs Agent 84:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 84 vs Agent 85:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 86
+Best agent layer sizes: [4, 2]
+Agent 34 vs Agent 86:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 86 vs Agent 34:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 86 vs Agent 85:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 85 vs Agent 86:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 87
+Best agent layer sizes: [4, 1, 2]
+Agent 87 vs Agent 64:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 64 vs Agent 87:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 87 vs Agent 86:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 86 vs Agent 87:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 88
+Best agent layer sizes: [4, 1, 2]
+Agent 88 vs Agent 14:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 0]
+Game result: [1, 0]
+Agent 88 vs Agent 87:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 87 vs Agent 88:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 14 vs Agent 88:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 89
+Best agent layer sizes: [4, 2]
+Agent 88 vs Agent 89:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [4, 4]
+Game result: [0, 1]
+Agent 72 vs Agent 89:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 89 vs Agent 88:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 89 vs Agent 72:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 3: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 90
+Best agent layer sizes: [4, 2]
+Agent 90 vs Agent 89:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 75 vs Agent 90:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 89 vs Agent 90:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 90 vs Agent 75:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 91
+Best agent layer sizes: [4, 2]
+Agent 14 vs Agent 91:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, -1]
+Game result: [0, 1]
+Agent 91 vs Agent 14:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 91 vs Agent 90:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 90 vs Agent 91:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 92
+Best agent layer sizes: [4, 1, 2]
+Agent 29 vs Agent 92:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 92 vs Agent 29:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 92 vs Agent 91:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 91 vs Agent 92:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 93
+Best agent layer sizes: [4, 1, 2]
+Agent 93 vs Agent 13:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 93 vs Agent 92:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 92 vs Agent 93:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 13 vs Agent 93:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 94
+Best agent layer sizes: [4, 2]
+Agent 94 vs Agent 50:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 50 vs Agent 94:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 93 vs Agent 94:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [3, 3]
+Game result: [0, 1]
+Agent 94 vs Agent 93:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 95
+Best agent layer sizes: [4, 2]
+Agent 64 vs Agent 95:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 95 vs Agent 64:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 95 vs Agent 94:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 94 vs Agent 95:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 96
+Best agent layer sizes: [4, 2]
+Agent 96 vs Agent 46:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 96 vs Agent 95:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 95 vs Agent 96:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 46 vs Agent 96:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 97
+Best agent layer sizes: [4, 1, 2]
+Agent 97 vs Agent 83:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 83 vs Agent 97:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 96 vs Agent 97:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 97 vs Agent 96:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 98
+Best agent layer sizes: [4, 2]
+Agent 54 vs Agent 98:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 97 vs Agent 98:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 98 vs Agent 97:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 5]
+Turn: 1: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [1, 0]
+Agent 98 vs Agent 54:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 3]
+Game result: [0, 1]
+
+Generation: 99
+Best agent layer sizes: [4, 2]
+Agent 99 vs Agent 51:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 51 vs Agent 99:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 99 vs Agent 98:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 98 vs Agent 99:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 100
+Best agent layer sizes: [4, 2]
+Agent 100 vs Agent 48:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 48 vs Agent 100:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 100 vs Agent 99:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 99 vs Agent 100:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 101
+Best agent layer sizes: [4, 1, 2]
+Agent 76 vs Agent 101:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 101 vs Agent 100:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 101 vs Agent 76:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 100 vs Agent 101:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 102
+Best agent layer sizes: [4, 1, 2]
+Agent 75 vs Agent 102:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 102 vs Agent 75:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 102 vs Agent 101:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 101 vs Agent 102:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 103
+Best agent layer sizes: [4, 2]
+Agent 103 vs Agent 37:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 103 vs Agent 102:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 102 vs Agent 103:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 37 vs Agent 103:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 104
+Best agent layer sizes: [4, 2]
+Agent 104 vs Agent 103:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 103 vs Agent 104:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 104 vs Agent 18:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 18 vs Agent 104:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+
+Generation: 105
+Best agent layer sizes: [4, 2]
+Agent 86 vs Agent 105:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 105 vs Agent 86:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 105 vs Agent 104:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 104 vs Agent 105:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 106
+Best agent layer sizes: [4, 2]
+Agent 57 vs Agent 106:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 106 vs Agent 57:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 106 vs Agent 105:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 105 vs Agent 106:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 107
+Best agent layer sizes: [4, 2]
+Agent 107 vs Agent 106:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 107 vs Agent 104:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 104 vs Agent 107:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 106 vs Agent 107:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 108
+Best agent layer sizes: [4, 2]
+Agent 108 vs Agent 47:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 47 vs Agent 108:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 108 vs Agent 107:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 107 vs Agent 108:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 109
+Best agent layer sizes: [4, 2]
+Agent 108 vs Agent 109:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 109 vs Agent 108:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 91 vs Agent 109:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 109 vs Agent 91:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 110
+Best agent layer sizes: [4, 2]
+Agent 110 vs Agent 109:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 110 vs Agent 24:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 109 vs Agent 110:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 24 vs Agent 110:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 111
+Best agent layer sizes: [4, 1, 2]
+Agent 111 vs Agent 88:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 88 vs Agent 111:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [3, 3]
+Game result: [0, 1]
+Agent 110 vs Agent 111:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 111 vs Agent 110:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 112
+Best agent layer sizes: [4, 2]
+Agent 91 vs Agent 112:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 112 vs Agent 91:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 111 vs Agent 112:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 112 vs Agent 111:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 113
+Best agent layer sizes: [4, 2]
+Agent 67 vs Agent 113:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 113 vs Agent 67:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 113 vs Agent 112:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 112 vs Agent 113:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 114
+Best agent layer sizes: [4, 2]
+Agent 100 vs Agent 114:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 114 vs Agent 100:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 114 vs Agent 113:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 113 vs Agent 114:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 115
+Best agent layer sizes: [4, 2]
+Agent 115 vs Agent 62:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 62 vs Agent 115:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 115 vs Agent 114:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 114 vs Agent 115:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 116
+Best agent layer sizes: [4, 1, 2]
+Agent 58 vs Agent 116:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 116 vs Agent 58:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 115 vs Agent 116:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 116 vs Agent 115:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 117
+Best agent layer sizes: [4, 1, 2]
+Agent 117 vs Agent 91:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 117 vs Agent 116:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 116 vs Agent 117:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 91 vs Agent 117:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 118
+Best agent layer sizes: [4, 2]
+Agent 118 vs Agent 75:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 75 vs Agent 118:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 118 vs Agent 117:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 117 vs Agent 118:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+
+Generation: 119
+Best agent layer sizes: [4, 1, 2]
+Agent 80 vs Agent 119:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 119 vs Agent 80:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 119 vs Agent 118:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [4, 4]
+Game result: [0, 1]
+Agent 118 vs Agent 119:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 120
+Best agent layer sizes: [4, 2]
+Agent 120 vs Agent 21:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 120 vs Agent 119:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 119 vs Agent 120:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 21 vs Agent 120:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 121
+Best agent layer sizes: [4, 2]
+Agent 121 vs Agent 116:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 116 vs Agent 121:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 121 vs Agent 120:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 120 vs Agent 121:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 122
+Best agent layer sizes: [4, 2]
+Agent 122 vs Agent 85:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 85 vs Agent 122:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 122 vs Agent 121:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 121 vs Agent 122:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+
+Generation: 123
+Best agent layer sizes: [4, 2]
+Agent 7 vs Agent 123:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 123 vs Agent 7:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 122 vs Agent 123:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 123 vs Agent 122:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 124
+Best agent layer sizes: [4, 2]
+Agent 124 vs Agent 79:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 79 vs Agent 124:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [3, 3]
+Game result: [0, 1]
+Agent 124 vs Agent 123:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 123 vs Agent 124:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 125
+Best agent layer sizes: [4, 2]
+Agent 125 vs Agent 10:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 10 vs Agent 125:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 125 vs Agent 124:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 124 vs Agent 125:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 126
+Best agent layer sizes: [4, 2]
+Agent 126 vs Agent 105:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 105 vs Agent 126:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 125 vs Agent 126:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 126 vs Agent 125:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 127
+Best agent layer sizes: [4, 2]
+Agent 55 vs Agent 127:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 127 vs Agent 55:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 127 vs Agent 126:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 126 vs Agent 127:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 128
+Best agent layer sizes: [4, 2]
+Agent 128 vs Agent 15:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 128 vs Agent 127:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 15 vs Agent 128:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 127 vs Agent 128:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 129
+Best agent layer sizes: [4, 2]
+Agent 129 vs Agent 7:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 129 vs Agent 128:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 7 vs Agent 129:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 128 vs Agent 129:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 130
+Best agent layer sizes: [4, 2]
+Agent 130 vs Agent 129:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 130 vs Agent 20:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 129 vs Agent 130:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 20 vs Agent 130:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [3, 3]
+Game result: [0, 1]
+
+Generation: 131
+Best agent layer sizes: [4, 1, 2]
+Agent 131 vs Agent 112:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 112 vs Agent 131:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 131 vs Agent 130:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 130 vs Agent 131:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 132
+Best agent layer sizes: [4, 2]
+Agent 131 vs Agent 132:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 132 vs Agent 131:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 132 vs Agent 95:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 95 vs Agent 132:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 133
+Best agent layer sizes: [4, 2]
+Agent 133 vs Agent 132:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 132 vs Agent 133:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 134
+Best agent layer sizes: [4, 2]
+Agent 134 vs Agent 8:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 8 vs Agent 134:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 134 vs Agent 133:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 2: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 3: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 133 vs Agent 134:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 135
+Best agent layer sizes: [4, 1, 2]
+Agent 135 vs Agent 134:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 0]
+Game result: [1, 0]
+Agent 134 vs Agent 135:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 136
+Best agent layer sizes: [4, 2]
+Agent 136 vs Agent 46:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 136 vs Agent 135:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 46 vs Agent 136:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 135 vs Agent 136:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 137
+Best agent layer sizes: [4, 2]
+Agent 137 vs Agent 65:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 137 vs Agent 136:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 136 vs Agent 137:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 65 vs Agent 137:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 138
+Best agent layer sizes: [4, 2]
+Agent 138 vs Agent 80:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 138 vs Agent 137:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 80 vs Agent 138:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 137 vs Agent 138:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 139
+Best agent layer sizes: [4, 2]
+Agent 122 vs Agent 139:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 139 vs Agent 122:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 138 vs Agent 139:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 139 vs Agent 138:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 140
+Best agent layer sizes: [4, 2]
+Agent 140 vs Agent 81:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 140 vs Agent 139:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 81 vs Agent 140:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 139 vs Agent 140:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 141
+Best agent layer sizes: [4, 2]
+Agent 141 vs Agent 140:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 140 vs Agent 141:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 47 vs Agent 141:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [3, 4]
+Game result: [0, 1]
+Agent 141 vs Agent 47:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 142
+Best agent layer sizes: [4, 2]
+Agent 79 vs Agent 142:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 142 vs Agent 141:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 142 vs Agent 79:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 141 vs Agent 142:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 143
+Best agent layer sizes: [4, 1, 2]
+Agent 143 vs Agent 140:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 143 vs Agent 142:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 142 vs Agent 143:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 140 vs Agent 143:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 144
+Best agent layer sizes: [4, 1, 2]
+Agent 72 vs Agent 144:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 144 vs Agent 143:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 143 vs Agent 144:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [3, 4]
+Game result: [0, 1]
+Agent 144 vs Agent 72:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 145
+Best agent layer sizes: [4, 2]
+Agent 145 vs Agent 2:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 2 vs Agent 145:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 145 vs Agent 144:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 144 vs Agent 145:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 146
+Best agent layer sizes: [4, 2]
+Agent 73 vs Agent 146:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 145 vs Agent 146:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 146 vs Agent 73:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 146 vs Agent 145:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 147
+Best agent layer sizes: [4, 2]
+Agent 73 vs Agent 147:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 147 vs Agent 146:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 147 vs Agent 73:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 146 vs Agent 147:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 148
+Best agent layer sizes: [4, 1, 2]
+Agent 148 vs Agent 147:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [2, 4]
+Turn: 1: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [1, 0]
+Agent 147 vs Agent 148:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [3, 2]
+Turn: 2: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 124 vs Agent 148:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 148 vs Agent 124:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [2, 4]
+Turn: 1: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 149
+Best agent layer sizes: [4, 1, 2]
+Agent 35 vs Agent 149:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 149 vs Agent 35:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 148 vs Agent 149:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [5, 2]
+Game result: [0, 1]
+Agent 149 vs Agent 148:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+
+Generation: 150
+Best agent layer sizes: [4, 2]
+Agent 150 vs Agent 42:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 42 vs Agent 150:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 150 vs Agent 149:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 149 vs Agent 150:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 151
+Best agent layer sizes: [4, 1, 2]
+Agent 151 vs Agent 63:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 150 vs Agent 151:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 151 vs Agent 150:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 63 vs Agent 151:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 152
+Best agent layer sizes: [4, 2]
+Agent 124 vs Agent 152:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 152 vs Agent 124:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 152 vs Agent 151:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 151 vs Agent 152:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+
+Generation: 153
+Best agent layer sizes: [4, 2]
+Agent 153 vs Agent 122:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 122 vs Agent 153:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 152 vs Agent 153:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 153 vs Agent 152:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 154
+Best agent layer sizes: [4, 2]
+Agent 144 vs Agent 154:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 153 vs Agent 154:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [1, 0]
+Agent 154 vs Agent 144:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 154 vs Agent 153:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 155
+Best agent layer sizes: [4, 2]
+Agent 155 vs Agent 77:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 77 vs Agent 155:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 154 vs Agent 155:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 155 vs Agent 154:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 156
+Best agent layer sizes: [4, 2]
+Agent 155 vs Agent 156:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 156 vs Agent 134:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 156 vs Agent 155:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 134 vs Agent 156:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+
+Generation: 157
+Best agent layer sizes: [4, 1, 2]
+Agent 157 vs Agent 9:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 9 vs Agent 157:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 157 vs Agent 156:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [1, 2]
+Game result: [0, 1]
+Agent 156 vs Agent 157:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+
+Generation: 158
+Best agent layer sizes: [4, 2]
+Agent 158 vs Agent 18:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 2]
+Game result: [0, 1]
+Agent 18 vs Agent 158:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 157 vs Agent 158:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 3], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 158 vs Agent 157:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 159
+Best agent layer sizes: [4, 2]
+Agent 50 vs Agent 159:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 159 vs Agent 50:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 158 vs Agent 159:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 159 vs Agent 158:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 160
+Best agent layer sizes: [4, 1, 2]
+Agent 160 vs Agent 54:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 54 vs Agent 160:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 160 vs Agent 159:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 159 vs Agent 160:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 161
+Best agent layer sizes: [4, 2]
+Agent 122 vs Agent 161:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 161 vs Agent 122:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 161 vs Agent 160:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 160 vs Agent 161:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 162
+Best agent layer sizes: [4, 2]
+Agent 162 vs Agent 68:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 68 vs Agent 162:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 162 vs Agent 161:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 161 vs Agent 162:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 163
+Best agent layer sizes: [4, 2]
+Agent 163 vs Agent 94:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 163 vs Agent 162:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 94 vs Agent 163:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 162 vs Agent 163:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 164
+Best agent layer sizes: [4, 1, 2]
+Agent 164 vs Agent 85:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 163 vs Agent 164:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 85 vs Agent 164:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 164 vs Agent 163:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 165
+Best agent layer sizes: [4, 1, 2]
+Agent 165 vs Agent 62:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 62 vs Agent 165:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 164 vs Agent 165:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 165 vs Agent 164:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 166
+Best agent layer sizes: [4, 2]
+Agent 166 vs Agent 36:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 36 vs Agent 166:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 166 vs Agent 165:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 165 vs Agent 166:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 167
+Best agent layer sizes: [4, 2]
+Agent 167 vs Agent 10:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 166 vs Agent 167:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 167 vs Agent 166:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 10 vs Agent 167:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 168
+Best agent layer sizes: [4, 2]
+Agent 168 vs Agent 167:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 168 vs Agent 97:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 97 vs Agent 168:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 167 vs Agent 168:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 169
+Best agent layer sizes: [4, 1, 2]
+Agent 169 vs Agent 168:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 168 vs Agent 169:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 170
+Best agent layer sizes: [4, 1, 2]
+Agent 170 vs Agent 30:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 169 vs Agent 170:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 170 vs Agent 169:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 30 vs Agent 170:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+
+Generation: 171
+Best agent layer sizes: [4, 1, 2]
+Agent 171 vs Agent 23:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 23 vs Agent 171:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 171 vs Agent 170:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 170 vs Agent 171:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+
+Generation: 172
+Best agent layer sizes: [4, 1, 2]
+Agent 172 vs Agent 27:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 27 vs Agent 172:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 172 vs Agent 171:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 171 vs Agent 172:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 173
+Best agent layer sizes: [4, 2]
+Agent 173 vs Agent 89:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 173 vs Agent 172:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 89 vs Agent 173:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 172 vs Agent 173:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 174
+Best agent layer sizes: [4, 2]
+Agent 174 vs Agent 69:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 69 vs Agent 174:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 174 vs Agent 173:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 173 vs Agent 174:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 175
+Best agent layer sizes: [4, 2]
+Agent 175 vs Agent 31:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [0, 1]
+Agent 174 vs Agent 175:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 175 vs Agent 174:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 31 vs Agent 175:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 176
+Best agent layer sizes: [4, 1, 2]
+Agent 176 vs Agent 49:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 49 vs Agent 176:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 175 vs Agent 176:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 176 vs Agent 175:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 177
+Best agent layer sizes: [4, 1, 2]
+Agent 177 vs Agent 169:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 177 vs Agent 176:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 169 vs Agent 177:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 176 vs Agent 177:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+
+Generation: 178
+Best agent layer sizes: [4, 2]
+Agent 32 vs Agent 178:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 178 vs Agent 32:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 177 vs Agent 178:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 178 vs Agent 177:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 179
+Best agent layer sizes: [4, 2]
+Agent 179 vs Agent 121:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 121 vs Agent 179:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 178 vs Agent 179:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+Agent 179 vs Agent 178:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 180
+Best agent layer sizes: [4, 2]
+Agent 180 vs Agent 25:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 25 vs Agent 180:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 180 vs Agent 179:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 179 vs Agent 180:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 181
+Best agent layer sizes: [4, 2, 2]
+Agent 39 vs Agent 181:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 180 vs Agent 181:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 181 vs Agent 180:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 181 vs Agent 39:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+
+Generation: 182
+Best agent layer sizes: [4, 2]
+Agent 182 vs Agent 65:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 65 vs Agent 182:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 181 vs Agent 182:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 182 vs Agent 181:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 183
+Best agent layer sizes: [4, 2]
+Agent 183 vs Agent 54:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 54 vs Agent 183:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 183 vs Agent 182:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 182 vs Agent 183:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [0, 1]
+
+Generation: 184
+Best agent layer sizes: [4, 2]
+Agent 184 vs Agent 73:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 73 vs Agent 184:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 184 vs Agent 183:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 183 vs Agent 184:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 185
+Best agent layer sizes: [4, 1, 2]
+Agent 140 vs Agent 185:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 185 vs Agent 140:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 184 vs Agent 185:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 185 vs Agent 184:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 186
+Best agent layer sizes: [4, 2]
+Agent 186 vs Agent 22:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 22 vs Agent 186:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 185 vs Agent 186:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 186 vs Agent 185:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 187
+Best agent layer sizes: [4, 1, 2]
+Agent 93 vs Agent 187:
+Turn: 0: state: [0, 0, 0, 3], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 187 vs Agent 93:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 187 vs Agent 186:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 186 vs Agent 187:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 188
+Best agent layer sizes: [4, 2]
+Agent 105 vs Agent 188:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 188 vs Agent 105:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 187 vs Agent 188:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 188 vs Agent 187:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 189
+Best agent layer sizes: [4, 1, 2]
+Agent 189 vs Agent 154:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 188 vs Agent 189:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 154 vs Agent 189:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 189 vs Agent 188:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 190
+Best agent layer sizes: [4, 1, 2]
+Agent 190 vs Agent 140:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 190 vs Agent 189:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 189 vs Agent 190:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 140 vs Agent 190:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 191
+Best agent layer sizes: [4, 2]
+Agent 191 vs Agent 110:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 110 vs Agent 191:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 190 vs Agent 191:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 191 vs Agent 190:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 192
+Best agent layer sizes: [4, 2]
+Agent 192 vs Agent 191:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 191 vs Agent 192:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 88 vs Agent 192:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 192 vs Agent 88:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 193
+Best agent layer sizes: [4, 2]
+Agent 185 vs Agent 193:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 193 vs Agent 185:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 193 vs Agent 192:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 192 vs Agent 193:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 194
+Best agent layer sizes: [4, 1, 2]
+Agent 194 vs Agent 193:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 193 vs Agent 194:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 194 vs Agent 42:
+Turn: 0: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 42 vs Agent 194:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [2, 3]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 195
+Best agent layer sizes: [4, 2]
+Agent 195 vs Agent 11:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 0]
+Game result: [1, 0]
+Agent 11 vs Agent 195:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 195 vs Agent 194:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 194 vs Agent 195:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 196
+Best agent layer sizes: [4, 1, 2]
+Agent 196 vs Agent 11:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 11 vs Agent 196:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 196 vs Agent 195:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 195 vs Agent 196:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 197
+Best agent layer sizes: [4, 2]
+Agent 197 vs Agent 177:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 177 vs Agent 197:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 197 vs Agent 196:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 196 vs Agent 197:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 198
+Best agent layer sizes: [4, 1, 2]
+Agent 138 vs Agent 198:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 198 vs Agent 138:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [2, 4]
+Turn: 1: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 198 vs Agent 197:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [5, 2]
+Game result: [0, 1]
+Agent 197 vs Agent 198:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+
+Generation: 199
+Best agent layer sizes: [4, 2]
+Agent 199 vs Agent 7:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 7 vs Agent 199:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 199 vs Agent 198:
+Turn: 0: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 198 vs Agent 199:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 200
+Best agent layer sizes: [4, 2]
+Agent 200 vs Agent 192:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 200 vs Agent 199:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 199 vs Agent 200:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 192 vs Agent 200:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 201
+Best agent layer sizes: [4, 2]
+Agent 201 vs Agent 164:
+Turn: 0: state: [0, 0, 0, 7], agent_move: [3, 3]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 201 vs Agent 200:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 164 vs Agent 201:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [3, 2]
+Game result: [0, 1]
+Agent 200 vs Agent 201:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 202
+Best agent layer sizes: [4, 1, 2]
+Agent 202 vs Agent 157:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 157 vs Agent 202:
+Turn: 0: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 202 vs Agent 201:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 201 vs Agent 202:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 203
+Best agent layer sizes: [4, 2]
+Agent 203 vs Agent 64:
+Turn: 0: state: [6, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 64 vs Agent 203:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 203 vs Agent 202:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 202 vs Agent 203:
+Turn: 0: state: [0, 0, 4, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 2: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 204
+Best agent layer sizes: [4, 1, 2]
+Agent 204 vs Agent 203:
+Turn: 0: state: [7, 0, 0, 0], agent_move: [0, 5]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 203 vs Agent 204:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+Agent 126 vs Agent 204:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 204 vs Agent 126:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 205
+Best agent layer sizes: [4, 2]
+Agent 205 vs Agent 16:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 16 vs Agent 205:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 205 vs Agent 204:
+Turn: 0: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 204 vs Agent 205:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 206
+Best agent layer sizes: [4, 2]
+Agent 206 vs Agent 201:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 206 vs Agent 205:
+Turn: 0: state: [0, 0, 3, 0], agent_move: [2, 2]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 201 vs Agent 206:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 205 vs Agent 206:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 207
+Best agent layer sizes: [4, 2]
+Agent 207 vs Agent 157:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 206 vs Agent 207:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 207 vs Agent 206:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 157 vs Agent 207:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 3], agent_move: [2, 1]
+Game result: [1, 0]
+
+Generation: 208
+Best agent layer sizes: [4, 2]
+Agent 195 vs Agent 208:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 208 vs Agent 207:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 207 vs Agent 208:
+Turn: 0: state: [0, 0, 2, 0], agent_move: [2, 1]
+Turn: 1: state: [0, 0, 1, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 208 vs Agent 195:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+
+Generation: 209
+Best agent layer sizes: [4, 2]
+Agent 209 vs Agent 37:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 37 vs Agent 209:
+Turn: 0: state: [0, 0, 0, 6], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 4], agent_move: [2, 2]
+Game result: [1, 0]
+Agent 209 vs Agent 208:
+Turn: 0: state: [4, 0, 0, 0], agent_move: [0, 3]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+Agent 208 vs Agent 209:
+Turn: 0: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 210
+Best agent layer sizes: [4, 2]
+Agent 210 vs Agent 109:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 209 vs Agent 210:
+Turn: 0: state: [0, 0, 8, 0], agent_move: [5, 4]
+Game result: [0, 1]
+Agent 210 vs Agent 209:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 109 vs Agent 210:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [2, 2]
+Game result: [0, 1]
+
+Generation: 211
+Best agent layer sizes: [4, 2]
+Agent 16 vs Agent 211:
+Turn: 0: state: [0, 0, 6, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 211 vs Agent 210:
+Turn: 0: state: [0, 0, 0, 2], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 211 vs Agent 16:
+Turn: 0: state: [0, 4, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 210 vs Agent 211:
+Turn: 0: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+
+Generation: 212
+Best agent layer sizes: [4, 2]
+Agent 161 vs Agent 212:
+Turn: 0: state: [0, 6, 0, 0], agent_move: [1, 4]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 212 vs Agent 211:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 211 vs Agent 212:
+Turn: 0: state: [0, 0, 0, 5], agent_move: [3, 2]
+Turn: 1: state: [0, 0, 0, 3], agent_move: [2, 3]
+Game result: [1, 0]
+Agent 212 vs Agent 161:
+Turn: 0: state: [3, 0, 0, 0], agent_move: [0, 2]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
+Generation: 213
+Best agent layer sizes: [4, 2]
+Agent 132 vs Agent 213:
+Turn: 0: state: [0, 0, 5, 0], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 213 vs Agent 212:
+Turn: 0: state: [0, 7, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 212 vs Agent 213:
+Turn: 0: state: [0, 8, 0, 0], agent_move: [1, 5]
+Turn: 1: state: [0, 3, 0, 0], agent_move: [1, 2]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 213 vs Agent 132:
+Turn: 0: state: [0, 0, 7, 0], agent_move: [5, 4]
+Game result: [0, 1]
+
+Generation: 214
+Best agent layer sizes: [4, 2]
+Agent 214 vs Agent 213:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 214 vs Agent 115:
+Turn: 0: state: [0, 5, 0, 0], agent_move: [1, 3]
+Turn: 1: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 2: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [0, 1]
+Agent 213 vs Agent 214:
+Turn: 0: state: [8, 0, 0, 0], agent_move: [0, 6]
+Turn: 1: state: [2, 0, 0, 0], agent_move: [0, 1]
+Turn: 2: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [0, 1]
+Agent 115 vs Agent 214:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+
+Generation: 215
+Best agent layer sizes: [4, 2]
+Agent 215 vs Agent 103:
+Turn: 0: state: [0, 0, 0, 8], agent_move: [4, 3]
+Game result: [0, 1]
+Agent 215 vs Agent 214:
+Turn: 0: state: [0, 2, 0, 0], agent_move: [1, 1]
+Turn: 1: state: [0, 1, 0, 0], agent_move: [1, 1]
+Game result: [1, 0]
+Agent 103 vs Agent 215:
+Turn: 0: state: [0, 0, 0, 1], agent_move: [1, 0]
+Game result: [0, 1]
+Agent 214 vs Agent 215:
+Turn: 0: state: [5, 0, 0, 0], agent_move: [0, 4]
+Turn: 1: state: [1, 0, 0, 0], agent_move: [0, 1]
+Game result: [1, 0]
+
