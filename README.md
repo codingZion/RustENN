@@ -1,4 +1,4 @@
-# Rust NEAT
+# Rust ENN
 *A matura Thesis*
 
 Simple implementation of Evolutionary Neural Networks (ENNs) inspired by the NEAT algorithm applied on games like Nim, Tic Tac Toe etc.\
