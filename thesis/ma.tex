@@ -239,7 +239,7 @@
         \includegraphics[width=0.25\textwidth]{nn_simple_1}~\caption{A simple Feed Forward Neural Network (FNN) with three layers: Input, Hidden and Output.\footnote{\cite{nn_simple_img_1}}}
         \label{fig:nn_simple_1}
     \end{figure}
-    
+
     The term topology is used to describe the structure of a NN\@.
     \begin{mydef}{Neural Network Topology}
         The topology of a neural network is its distinct arrangement of neurons, layers and the connections between the neurons.
@@ -254,15 +254,15 @@
         \label{definition:Nodes-Edges}
     \end{mydef}
     \\ \\
-    The computation of information by a neural network can be illustrated through the example of a computer vision NN that recognizes digits in a black-and-white image.
+    The computation process of information by a neural network can be illustrated through the example of a computer vision NN that recognizes digits in a black-and-white image.
     As a first step, the input is encoded into values that correspond to the nodes of the input layer.
-    In the example of a computer vision NN, the Brightness values of the single pixels can be used and directly assigned to the nodes of the input layer.
+    In the example of a computer vision NN, the brightness values of the single pixels might directly represent the nodes of the input layer.
     \\
-    Then, each node of the input layer is iterated through to identify all its connected edges.
-    For each of these edges I multiply its weight by the value of the input node and add the result to the node on the receiving end.
+    Then, the algorithm iterates through all input nodes to identify its connected edges.
+    For each of these edges it multiplies its weight by the value of the input node and adds the result to the node on the receiving end.
     \\
-    After iterating through all the nodes of one layer, I move the next layer.
-    At this point, the value of the nodes in this layer is the sum accumulated by the values of all connected nodes multiplied by the weight of that connection:
+    After iterating through all the nodes of one layer, it moves to the next layer.
+    At this point, the value of the nodes in the current layer is the sum accumulated by the values of all connected nodes multiplied by the weight of that connection:
     \begin{equation}
         v_x = \sum_{i=0}^{N}v_i * w_i\label{eq:sum_connected_nodes}
     \end{equation}
@@ -275,8 +275,8 @@
             \item $w_i$ is the weight of the edge connecting the current node to node i
         \end{itemize}
     }
-    
-    Additionally, I can add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.
+
+    Additionally, some algorithms add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.
     Finally, an activation function $\sigma(x)$ is applied to the value of the nodes to fit the value of the node inside a preferred range.
     This activation function can also be thought of as the threshold of stimulation for a neuron to fire.
     Two examples for activation functions are:
@@ -331,17 +331,17 @@
             \item $\sigma$ is the activation function
         \end{itemize}
     }
-    
-    Now this value $v_x$ is again sent through its connections to nodes from upcoming layers.
-    After iterating through all the nodes and layers of the NN, I reach the final layer of the NN, where I can read out its computed output.
-    This output again is encoded in node values like I did with the input and therefore needs to be decoded for the final result.
-    In the example of a digit detecting NN, I could use 10 output nodes, each representing one digit.
-    The result could be decoded by using the output node with the highest value as result.
-    This kind of output encoding where all possible result get their own node is called one-hot encoding.
-    With one-hot output encoding, the values of the output nodes can be interpreted as a certainty value for a specific result to be correct.
+
+    Now this value $v_x$ is again sent through its connections to nodes in the upcoming layers.
+    After iterating through all the nodes and layers of the neural network (NN), the process reaches the final layer of the NN, where the computed output can be read out.
+    This output is encoded in node values, as was done with the input, and therefore requires decoding to obtain the final result.
+    In the example of a digit-detecting NN, 10 output nodes could be used, each representing one digit.
+    The result could then be decoded by identifying the output node with the highest value as the result.
+    This kind of output encoding, where all possible results are assigned their own node, is referred to as one-hot encoding.
+    With one-hot output encoding, the values of the output nodes can be interpreted as a the neural networks certainty for a specific result to be correct.
 
     \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
-    Now that I have established how a NN works, it is important to understand why this kind of algorithm is revolutionary to computer science.
+    Having established how a neural network operates, it is important to understand why this type of algorithm is considered revolutionary in the field of computer science.
     \\ \\
     An algorithm processes an input with a set of functions applied in a certain order to calculate an output.
     Traditionally, a computer algorithm gets programmed with the help of mathematical operations, logic functions, loops, system functions and data structures, which are then converted into binary code for the processor.
@@ -353,79 +353,73 @@
     Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
     With NNs, the algorithm is based on different parameters for nodes and edges, which make it an unpredictable blackbox.
     In the top layer of abstraction, there are no concrete functions but only neuron activation that approximates a function instead.
-    This means it is hard to prove a neural network to be always accurate and is also the reason why I often call the result of NNs its prediction.
+    This means it is hard to prove a neural network to always be accurate and is also the reason why the result of NNs is often called its prediction.
     \begin{mydef}{NN Prediction}
-        The output of a NN is called its prediction for some input.
+        The output of a neural network is referred to as its prediction for a given input.
     \end{mydef}
 
     \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
-    I already know how a NN with certain parameters can make a prediction for a given input.
-    But how do I find such parameters encoding for the structure and weights/biases of the NN?
-    The answer is to use machine learning, which trains the model to perform a certain task with the help of training data.
+    It is already established how a neural network with specific parameters generates a prediction for a given input.
+    The raises the question: how can parameters encoding the structure, weights, and biases of the neural network be determined?
+    The solution lies in using machine learning, which trains the model to perform a specific task using training data.
     \begin{mydef}{Machine Learning}
-        Machine learning (ML) is a subset of artificial intelligence that involves the use of algorithms and statistical techniques to optimize artificially intelligent models for a given problem.
+        Machine learning (ML) is a branch of artificial intelligence that focuses on optimizing artificially intelligent models to solve a given problem.
     \end{mydef}
-    One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient ways to train a NN.\@
-    Backpropagation uses a training and test set containing unlabeled data for a problem.
-    But what does a test set with unlabeled data mean in the context of machine learning?
+    One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient methods to train a NN.\@
+    Backpropagation works using a training and test set containing unlabeled data for a problem.
     \begin{mydef}{(Un)labeled Data}
         Labeled data for a machine learning problem is a set of data with sample problems and the respective solutions.
         Unlabeled data instead only contains the sample problems.
     \end{mydef}
-    The machine learning process of backpropagation starts with an NN with fixed topology and random weights/biases.
-    First, the NN is given the training problems for which it will make random predictions.
-    I will then refine these random predictions with the help of the sample solutions.
-    This is done by looping back through the NN from the output layer to the input layer, always adjusting the weights and biases that the NN would finally make the right prediction for this problem.
+    The machine learning process of backpropagation begins with a neural network that has a fixed topology and random weights and biases.
+    First, the NN is given the training problems for which it will generate random predictions.
+    These random predictions are then refined using the sample solutions.
+    This is done by looping back through the NN from the output layer to the input layer, always adjusting the weights and biases in a way that the NN would finally make the right prediction for this problem.
     However, the NN shouldn't be adapted only to a single problem but make accurate predictions for the whole training set and unknown problems.
-    To therefore prevent overcorrecting a NN for single problems, I have to factor in a learning rate that is significantly smaller than 1 for my correction.
+    To therefore prevent overcorrecting a NN for single problems, a learning rate significantly smaller than 1 is applied to the corrections.
     \\ \\
     The NN is trained on the whole training set for many generations, until the NN starts to make accurate predictions for all problems.
-    To test the performance on unknown problems I can use a separate test set, which the NN wasn't trained on.
+    To evaluate the performance on unknown problems, a separate test set, which the NN hasn't been trained on, can be used.
 
 
     \section{Evolutionary Computation (EC) \& Genetic Algorithms (GAs)}\label{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}
-    Now I will have a look at the Machine Learning Technique, this Thesis focuses on.
-    Again, I will draw inspiration from Nature:
+    The focus now shifts to the machine learning technique this thesis focuses on.
+    Once again, nature serves as inspiration:
     \begin{mydef}{Evolutionary Computation}
         Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
     \end{mydef}
-    EC is commonly used where the perfect parameters for some function can't be calculated but the performance of a certain set can be determined.
-    One example scenario for EC might be if you have a large set of data points of an unknown polynomial function with noise and outliers.
-    If you want to find the parameters for the underlying polynomial, you could then employ EC to find the best fitting parameters.
-    Let's see how EC finds these parameters.
+    Evolutionary computation (EC) is often employed in situations where the optimal parameters for a function cannot be directly calculated, but the performance of a given parameter set can be evaluated.
+    One example scenario involves a large dataset of points representing an unknown polynomial function with added noise and outliers.
+    To determine the parameters of the underlying polynomial, EC can be utilized to identify the best-fitting parameters.
+    The following shows how EC achieves this optimization.
     \\ \\
-    The process starts with an initial population of agents with random sets of parameters.
+    The process starts with an initial population of agents with random parameter sets.
     EC then repeats following steps, forming a new generation of the population in each iteration:
     \begin{itemize}
-        \item \textbf{Fitness evaluation:} First, EC needs to find out how good each agent with its parameters perform in the problem.
-        I call the performance of an agent its fitness, which I either evaluate objectively with a cost function or relatively with a competition between agents.
-        In my example, the cost function might check the prediction of the NN for the given data points, calculate its absolute differences to the values of the data points, and use the total sum as cost.
+        \item \textbf{Fitness evaluation:} First, EC assesses the performance of each agent, defined by its parameters, in the given problem.
+        This performance is referred to as the agent's fitness, which can be evaluated either objectively through a cost function or relatively with a competition between agents.
+        In the given example, the cost function might check the prediction of the NN for the given data points, calculate the absolute differences between the prediction and the values of the data points, and use the total sum of these differences as the cost.
         \item \textbf{Selection:} As a next step, the agents that performed well are selected to be part of the next generation.
-        \item \textbf{Reproduction:} The selected agents will then be replicated by directly copying their parameters (non-mating) or by merging parameters from different agents (crossover).
-        \item \textbf{Mutation:} The agents parameters will then be mutated by either completely overwriting certain parameters with new random parameters or by shifting the existing parameters by a random number.
+        \item \textbf{Reproduction:} The selected agents are then replicated by directly copying their parameters (non-mating) or by merging parameters from different agents (crossover).
+        \item \textbf{Mutation:} In each new generation, th parameters of the agents are mutated, either by completely replacing certain parameters with new random parameters or by shifting the existing parameters by a random value.
     \end{itemize}
-    After a certain number of generations, you will then have the best performing set of parameters for a given problem.
-    There is also one popular addition to EC, which draws inspiration from nature again:
-    \begin{mydef}{Genetic Algorithm}
-        A Genetic Algorithm (GA) is an implementation of EC that uses a genetic representation of the parameters.
-    \end{mydef}
-    Its main idea is to have genes that only encode indirectly for the parameters, and can be turned on or off.
+    After a certain number of generations, the EC algorithm will have found best performing set of parameters for a given problem.
 
     \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
-    I know from the previous section that EC starts with an initial population of agents with random sets of parameters, which all have a fitness determined by the cost function.
-    Agents with relatively low cost (or high fitness) survive the round and then get replicated a few times, mutated and again selected by cost.
+    As established in the previous section, EC begins with an initial population of agents with a random set of parameters.
+    The fitness of these agents is determined using a cost function.
+    Agents with relatively low cost (or high fitness) survive the round and are replicated, mutated and again selected by cost.
     \\ \\
     This whole process strongly resembles a ball rolling down a hill in some terrain.
-    On any given point on the terrain, the ball will roll down in the direction that goes down the steepest (I will disregard the inertia of the ball).
-    If I apply this analogy to EC, the parameters for a function can be imagined as the horizontal coordinates for the ball meanwhile the cost of these parameters is the height at that location.
-    The different mutations have parameters close to the original and can therefore be thought of as points close to the original in my terrain.
-    As the ball rolls down to the lowest of all neighboring points in any moment, EC again chooses the set of parameters with the lowest cost every cycle.
-    Because of this, my ML process is called gradient descent, as the algorithm evaluates all neighboring points and then follows the direction with the lowest cost and therefore steepest gradient.
+    At any given point on the terrain, the ball moves in the direction of the steepest descent (ignoring the inertia of the ball).
+    Applying this analogy to EC, the parameters for a function can be imagined as the horizontal coordinates for the ball meanwhile the cost of these parameters correspond to the height at that location.
+    Mutations produce parameter sets that are close to the original, resembling neighboring points on the terrain.
+    As the ball rolls down to the lowest neighboring point in any step, EC again chooses the set of parameters with the lowest cost every cycle.
+    This is why the machine learning process is referred to as gradient descent, as the algorithm evaluates all neighboring points and then follows the direction with the lowest cost and therefore steepest gradient.
     \\ \\
-    So what does the ball analogy tell us about how EC learning works?
-    Imagine a hill with each a shallow and a deep valley next to it.
+    The ball analogy provides insights into the functioning of the EC learning process, which can be understood by visualizing a hill with each a shallow and a deep valley next to it.
     Depending on which side of the hill you place the ball in the beginning, it will roll in a different direction and end up in either of the two valleys, which have different heights.
-    From this I can take away following things:
+    Therefore, following things can be derived:
     \begin{itemize}
         \item (Minor) differences in the starting position can result in large differences in the end position and the respective cost.
         \item Once a point with no downwards gradient is reached, innovation halts for that agent, even if there is a point with lower cost somewhere else.
@@ -439,16 +433,17 @@
 
 
     \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
-    After having covered all the basics about NNs and EC, I can now combine those concepts to create the algorithm this thesis is about.
+    After having covered all the basics about neural networks and evolutionary computation, the two concepts are finally combined to create the algorithm this thesis focuses on.
     \begin{mydef}{Evolutionary Neural Networks}
         Evolutionary neural networks (ENNs) are neural networks that use evolutionary computation to optimize for its parameters for the NNs weights/biases and its topology.
     \end{mydef}
     ENNs are useful for complex machine learning problems and also work for unlabeled training data as long as there is a fitness function.
-    Let's bring evolutionary computation into the context of neural networks:
-    The parameters ENNs encode for are for the weights, biases, nodes and edges of a Neural Network.
-    You could either directly encode the NNs parameters as a graph or indirectly as genes, which would make it a genetic algorithm.
-    ENNs still start with a random population of agents that are evaluated and selected by a fitness function.
-    Then they are replicated (with crossover or non-mating) and finally mutated in following ways:
+    In the context of neural networks, evolutionary computation can be applied as follows:
+    \\
+    The parameters encoded by ENNs represent the weights, biases, nodes, and edges of a neural network.
+    ENNs still follow the same core process of evolutionary computation:
+    They start with a random population of NNs that are evaluated and selected based on a fitness function.
+    The selected NNs are replicated (with crossover or non-mating) and finally mutated in following ways:
     \begin{enumerate}
         \item \textbf{Change weights/biases:} A new random value is set for the weight or bias of a random existing edge or node.
         \item \textbf{Shift weights/biases:} The value for an existing weight or bias of a random existing edge or node is altered by a random change but is kept close to the old value.
@@ -460,15 +455,16 @@
 
 
     \section{Drawing Inspiration from the NEAT-Approach}\label{sec:drawing-inspiration-from-the-neat-approach}
-    As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies is a ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
-    One of its main innovations is that the initial population starts with NNs of lowest complexity and the NNs only increase topological complexity as its useful for the problem.
-    In specific, I start with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
-    This should result in more efficient NNs for the problem as complexity is only increased when it improves the NNs performance.
-    The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.) as it is already minimal.
+    As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies is an ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
+    NEAT evolves the topology, weights and biases of NNs at the same time, which makes it particularly suitable for tasks where the optimal network architecture is not yet known.
+    One of its key innovations is that the initial population begins with NNs of lowest complexity and the NNs only increase topological complexity as it is useful for the problem.
+    In specific, the NEAT algorithm starts with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
+    This design aims to produce more efficient neural networks by only increasing complexity when it leads to improved performance.
+    The NEAT algorithm therefore only needs the mutations 1. to 4. shown in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.) as it is already minimal.
 
 
     \section{Games}\label{sec:games}
-    Let's also have a quick look at the games this Thesis will train the ENNs on.
+    The following section offers a brief overview of the games on which the ENNs will be trained.
 
     \subsection{Simple Nim}\label{subsec:simple-nim}
     This game is a simplified version of Nim, where two players take turns removing an arbitrary amount of matches from a single stack with some number of matches.
@@ -478,14 +474,12 @@
     \subsection{Nim}\label{subsec:nim}
     This game works similarly to Simple Nim with the difference that there are multiple stacks with matches.
     Now, the player who removes the last match from the last unemptied stack loses.
-    The winning strategy for Nim is much more complex, which forces the ENNs to learn a more complex strategy.
-    You can read up the exact winning strategy on Wikipedia\footcite{nim_23} but the main point is that perfect play requires a complex algorithm.
-    I won't expect the ENNs to learn this algorithm fully but hopefully they will be able to approximate perfect play that it can beat human players that don't know the perfect strategy.
+    The winning strategy for Nim is much more complex, which forces the ENNs to learn a more complex strategy.\footcite{nim_23} %TODO: No wikipedia
 
 
     \section{Related Work}\label{sec:related-work}
     The field of AI research in ENNs is largely studied and is often linked to games.
-    In the following table, I can find some examples of ENN models that have been tested on games:
+    The following table provides some examples of ENN models that have been tested on games:
 
     \footnotesize
     \begin{center}
@@ -538,24 +532,33 @@
 
 
     \section{Algorithm Design}\label{sec:algorithm-design}
-    This chapter details
-    Now, we will have a detailed look at how to use the concepts described in the last chapter(\ref{ch:introduction}) to build an evolutionary neural network that plays Nim.
-    The code is structured as follows:
+    This chapter details how to use the concepts described in the last chapter(\ref{ch:introduction}) to build an evolutionary neural network that plays Nim.
 
     \subsection{Overview}\label{subsec:overview}
-    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language. #TODO: footnote rust booklet
+    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language\footcite{rust23}.
+    The source code and all test data can be found on this thesis' GitHub page. %TODO: reference
+    This project utilizes following Rust libraries:
+    `rand` (version 0.9.0-alpha.2)\footcite{rand2024},
+    `indicatif` (version 0.17.8)\footcite{indicatif2023},
+    `csv` (version 1.3.0)\footcite{csv2023},
+    `bincode` (version 1.3.3)\footcite{bincode2021},
+    `serde` (version 1.0.209)\footcite{serde2024},
+    and `rayon` (version 1.10.0)\footcite{rayon2023}.
+    The code has been partially written by the AI coding assistant GitHub Copilot\footcite{github_copilot2021}.
+    Every instance of artificially generated code has been thoroughly reviewed.
     \\ \\
-    My codebase is divided into different modules as well as a bin folder with main files.
-    The modules are divided into one module with the ENN algorithm, the other modules handle the different games, the ENNs learn to play.
-    The ENN module is divided into two files:
+    The codebase is divided into different modules as well as a bin folder containing main files.
+    One module manages the ENN algorithm, while another handles the games that the ENNs are trained to play.
+    The ENN module itself is further divided into two files:
     \begin{itemize}
         \item \textbf{agent.rs:} This file handles the NNs and the mutations on the NNs
         \item \textbf{population.rs:} This file handles the natural selection process and data saving
     \end{itemize}
     The game modules provide the problems for the NNs, handle the predictions of the NNs, and find the new game state after a move.
-    It might also include an objective performance evaluation function to measure how well the NNs perform.
-    I will now explain all the functions bottom up, starting with the neural network.
-    I work with Rusts structs which are similar to classes in other programming languages.
+    It further includes an objective performance evaluation function to measure how well the NNs perform.
+    \\ \\
+    The following sections provide a bottom-up explanation of all functions, beginning with the neural network.
+    The implementation uses Rust's structs, which are similar to classes in other programming languages.
 
     \subsection{Neural Network}\label{subsec:neural-network}
     The struct \textit{NeurualNetwork} (defined in agents.rs) most importantly contains a two-dimensional vector of nodes, which encodes all the information of the NN\@:
@@ -587,9 +590,10 @@
     \begin{itemize}
         \item \mintinline{rust}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which initializes the NN with all input and output nodes connected to each other with random weights and biases.
         \item \mintinline{rust}{predict(&self, input: Vec<f64>) -> Vec<f64>}, which computes the output of the NN for a given input with the forward propagation algorithm described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
-        \item \mintinline{rust}{activation_function(x: f64) -> f64}, which computes the neuron activation described in \ref{subsec:feed-forward-neural-networks-(fnns)}.
-        I use a variant of the \texit{ReLU} function, since the linearity for inputs above 0 in the ReLU function allows for more variety of neuron activation, which makes the NN more flexible and efficient.
-        The variant I use is the \texit{ELU} function, which additionally tackles the problem of dead neurons in \texit{ReLU} by allowing for negative values.
+        \item \mintinline{rust}{activation_function(x: f64) -> f64}, which computes the neuron activation described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
+        This implementation uses a variant of the \textit{ReLU} function.
+        The linearity for inputs greater than zero in the \textit{ReLU} function allows for more variety of neuron activations, enhancing the flexibility and efficiency of the neural network.
+        The chosen variant is the \textit{ELU} function, which addresses the issue of dead neurons encountered in \textit{ReLU} by permitting negative output values.
     \end{itemize}
 
     \subsection{Mutation}\label{subsec:mutation}
@@ -606,13 +610,13 @@
     All of these mutations have already been described in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
     \begin{itemize}
         \item When inserting a new node in between of two connected nodes (mutation 4.), the inserted node will be added to a random layer in between of the previously connected nodes.
-        If the previously connected nodes are in neighboring layers, I create a new layer in between for the new node.
+        If the previously connected nodes are in neighboring layers, a new layer is created in between for the new node.
         \item The shift mutation adds to the initial value a random float in the range 0.0 to 1.0 squared with a random sign.
         This gives us following function: \\
         $v_{new} = shift(v_{old}) = v_{old} + rand(-1, 1) * rand_{float}(0..1)^2$
-        \item The amount of mutations performed per NN is randomly selected in a range, which I can define as parameters (see section~\ref{subsec:enn-parameters}).
+        \item The amount of mutations performed per NN is randomly selected in a range defined by adjustable parameters (see section~\ref{subsec:enn-parameters}).
         \item The type of mutation that is performed is randomly determined for each mutation.
-        I can also assign a weight to each mutation as parameters which represent its probability to be selected relatively to the weight of the other mutations (see again section~\ref{subsec:enn-parameters}).
+        A weight can be assigned to each mutation as a parameter, which represent its probability to be selected relative to the weights of other mutations (see again section~\ref{subsec:enn-parameters}).
     \end{itemize}
 
     \subsection{Evolutionary Computation}\label{subsec:natural-slection}
