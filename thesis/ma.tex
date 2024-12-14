@@ -619,35 +619,37 @@
         A weight can be assigned to each mutation as a parameter, which represent its probability to be selected relative to the weights of other mutations (see again section~\ref{subsec:enn-parameters}).
     \end{itemize}
 
-    \subsection{Evolutionary Computation}\label{subsec:natural-slection}
-    The EC process starts with an initial population of agents with new, minimal NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in \ref{subsec:neural-network}).
-    As I already established before (see~\ref{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}), I now repeat the steps of performance evaluation, selection and mutation.
+    \subsection{Evolutionary Computation \& inspiration by NEAT}\label{subsec:evolutionary-computation-&-inspiration-by-neat}
+    The EC process starts with an initial population of new agents with NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in~\ref{subsec:neural-network}).
+    As per the NEAT algorithm's approach, the new NNs have minimal structure, where all input nodes are directly connected to all output nodes with no hidden layers.
+    Random values area assigned for the weights and biases of the initial NNs.
+    Subsequently, the steps of performance evaluation, selection and mutation are repeated every generation.
 
     \subsubsection{Competition}
-    In this case, the fitness evaluation works by letting the agents of a population compete against each other in the games.
-    However, I can't let every agent play every other agent since the needed time increases quadratically with population size.
-    My solution therefore is to use my circular pairing algorithm.
-    This algorithm has a predefined number of opponents each agent needs to play against (see~\ref{subsec:enn-parameters}).
-    For each of this predefined number of games, it generates a new distance which it then uses to pair each $\textrm{agent}_i$ with the $\textrm{agent}_{i+distance}$.
-    It also checks that the distance isn't a multiple of any distance it had previously since this would result in the same agents being paired twice.
-    Each game is played twice with both players starting once while keeping the same initial state.
+    In the approach examined by this thesis, the fitness of agents is assessed by having them compete against one another in the games.
+    However, allowing every agent to play every other agent is computationally too expensive since the needed time increases quadratically with the population size.
+    To address this, a circular pairing algorithm is employed.
+    This algorithm sets a predefined number of opponents for each agent to play against (see~\ref{subsec:enn-parameters}).
+    For each of these predefined games, the algorithm generates a new pairing distance, which it then uses to pair each $\textrm{agent}_i$ with the $\textrm{agent}_{i+distance}$.
+    It also checks that the distance isn't a multiple of any distance it had previously avoiding duplicate pairings between agents.
+    Each game is played twice with both agents taking turns as the starting player while keeping the same initial state.
 
     \subsubsection{Fitness Evaluation}
-    Now, I need to evaluate the fitness of the agents with the fitness function.
-    The main idea for the fitness function is to simply count the number of wins an agent has made during the competition.
+    Now, the fitness function evaluates its fitness for each agents.
+    The main idea for the fitness function is to simply count the number of wins an agent has scored during the competition.
     Of course, there are other possibilities to evaluate the performance of an agent that represent their performance more accurately.
-    The reason why I still first try to use the number of wins as fitness is because it is a generally applicable function to any game.
+    Still, the number of wins is used as fitness as this function is generally applicable to any game.
     Counting the number of wins doesn't require a deeper understanding of the game, which is very useful in games that are indeterministic.
-    This also enables the ENNs to find their own new strategy for the game, which is finally the goal of AI training.
+    This also enables the ENNs to find their own new strategy for the game, which is finally the goal of machine learning.
 
     \subsubsection{Natural Selection}
-    After the fitness evaluation, I can test the performance of the generation (details in section~\ref{subsec:performance-tests}) and then generate the new population.
+    After the fitness evaluation, the performance of the current generation is evaluated (details in section~\ref{subsec:performance-tests}) before the new population is generated.
     The new population is made up by some portion of each of the following:
     \begin{itemize}
         \item \textbf{Agents from the last generation:}
         The main part of the new population will be drawn from agents from the old generation with high fitness.
         This works by selecting all needed agents randomly using the fitness of my agents as their relative probability of being drawn.
-        I can also raise the fitness to some power to either allow more or less survival of non top-performing agents.
+        The fitness can also be raised to some power to adjust the likelihood of survival for non-top-performing agents.
         \item \textbf{Random agents from the last generation:}
         Some fraction of the new population is made up of randomly selected agents from the last generation which might help counter a population with the top performing agents stuck in local minimum.
         \item \textbf{New random agents:}
@@ -655,11 +657,11 @@
         \item \textbf{Old best agents:}
         The last part of the new population is made up of best agents from previous generations which help counter populations stuck in a local minimum.
     \end{itemize}
-    Now that I have generated my new population, I can start over the whole process.
+    Now that the new population has been generated, the whole process can start over again.
 
     \subsection{ENN Parameters}\label{subsec:enn-parameters}
-    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), my research involves testing my implementation with several configurations of different parameters and then evaluate their performance with the stats described in the following section(\ref{subsec:performance-tests}).
-    Here is a list of all possible parameters influencing my ENNs:
+    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this research involves testing its implementation with several configurations of different parameters and then evaluate their performance with the stats described in the following section(\ref{subsec:performance-tests}).
+    Here is a list of all possible parameters influencing the ENN algorithm:
     \begin{itemize}
         \item \textbf{General:} Size of the population
         \item \textbf{Game:} Initial state of the game, game function that encodes the state for the NN, decodes its prediction, and executes the move on the current state
@@ -669,28 +671,28 @@
         \item \textbf{Evaluation:} Number of games from the best agent against old best agents
 
     \end{itemize}
-    For each test, I then save a file with the information about the value of all these parameters.
+    For each test, a file is saved with the information about the value of all these parameters.
 
     \subsection{Performance Tests}\label{subsec:performance-tests}
-    To see how the Agents perform in the games, I need to track some stats and games.
-    I save following data every generation after the competition phase:
+    Some stats and games are tracked to see how the Agents perform in the games.
+    Following data is saved every generation after the competition phase:
     \begin{itemize}
         \item \textbf{Fitness of the best agent:} This stat shows us how much better the best agent performs relatively to the average agent.
-        \item \textbf{Wins against older generations:} I pair the best agent against an evenly distributed set of the best agents from past generations to track relative performance to the past.
-        As long as this number is above 50\%, I should expect improvement over older generations.
+        \item \textbf{Wins against older generations:} The best agent of the current generation is paired against an evenly distributed set of the best agents from past generations to track relative performance to the past.
+        As long as this number stays above 50\%, an improvement over older generations should be expected.
         \item \textbf{Objective grading:} This stat is the performance evaluation of the best agent based on some algorithm that either plays mathematically perfect or (in non-deterministic games) is generally accepted to play well.
-        It is important to note that I primarily don't use this algorithm for the fitness function because of the points previously mentioned in section~\ref{subsec:natural-slection}.
-        \item \textbf{Number of turns:} I track the average number of turns the agents needed while playing their competition games.
+        It is important to note that this algorithm is not used as the fitness function because of the points previously mentioned in section~\ref{subsec:evolutionary-computation-&-inspiration-by-neat}.
+        \item \textbf{Number of turns:} The average number of turns the agents play during their competition is tracked throughout each generation.
         In Nim, low turn count generally means better play.
-        \item \textbf{Average amount of hidden layers and nodes per hidden layer:} I track these stats to see how complex the topologies of my NNs in the population are.
-        \item \textbf{Best agent layer sizes and edges:} I track these topological stats to see how complex the best solution is.
-        \item \textbf{Best agent games:} I track the whole games turn after turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from a previous generation.
-        With these game logs, I can see what moves my agents make in real games and try to derive their tactics and strategies.
+        \item \textbf{Average amount of hidden layers and nodes per hidden layer:} These stats are tracked to see how complex the topologies of my NNs in the population are.
+        \item \textbf{Best agent layer sizes and edges:} These topological stats are tracked to see how complex the best solution is.
+        \item \textbf{Best agent games:} The whole games are tracked turn after turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from a previous generation.
+        These game logs offers insight into what moves the agents make in real games which helps derive their tactics and strategies.
     \end{itemize}
 
     \subsection{Nim}\label{subsec:nim-implementation}
     For the nim game, there are a few different game modes as well as an objectively perfectly playing dynamic programming algorithm.
-    Let's first look at the general idea of how a game is played.
+    First, the general concept of how a game is played will be explored.
 
     \subsubsection{General Approach}
     Each game starts with a first game state, which is derived from the initial state parameter.
@@ -706,7 +708,7 @@
     \\ \\
     For output encoding, there is two different implementations.
     \begin{itemize}
-        \item \textbf{Direct encoding:} I have two output nodes where the value for the first represents the index of the stack and the second value represents the amount of matches that are removed.
+        \item \textbf{Direct encoding:} The output layer has two output nodes where the value for the first represents the index of the stack and the second value represents the amount of matches that is removed.
         \item \textbf{One-hot encoding:} The first $N$ output nodes encode for the index and the following nodes encode for the amount of matches removed.
         For both the nodes encoding for index and amount removed, the node with the highest value is finally used as output.
         The output layer therefore has length $l = N + \max(state_{initial})$, where $N$ is the amount of stacks and $\max(state_{initial})$ is the highest possible amount of matches on a stack.
@@ -724,14 +726,14 @@
     With strict grading, illegal moves lead to a game loss, whereas in safe grading, the closest legal move to the illegal prediction is played.
 
     \subsubsection{Objective Grading}
-    To have an exact measure of performance, I use a dynamic programming (DP) algorithm that knows the best moves for each given state.
-    It works by first defining a base case, which in case of Nim is every stack being empty and the result a loss.
+    To have an exact measure of performance, a dynamic programming (DP) algorithm is used to calculate the best move for every state.
+    This algorithm works by first defining a base case, which in case of Nim is every stack being empty and the result a loss.
     Then, it starts with the initial state and tries out all possible moves using recursion.
     For each state it tries to find a move that forces the opponent into a losing position.
     If it can find such a move, the position is winning, but if all moves lead to winning position for the opponent, the algorithm returns the position with the maximal moves needed for the opponent to win.
     It also stores the result for each already computed state, so that all other paths that lead to that position can use the precomputed result.
     \\ \\
-    Now that I know for all positions if they're winning, I can use this to grade the moves of my agents:
+    Now that it is known for all positions if they're winning, this data can used to grade the moves of agents with a score that is calculated as follows:
     For each move, an agent gets one point if
     \begin{itemize}
         \item the agent had a winning state and made a move that got the opponent into a losing state,
@@ -744,26 +746,26 @@
 
 
     \section{Findings}\label{sec:first-findings}
-    Now I will test my ENN algorithm with the games and different parameters.
+    Now this implementation of ENNs will be tested with different parameters using the games as a benchmark.
     The general approach is to start by training the ENNs on easy problems whilst observing the effect of different parameters on the result.
-    Each test is repeated at least 3 times to try to reduce the impact of randomness on the results.
-    As I walk through the different testing configurations, I will discuss just one of the tests as long as all tests showed similar results.
-    However, all testing data can be inspected on my GitHub.
+    Each test is repeated at least three times to try to reduce the impact of randomness on the results.
+    As this thesis outlines the different testing configurations, one test will be discussed for each configuration as long as all three tests showed similar results.
+    However, the full testing data can be inspected on this thesis' GitHub\footcite{RustENN}.
 
     \subsection{Simple Nim}\label{subsec:simple-nim-results}
-    For the Simple Nim game, I will run each test for 1000 generations, since ENNs should be able to solve this simple game rather quickly.
+    For the Simple Nim game, each test is run for 1000 generations, as the ENNs should be able to solve such simple games rather quickly.
 
     \subsubsection{Stack: 2, Configuration 1}
-    First I test the ENNs on a problem with one stack containing 2 matches.
-    This is the easiest problem one still consider a game - with one match on the stack there is only one legal move, so it doesn't involve much decision-making.
-    The winning strategy of course is to only take one match and leave the opponent with the last match on the stack.
-    I start my first test with a relatively small population of 100 agents and try to simplify all other parameters:
+    In the first configuration, the ENNs need to find the correct move for the initial Nim state with one stack containing 2 matches.
+    This is the easiest problem that can still be considered a game - with one match on the stack there is only one legal move, so it doesn't involve any decision-making.
+    The winning strategy is to only take one match and leave the opponent with the last match on the stack.
+    The first test starts with a relatively small population of 100 agents and completely simplified parameters:
     \\
     \texttt{game function: run\_nim\_strict}, initial state: \texttt{[2]}, population size: \texttt{100}, competition games: \texttt{50}, mutation min: \texttt{0}, mutation max: \texttt{1}, fitness exponent: \texttt{1}, best agent share:
     \texttt{0}, random agent share: \texttt{0}, random old agent share: \texttt{0}, best agent tournament games: \texttt{50}, add\_connection\_rand: \texttt{1}, add\_node\_rand: \texttt{1}, change\_weight\_rand: \texttt{1}, change\_bias\_rand: \texttt{1}, shift\_weight\_rand: \texttt{1}, shift\_bias\_rand: \texttt{1}\\
-    It is also important to note that I start with one-hot output encoding, since this means that the output stays in the desired range.
+    It is also important to note that one-hot output encoding is used at first, as it keeps the output in a desired range.
     \\ \\
-    Now, I will run it and see how it goes:
+    The first test shows following results:
     \\
     \newcommand{\csvpath}{../data/simple_nim/stack_2/t_1/stats.csv} % Rename the macro
     \begin{center}
@@ -802,8 +804,8 @@
         \end{tikzpicture}
     \end{center}
 
-    As one can see, the best agent already plays the game perfectly after one generation.
-    One can also observe this in my saved games, where the best agent correctly plays the move [0, 1] (first value is the stack, second value the number of matches removed):
+    The best agent already plays the game perfectly after one generation.
+    This can be verified with the saved games, where it can be seen that the best agent correctly plays the move [0, 1] (first value is the stack, second value the number of matches removed):
     \begin{minted}{}
     Generation: 1
     Best agent layer sizes: [1, 3]
