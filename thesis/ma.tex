@@ -6,9 +6,9 @@
 \usemintedstyle{borland}
 
 \setminted{
-framesep=2mm,
-fontsize=\footnotesize,
-linenos
+    framesep=2mm,
+    fontsize=\footnotesize,
+    linenos
 }
 %\usemintedstyle{trac}
 
@@ -40,21 +40,20 @@ linenos
 \usepackage{mdframed}
 
 \NewDocumentCommand\newmdtheoremenvnonumber{O{} m m }{%
-  \newtheorem*{#2}{#3}
-  \BeforeBeginEnvironment{#2}{%
-     \begin{mdframed}[#1]}%
-  \AfterEndEnvironment{#2}{%
-     \end{mdframed}}%
+    \newtheorem*{#2}{#3}
+    \BeforeBeginEnvironment{#2}{%
+        \begin{mdframed}[#1]}%
+    \AfterEndEnvironment{#2}{%
+        \end{mdframed}}%
 }
 
 \newmdtheoremenvnonumber{mydefinner}{\mydeflabel}
 \newcommand{\mydeflabel}{}
 \newenvironment{mydef}[1]
- {\renewcommand\mydeflabel{#1}\begin{mydefinner}}
- {\end{mydefinner}}
+{\renewcommand\mydeflabel{#1}\begin{mydefinner}}
+{\end{mydefinner}}
 
 \newcommand{\attribution}[1]{\textup{(#1)}}
-
 
 
 %Citations
@@ -104,71 +103,85 @@ linenos
 
 
 \backgroundsetup{
-scale=1,
-color=black,
-opacity=1,
-angle=0,
-contents={%
-\hspace*{13.5cm}\includegraphics[width=3\paperwidth,height=\paperheight]{abstract_neurons3}
-  }%
+    scale=1,
+    color=black,
+    opacity=1,
+    angle=0,
+    contents={%
+    \hspace*{13.5cm}\includegraphics[width=3\paperwidth,height=\paperheight]{abstract_neurons3}
+    }%
 }
 
 
 \begin{document}
     \pagenumbering{gobble}
     \begin{titlepage}
+        \newgeometry{top=5mm, bottom=10mm, left=15mm, right=15mm}
         \BgThispage
-            \color{white} {
-                \begin{center}
-                    \Large \textsc{Matura Thesis}\\Kantonsschule Hohe Promenade\\
-                    \rule[0.1cm]{15.8cm}{0.1mm}\\
-                    \vspace{3cm}
-                    \Huge \textbf{ \textsc{How can you develop \\Evolutionary Neural Networks which \\learn to play Board Games?}}\\
-                    \vspace{0.8cm}
-                    \Large \textit {Implementation and Study of\\ Evolutionary Neural Networks inspired\\ by the NEAT Algorithm}\\
-                \end{center}
+        \color{white} {
+            \begin{center}
+                \Large \textsc{Matura Thesis}\\Kantonsschule Hohe Promenade\\
+                \rule[0.1cm]{16.5cm}{0.1mm}\\
                 \vspace{3cm}
-                \rule[0.1cm]{15.8cm}{0.1mm}\\
-                \vspace{9cm}\\
-                \begin{minipage}[t]{0.47\textwidth}
+                \Huge \textbf{ \textsc{Evolutionary Neural Networks: \\Designing a NEAT-Inspired Algorithm \\for Strategic Game Learning}}\\
+                %\vspace{0.8cm}
+                %\Large \textit {Implementation and Study of \\Evolutionary Neural Networks}\\
+                \vspace{3cm}
+                \rule[0.1cm]{16.5cm}{0.1mm}\\
+            \end{center}
+            \vspace{12cm}\\
+            \begin{minipage}[t]{0.47\textwidth}
                 \large\textbf {Thesis By:}\\
-                \end{minipage}
-                \hfill
-                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\textwidth}
+                \raggedleft
                 \large\textbf {Lucien Kissling 6e}\\
-                \end{minipage}
-                \begin{minipage}[t]{0.47\textwidth}
+            \end{minipage}
+            \begin{minipage}[t]{0.47\textwidth}
                 \large \textbf {Year:}\\
-                \end{minipage}
-                \hfill
-                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\textwidth}
+                \raggedleft
                 \large \textbf {2025}\\
-                \end{minipage}
-                \begin{minipage}[t]{0.47\textwidth}
+            \end{minipage}
+            \begin{minipage}[t]{0.47\textwidth}
                 \large \textbf {Supervisor:}\\
-                \end{minipage}
-                \hfill
-                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\textwidth}
+                \raggedleft
                 \large \textbf {Timo Schenk}\\
-                \end{minipage}
-                \begin{minipage}[t]{0.47\textwidth}
+            \end{minipage}
+            \begin{minipage}[t]{0.47\textwidth}
                 \large \textbf {Co Examiner:}\\
-                \end{minipage}
-                \hfill
-                \begin{minipage}[t]{0.47\textwidth}\raggedleft
+            \end{minipage}
+            \hfill
+            \begin{minipage}[t]{0.47\textwidth}
+                \raggedleft
                 \large \textbf {Dr. Arno Liegmann}\\
-                \end{minipage}
-                \vfill
-            }
+            \end{minipage}
+            \vfill
+        }
         \clearpage
+        \restoregeometry
     \end{titlepage}
+    Danke an meine Eltern
+    Danke an meine Betreuer %TODO: Dankesagung
+    Danke an Jan
+    \newpage
     \pagenumbering{arabic}
-    \setcounter{page}{2}
+    \setcounter{page}{3}
     \tableofcontents
+
+
     \chapter{Introduction}\label{ch:introduction}
+
+
     \section{Preface}\label{sec:preface}
     Ever since I got into computer science a few years ago, I was fascinated by the idea of algorithms that solved various problems.
-    Therefore, I participated in the SOI (Swiss Olympiad in Informatics) where I were taught everything about developing and programming algorithms and their data structures.
+    Therefore, I participated in the SOI (Swiss Olympiad in Informatics) where we were taught everything about developing and programming algorithms and their data structures.
     \\ \\
     In recent years although, a new field of computer science has gained a lot of attention, where these algorithms are not programmed by humans, but evolved by a computer.
     This field called machine learning immediately got my excitement and two years ago a friend of mine and I had our first practical experience with it.
@@ -177,69 +190,75 @@ contents={%
     A neural network (NN) forms the basis of most machine learning models and I will therefore explain it in much detail in the following chapters.
     In simple terms however, a NN is a strongly simplified artificial model of the human brain consisting of an interconnected web of neurons through which information flows and gets computed.
     \\ \\
-    Although the NN I developed two years ago already learned on its self, I still had to provide and label data for it to learn from.
+    Although the NN I developed two years ago already learned on its own, I still had to provide and label data for it to learn from.
     This meant that I had to manually scan the RGB values of the lego bricks and assign them the color they represented.
     In this case, this was the most efficient solution, however there are cases where you train a model where such data is unavailable or you simply want them to develop their own approach for a problem without predefined solutions.
     That is how I got to my matura thesis, which aims to develop such ML models that learn without labeled data with and use those to learn board games.
 
-        \section{Thesis Statement}\label{sec:thesis-statement}
-    This thesis will explore the field of neural networks (NNs) that learn without data provided by humans, which is called unsupervised learning.
-    The solution this Thesis will focus on are evolutionary neural networks (ENNs), a combination of neural networks and evolutionary competition.
+
+    \section{Thesis Statement}\label{sec:thesis-statement}
+    This thesis explores the field of neural networks (NNs) capable of learning without human-provided data, known as unsupervised learning.
+    The focus is on evolutionary neural networks (ENNs), which combine neural networks with evolutionary competition.
     \\ \\
-    In this thesis, I develop my own simplified implementation of ENNs and then train them on some board games.
-    The research effort consists of testing the ENN algorithm with different Parameters and Features to see how well it can learn to play the games in different configurations.
-    My approach also draws inspiration from the NEAT Algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002, where the NNs start minimally in the first generation and then develop complexity over time.\footcite[p.105-106]{Neat_02}
-    The first game I will train the ENNs on is Nim, a simple game where two players take turns removing matches from different stacks.
+    In this thesis, a simplified implementation of ENNs is developed and trained on board games.
+    The research investigates the effects of varying parameters and features on the learning process and evaluates the algorithm’s performance in comparison to other machine learning approaches.
+    This project draws inspiration from the NEAT Algorithm, introduced by Kenneth O. Stanley and Risto Miikkulainen in 2002, which uses a minimal initial structure that evolves complexity over time.\footcite[p.105-106]{Neat_02}
+    As a benchmark, the ENNs are trained to play the game Nim, where players alternately remove matches from stacks, and the winner is the one who avoids taking the last match.
     \\ \\
-    In specific, this Thesis aims to answer following questions:
+    In specific, this Thesis addresses following questions:
     \begin{itemize}
-        \item How can you develop evolutionary neural networks (ENNs) that learn to play board games?
+        \item How can evolutionary neural networks (ENNs) be developed that learn to play simple games?
         \item How do different parameters and features of ENNs affect the learning process?
-        \item How does this implementation of ENNs compare to other Machine Learning Algorithms?
     \end{itemize}
+
+
     \chapter{Background}\label{ch:background}
+
+
     \section{Neural Networks (NNs)}\label{sec:neural-networks-(nns)}
-    As already touched on in the Preface(\ref{sec:preface}), an artificial neural network (ANN or NN) is a mathematical model for data processing, initially inspired by the structure of the brain\footcite{Chandra_22}.
-    Therefore, I will first have a brief look at the functioning of a brain.
-            \subsection{Neurons in the Brain}\label{subsec:neurons-in-the-brain}
+
+    As previously mentioned in the Preface, an artificial neural network (ANN or NN) is a mathematical model for data processing, initially inspired by the structure of the brain.
+    Therefore, a brief overview of how a brain functions is presented next.
+
+    \subsection{Neurons in the Brain}\label{subsec:neurons-in-the-brain}
     Inside the brain, around 86 million neurons\footcite{caruso_23} form connections to each other through which they activate other neurons with electric and chemical signals.
     In a neuron, the signals of connected neurons add up and when they reach a certain threshold, the neuron is activated and fires a new signal to its own connections\footcite{Newman_23}.
     The neuron then resets after a certain amount of cooldown time.
     \\
     With this web of neurons inside the brain, animals can process the information from nerve signals from the body and output them again as nerve signals instructing the body.
-            \subsection{Feed Forward Neural Networks (FNNs)}\label{subsec:feed-forward-neural-networks-(fnns)}
-    So how do I apply these ideas about neural networks learned from the biology of a brain to a program that runs on a computer?
+
+    \subsection{Feed Forward Neural Networks (FNNs)}\label{subsec:feed-forward-neural-networks-(fnns)}
+    So how can these ideas about neural networks learned from the biology of a brain applied to a program that runs on a computer?
     The first step is to simplify the chaos of neurons in the brain and organize them into layers of neurons.
-    I get an input layer, an output layer and optional so-called hidden layers in between.
-    As a next step, in each layer, I connect its neurons to neurons of following layers, typically exclusively to neurons of the next layer.
+    These layers consist of an input layer, an output layer and optional so-called hidden layers in between.
+    As a next step, the neurons in each layer are connected to those in subsequent layers, typically limited to connections with the nearest layer.
     \\
-    Now, the structure of my network looks something like this:
+    Now, the structure of a neural network looks something like this:
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.25\textwidth]{nn_simple_1}~\caption{A simple Feed Forward Neural Network (FNN) with three layers: Input, Hidden and Output.\footnote{\cite{nn_simple_img_1}}}
         \label{fig:nn_simple_1}
     \end{figure}
-    \noindent
-    To describe the structure of a NN I also use the term topology.
+    
+    The term topology is used to describe the structure of a NN\@.
     \begin{mydef}{Neural Network Topology}
         The topology of a neural network is its distinct arrangement of neurons, layers and the connections between the neurons.
         \label{definition:Topology}
     \end{mydef}
-    \noindent
-    For the neural network to perform functions, I also need to assign a weight to all connections.
+    For the neural network to perform functions, a weight needs to be assigned.
     This weight value ranges from -1 to 1 and can be thought of as the strength of a connection between neurons.
     \\
-    In terms of computer science, this structure now resembles a directed, weighted graph, which is why I will call the neurons nodes and their connections edges from now on.
+    In terms of computer science, this structure now resembles a directed, weighted graph, which is why the neurons are called nodes and their connections edges.
     \begin{mydef}{Nodes/Edges}
         In a neural network, a node receives, computes and sends information, whereas an edge forms the connections between nodes to exchange information.
         \label{definition:Nodes-Edges}
     \end{mydef}
     \\ \\
-    Now let's see, how information gets computed by a neural network by using the example of a computer vision NN, that recognizes digits on a black/white image:
-    First, I need a way to encode the input image into values for the nodes of the input layer.
-    In my example, I might use the Brightness values of the single pixels, which I directly assign to the nodes of the input layer.
+    The computation of information by a neural network can be illustrated through the example of a computer vision NN that recognizes digits in a black-and-white image.
+    As a first step, the input is encoded into values that correspond to the nodes of the input layer.
+    In the example of a computer vision NN, the Brightness values of the single pixels can be used and directly assigned to the nodes of the input layer.
     \\
-    Then, for each node of the input layer, I look for all connected edges.
+    Then, each node of the input layer is iterated through to identify all its connected edges.
     For each of these edges I multiply its weight by the value of the input node and add the result to the node on the receiving end.
     \\
     After iterating through all the nodes of one layer, I move the next layer.
@@ -256,7 +275,7 @@ contents={%
             \item $w_i$ is the weight of the edge connecting the current node to node i
         \end{itemize}
     }
-    \noindent
+    
     Additionally, I can add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.
     Finally, an activation function $\sigma(x)$ is applied to the value of the nodes to fit the value of the node inside a preferred range.
     This activation function can also be thought of as the threshold of stimulation for a neuron to fire.
@@ -268,36 +287,37 @@ contents={%
     Plot of the activation functions:
     \\ \\
     \begin{center}
-    \begin{tikzpicture}
-     \begin{axis}[
-     xmin=-6,
-     xmax=6,
-     ymin=0,
-     ymax=6,
-     ytick distance = 1,
-     xtick distance = 1,
-     minor tick num=1,
-    axis lines = left,
-    line width = 1.5pt,
-    grid=both,
-    major grid style={line width=0.8pt,draw=gray!50},
-    minor grid style={line width=0.4pt,draw=gray!20},
-    xlabel = \(x\),
-    ylabel = {\(\sigma(x)\)}]
-     \addplot[
-        domain=-10:10,
-        color=red,
-        samples=1000.,
-     ]{1/(1 + e^-x)};
-\addlegendentry{\(Sigmoid\)}
-     \addplot[
-         domain=-10:10,
-         color=blue,
-         samples=1000.,
-     ]{max(0,x)};
-     \addlegendentry{\(ReLU\)}
-     \end{axis}
-    \end{tikzpicture}
+        \begin{tikzpicture}
+            \begin{axis}
+                [
+                xmin=-6,
+                xmax=6,
+                ymin=0,
+                ymax=6,
+                ytick distance = 1,
+                xtick distance = 1,
+                minor tick num=1,
+                axis lines = left,
+                line width = 1.5pt,
+                grid=both,
+                major grid style={line width=0.8pt,draw=gray!50},
+                minor grid style={line width=0.4pt,draw=gray!20},
+                xlabel = \(x\),
+                ylabel = {\(\sigma(x)\)}]
+                \addplot[
+                    domain=-10:10,
+                    color=red,
+                    samples=1000.,
+                ]{1/(1 + e^-x)};
+                \addlegendentry{\(Sigmoid\)}
+                \addplot[
+                    domain=-10:10,
+                    color=blue,
+                    samples=1000.,
+                ]{max(0,x)};
+                \addlegendentry{\(ReLU\)}
+            \end{axis}
+        \end{tikzpicture}
     \end{center}
     \\ \\
     The complete function for the value of one node is therefore:
@@ -311,7 +331,7 @@ contents={%
             \item $\sigma$ is the activation function
         \end{itemize}
     }
-    \noindent
+    
     Now this value $v_x$ is again sent through its connections to nodes from upcoming layers.
     After iterating through all the nodes and layers of the NN, I reach the final layer of the NN, where I can read out its computed output.
     This output again is encoded in node values like I did with the input and therefore needs to be decoded for the final result.
@@ -319,7 +339,8 @@ contents={%
     The result could be decoded by using the output node with the highest value as result.
     This kind of output encoding where all possible result get their own node is called one-hot encoding.
     With one-hot output encoding, the values of the output nodes can be interpreted as a certainty value for a specific result to be correct.
-            \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
+
+    \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
     Now that I have established how a NN works, it is important to understand why this kind of algorithm is revolutionary to computer science.
     \\ \\
     An algorithm processes an input with a set of functions applied in a certain order to calculate an output.
@@ -336,7 +357,8 @@ contents={%
     \begin{mydef}{NN Prediction}
         The output of a NN is called its prediction for some input.
     \end{mydef}
-            \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
+
+    \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
     I already know how a NN with certain parameters can make a prediction for a given input.
     But how do I find such parameters encoding for the structure and weights/biases of the NN?
     The answer is to use machine learning, which trains the model to perform a certain task with the help of training data.
@@ -360,11 +382,12 @@ contents={%
     The NN is trained on the whole training set for many generations, until the NN starts to make accurate predictions for all problems.
     To test the performance on unknown problems I can use a separate test set, which the NN wasn't trained on.
 
-        \section{Evolutionary Computation (EC) \& Genetic Algorithms (GAs)}\label{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}
+
+    \section{Evolutionary Computation (EC) \& Genetic Algorithms (GAs)}\label{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}
     Now I will have a look at the Machine Learning Technique, this Thesis focuses on.
     Again, I will draw inspiration from Nature:
     \begin{mydef}{Evolutionary Computation}
-    Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
+        Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
     \end{mydef}
     EC is commonly used where the perfect parameters for some function can't be calculated but the performance of a certain set can be determined.
     One example scenario for EC might be if you have a large set of data points of an unknown polynomial function with noise and outliers.
@@ -384,10 +407,11 @@ contents={%
     After a certain number of generations, you will then have the best performing set of parameters for a given problem.
     There is also one popular addition to EC, which draws inspiration from nature again:
     \begin{mydef}{Genetic Algorithm}
-    A Genetic Algorithm (GA) is an implementation of EC that uses a genetic representation of the parameters.
+        A Genetic Algorithm (GA) is an implementation of EC that uses a genetic representation of the parameters.
     \end{mydef}
     Its main idea is to have genes that only encode indirectly for the parameters, and can be turned on or off.
-            \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
+
+    \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
     I know from the previous section that EC starts with an initial population of agents with random sets of parameters, which all have a fitness determined by the cost function.
     Agents with relatively low cost (or high fitness) survive the round and then get replicated a few times, mutated and again selected by cost.
     \\ \\
@@ -413,7 +437,8 @@ contents={%
     The impact of starting position and local minima often pose a large problem for EC applications.
     Strategies to reduce the impact of such are therefore essential for the algorithms success.
 
-        \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
+
+    \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
     After having covered all the basics about NNs and EC, I can now combine those concepts to create the algorithm this thesis is about.
     \begin{mydef}{Evolutionary Neural Networks}
         Evolutionary neural networks (ENNs) are neural networks that use evolutionary computation to optimize for its parameters for the NNs weights/biases and its topology.
@@ -432,25 +457,32 @@ contents={%
         The old edge is removed and two new edges with random weights are added between the new node and the two other nodes each.
         \item \textbf{Remove nodes/edges:} A random node or edge is removed in a way that doesn't cut off the input from the output layer.
     \end{{enumerate}}
-    \section{Drawing Inspiration from the NEAT-Apporach}\label{sec:drawing-inspiration-from-the-neat-apporach}
-        As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies is a ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
-        One of its main innovations is that the initial population starts with NNs of lowest complexity and the NNs only increase topological complexity as its useful for the problem.
-        In specific, I start with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
-        This should result in more efficient NNs for the problem as complexity is only increased when it improves the NNs performance.
-        The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.) as it is already minimal.
+
+
+    \section{Drawing Inspiration from the NEAT-Approach}\label{sec:drawing-inspiration-from-the-neat-approach}
+    As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies is a ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\footcite[p.105-106]{Neat_02}.
+    One of its main innovations is that the initial population starts with NNs of lowest complexity and the NNs only increase topological complexity as its useful for the problem.
+    In specific, I start with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
+    This should result in more efficient NNs for the problem as complexity is only increased when it improves the NNs performance.
+    The NEAT algorithm therefore only needs the mutations 1. to 4. showed in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.) as it is already minimal.
+
 
     \section{Games}\label{sec:games}
     Let's also have a quick look at the games this Thesis will train the ENNs on.
+
     \subsection{Simple Nim}\label{subsec:simple-nim}
     This game is a simplified version of Nim, where two players take turns removing an arbitrary amount of matches from a single stack with some number of matches.
     The player who removes the last match loses.
     Therefore, the winning strategy simply is to remove all matches from the stack but one, which forces the opponent to remove the last match, which makes them lose.
+
     \subsection{Nim}\label{subsec:nim}
     This game works similarly to Simple Nim with the difference that there are multiple stacks with matches.
     Now, the player who removes the last match from the last unemptied stack loses.
     The winning strategy for Nim is much more complex, which forces the ENNs to learn a more complex strategy.
     You can read up the exact winning strategy on Wikipedia\footcite{nim_23} but the main point is that perfect play requires a complex algorithm.
     I won't expect the ENNs to learn this algorithm fully but hopefully they will be able to approximate perfect play that it can beat human players that don't know the perfect strategy.
+
+
     \section{Related Work}\label{sec:related-work}
     The field of AI research in ENNs is largely studied and is often linked to games.
     In the following table, I can find some examples of ENN models that have been tested on games:
@@ -458,57 +490,60 @@ contents={%
     \footnotesize
     \begin{center}
         \hspace*{-2cm}\begin{tabular}{|| l l l l l ||}
-          \hline
-          \makecell{\textbf{Author(s) \& Year}} &
-          \makecell{\textbf{Model}} &
-          \makecell{\textbf{Game/Benchmark}} &
-          \makecell{\textbf{Computation}} &
-          \makecell{\textbf{Accuracy}} \\
-          \hline\hline
-          \makecell{\cite{Neat_02}} &
-          \makecell{NEAT} &
-          \makecell{Double Pole Balancing\\With Velocities} &
-          \makecell{3600\\evaluations} &
-          \makecell{100\%} \\
-          \hline
-          \makecell{\cite{dama_22}} &
-          \makecell{NEAT} &
-          \makecell{Dama} &
-          \makecell{$>$5000\\generations} &
-          \makecell{81.25\%\\(wins against humans)} \\
-          \hline
-          \makecell{\cite{go_98}} &
-          \makecell{SANE} &
-          \makecell{Go} &
-          \makecell{260\\generations} &
-          \makecell{$>$75\%\\(vs Wally, 9$\times$9 board)} \\
-          \hline
-          \makecell{\cite{capture_02}} &
-          \makecell{Custom\\ENN} &
-          \makecell{Capture Game\\(subgame of Go)} &
-          \makecell{$>$100\\generations\\(distributed)} &
-          \makecell{No significant\\progress yet} \\
-          \hline
-          \makecell{\cite{backgammon_07}} &
-          \makecell{Genetic\\ENN} &
-          \makecell{Backgammon} &
-          \makecell{256 pop,\\100–200\\generations} &
-          \makecell{62.4\%\\(vs Pubeval)} \\
-          \hline
+                          \hline
+                          \makecell{\textbf{Author(s) \& Year}} &
+                          \makecell{\textbf{Model}} &
+                          \makecell{\textbf{Game/Benchmark}} &
+                          \makecell{\textbf{Computation}} &
+                          \makecell{\textbf{Accuracy}} \\
+                          \hline\hline
+                          \makecell{\cite{Neat_02}} &
+                          \makecell{NEAT} &
+                          \makecell{Double Pole Balancing \\With Velocities} &
+                          \makecell{3600 \\evaluations} &
+                          \makecell{100\%} \\
+                          \hline
+                          \makecell{\cite{dama_22}} &
+                          \makecell{NEAT} &
+                          \makecell{Dama} &
+                          \makecell{$>$5000 \\generations} &
+                          \makecell{81.25\%\\(wins against humans)} \\
+                          \hline
+                          \makecell{\cite{go_98}} &
+                          \makecell{SANE} &
+                          \makecell{Go} &
+                          \makecell{260 \\generations} &
+                          \makecell{$>$75\%\\(vs Wally, 9$\times$9 board)} \\
+                          \hline
+                          \makecell{\cite{capture_02}} &
+                          \makecell{Custom \\ENN} &
+                          \makecell{Capture Game\\(subgame of Go)} &
+                          \makecell{$>$100 \\generations\\(distributed)} &
+                          \makecell{No significant \\progress yet} \\
+                          \hline
+                          \makecell{\cite{backgammon_07}} &
+                          \makecell{Genetic \\ENN} &
+                          \makecell{Backgammon} &
+                          \makecell{256 pop,\\100–200 \\generations} &
+                          \makecell{62.4\%\\(vs Pubeval)} \\
+                          \hline
         \end{tabular}\hspace*{-2cm}
     \end{center}
     \normalsize
     Note:
     Although the amount of fitness evaluations is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations isn't indicated and cannot be derived.
 
+
     \chapter{Building my ENN}\label{ch:building-my-enn}
 
+
     \section{Algorithm Design}\label{sec:algorithm-design}
-    Now, I will have a detailed look at how to use the concepts described in the last chapter(\ref{ch:introduction}) to build an evolutionary neural network that plays Nim.
-    First, I will explain the general structure of my code:
-        \subsection{Overview}\label{subsec:overview}
-    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language.
-    If you don't understand the syntax of the code snippets, you can consult the online \("\)The Rust Programming Language\("\) booklet under: \url{https://doc.rust-lang.org/book/}
+    This chapter details
+    Now, we will have a detailed look at how to use the concepts described in the last chapter(\ref{ch:introduction}) to build an evolutionary neural network that plays Nim.
+    The code is structured as follows:
+
+    \subsection{Overview}\label{subsec:overview}
+    As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language. #TODO: footnote rust booklet
     \\ \\
     My codebase is divided into different modules as well as a bin folder with main files.
     The modules are divided into one module with the ENN algorithm, the other modules handle the different games, the ENNs learn to play.
@@ -521,7 +556,8 @@ contents={%
     It might also include an objective performance evaluation function to measure how well the NNs perform.
     I will now explain all the functions bottom up, starting with the neural network.
     I work with Rusts structs which are similar to classes in other programming languages.
-            \subsection{Neural Network}\label{subsec:neural-network}
+
+    \subsection{Neural Network}\label{subsec:neural-network}
     The struct \textit{NeurualNetwork} (defined in agents.rs) most importantly contains a two-dimensional vector of nodes, which encodes all the information of the NN\@:
     \begin{minted}{rust}
     pub struct NeuralNetwork {
@@ -555,7 +591,8 @@ contents={%
         I use a variant of the \texit{ReLU} function, since the linearity for inputs above 0 in the ReLU function allows for more variety of neuron activation, which makes the NN more flexible and efficient.
         The variant I use is the \texit{ELU} function, which additionally tackles the problem of dead neurons in \texit{ReLU} by allowing for negative values.
     \end{itemize}
-            \subsection{Mutation}\label{subsec:mutation}
+
+    \subsection{Mutation}\label{subsec:mutation}
     The mutation of the NNs is handled in the \textit{Agent} struct (defined in agent.rs), which includes a NN, its fitness, and its rank:
     \begin{minted}{rust}
     pub struct Agent {
@@ -578,10 +615,11 @@ contents={%
         I can also assign a weight to each mutation as parameters which represent its probability to be selected relatively to the weight of the other mutations (see again section~\ref{subsec:enn-parameters}).
     \end{itemize}
 
-            \subsection{Evolutionary Computation}\label{subsec:natural-slection}
+    \subsection{Evolutionary Computation}\label{subsec:natural-slection}
     The EC process starts with an initial population of agents with new, minimal NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in \ref{subsec:neural-network}).
     As I already established before (see~\ref{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}), I now repeat the steps of performance evaluation, selection and mutation.
-                \subsubsection{Competition}
+
+    \subsubsection{Competition}
     In this case, the fitness evaluation works by letting the agents of a population compete against each other in the games.
     However, I can't let every agent play every other agent since the needed time increases quadratically with population size.
     My solution therefore is to use my circular pairing algorithm.
@@ -589,14 +627,16 @@ contents={%
     For each of this predefined number of games, it generates a new distance which it then uses to pair each $\textrm{agent}_i$ with the $\textrm{agent}_{i+distance}$.
     It also checks that the distance isn't a multiple of any distance it had previously since this would result in the same agents being paired twice.
     Each game is played twice with both players starting once while keeping the same initial state.
-                \subsubsection{Fitness Evaluation}
+
+    \subsubsection{Fitness Evaluation}
     Now, I need to evaluate the fitness of the agents with the fitness function.
     The main idea for the fitness function is to simply count the number of wins an agent has made during the competition.
     Of course, there are other possibilities to evaluate the performance of an agent that represent their performance more accurately.
     The reason why I still first try to use the number of wins as fitness is because it is a generally applicable function to any game.
     Counting the number of wins doesn't require a deeper understanding of the game, which is very useful in games that are indeterministic.
     This also enables the ENNs to find their own new strategy for the game, which is finally the goal of AI training.
-                \subsubsection{Natural Selection}
+
+    \subsubsection{Natural Selection}
     After the fitness evaluation, I can test the performance of the generation (details in section~\ref{subsec:performance-tests}) and then generate the new population.
     The new population is made up by some portion of each of the following:
     \begin{itemize}
@@ -612,7 +652,8 @@ contents={%
         The last part of the new population is made up of best agents from previous generations which help counter populations stuck in a local minimum.
     \end{itemize}
     Now that I have generated my new population, I can start over the whole process.
-            \subsection{ENN Parameters}\label{subsec:enn-parameters}
+
+    \subsection{ENN Parameters}\label{subsec:enn-parameters}
     As already mentioned in the thesis statement(\ref{sec:thesis-statement}), my research involves testing my implementation with several configurations of different parameters and then evaluate their performance with the stats described in the following section(\ref{subsec:performance-tests}).
     Here is a list of all possible parameters influencing my ENNs:
     \begin{itemize}
@@ -642,10 +683,12 @@ contents={%
         \item \textbf{Best agent games:} I track the whole games turn after turn played by the best agent from the current generation against each the best agent from the last generation and a randomly selected best agent from a previous generation.
         With these game logs, I can see what moves my agents make in real games and try to derive their tactics and strategies.
     \end{itemize}
-            \subsection{Nim}\label{subsec:nim-implementation}
+
+    \subsection{Nim}\label{subsec:nim-implementation}
     For the nim game, there are a few different game modes as well as an objectively perfectly playing dynamic programming algorithm.
     Let's first look at the general idea of how a game is played.
-                \subsubsection{General Approach}
+
+    \subsubsection{General Approach}
     Each game starts with a first game state, which is derived from the initial state parameter.
     A game state is a list where its length is the amount of stacks in that game and each value $v_i$ stands for the amount of matches on the i-th stack.
     Then, the competing agents take turns predicting their moves.
@@ -653,7 +696,7 @@ contents={%
     A move indicates the stack where the matches are removed as well as the number of removed matches.
     Then the game function computes the new game state after the move or ends the game if all stacks are empty.
 
-                \subsubsection{Encoding and Decoding}
+    \subsubsection{Encoding and Decoding}
     The input is directly encoded into the input layer of the NNs, which means the input layer has the same size as the state.
     The values of the input nodes are directly copied from the game state list and therefore also represent the amount of matches on each stack.
     \\ \\
@@ -665,7 +708,8 @@ contents={%
         The output layer therefore has length $l = N + \max(state_{initial})$, where $N$ is the amount of stacks and $\max(state_{initial})$ is the highest possible amount of matches on a stack.
     \end{itemize}
     Direct encoding is the more straight forward approach with lower NN topology whereas one-hot encoding ensures that the output stays in a reasonable range.
-                \subsubsection{Game Modes}
+
+    \subsubsection{Game Modes}
     There are game modes \texit{Simple Nim} and \texit{Nim} with some configuration possibilities:
     \\
     In \texit{Nim}, each stack of the initial state can hold matches whereas in Simple Nim, the value of all stacks but one randomly chosen stack is set to 0.
@@ -674,7 +718,8 @@ contents={%
     \\
     Another configuration involves the output decoding.
     With strict grading, illegal moves lead to a game loss, whereas in safe grading, the closest legal move to the illegal prediction is played.
-                \subsubsection{Objective Grading}
+
+    \subsubsection{Objective Grading}
     To have an exact measure of performance, I use a dynamic programming (DP) algorithm that knows the best moves for each given state.
     It works by first defining a base case, which in case of Nim is every stack being empty and the result a loss.
     Then, it starts with the initial state and tries out all possible moves using recursion.
@@ -693,15 +738,18 @@ contents={%
     \end{itemize}
     The sum of all points an agent has collected is then divided by the amount of moves it has made to get the final performance score.
 
+
     \section{Findings}\label{sec:first-findings}
     Now I will test my ENN algorithm with the games and different parameters.
     The general approach is to start by training the ENNs on easy problems whilst observing the effect of different parameters on the result.
     Each test is repeated at least 3 times to try to reduce the impact of randomness on the results.
     As I walk through the different testing configurations, I will discuss just one of the tests as long as all tests showed similar results.
     However, all testing data can be inspected on my GitHub.
-            \subsection{Simple Nim}\label{subsec:simple-nim-results}
+
+    \subsection{Simple Nim}\label{subsec:simple-nim-results}
     For the Simple Nim game, I will run each test for 1000 generations, since ENNs should be able to solve this simple game rather quickly.
-                \subsubsection{Stack: 2, Configuration 1}
+
+    \subsubsection{Stack: 2, Configuration 1}
     First I test the ENNs on a problem with one stack containing 2 matches.
     This is the easiest problem one still consider a game - with one match on the stack there is only one legal move, so it doesn't involve much decision-making.
     The winning strategy of course is to only take one match and leave the opponent with the last match on the stack.
@@ -761,7 +809,8 @@ contents={%
     Game result: [1, 0]
     \end{minted}
     The best agent wins percentage in the plot above is a steady 50\% since all games are played both ways and the first agent always wins the game.
-            \subsubsection{Stack: 8, Configuration 1}
+
+    \subsubsection{Stack: 8, Configuration 1}
     Since the stack size with 2 has already worked fine, I will now try the same configuration with an increased initial stack size of 8 matches:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
@@ -815,6 +864,7 @@ contents={%
     The problem is that if the starting player subtracts less than 7 matches, the other player would get in winning position where it has to adapt and play subtract N - 1 matches.
     There might evolve a population where all agents only subtract 7 matches, however this seems more like a local minimum and my final goal is to develop NNs that can play the whole game.
     This simplification turns out to be a hindrance, so I will change the stack to have a variable amount of matches.
+
     \subsubsection{Remark: Unnecessary Topology}
     If I look at the topology metrics of one of the tests, I realize that complexity of the NNs exploded without any visible improvement in performance:
     \begin{center}
@@ -896,29 +946,29 @@ contents={%
                     \begin{tikzpicture}
                         \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
                         \begin{axis}[
-                        title=\textbf{Topology},
-                        grid=both,
-                        xmin=0, xmax=1000,
-                        ymin=0, ymax=50,
-                        no markers,
-                        xtick distance = 200,
-                        ytick distance = 10,
-                        legend pos=north west,
-                        xlabel={Generation},
-                        ylabel={Complexity},
+                            title=\textbf{Topology},
+                            grid=both,
+                            xmin=0, xmax=1000,
+                            ymin=0, ymax=50,
+                            no markers,
+                            xtick distance = 200,
+                            ytick distance = 10,
+                            legend pos=north west,
+                            xlabel={Generation},
+                            ylabel={Complexity},
                         ]
-                        \addplot[violet] table [
-                        x=generation,
-                        y=avg_layers,
-                        col sep=comma,
-                        ] {\csvpath};
-                        \addlegendentry{Average layers}
-                        \addplot[teal] table [
-                        x=generation,
-                        y=avg_hidden_layer_size,
-                        col sep=comma,
-                        ] {\csvpath};
-                        \addlegendentry{Average hidden layer size}
+                            \addplot[violet] table [
+                            x=generation,
+                            y=avg_layers,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Average layers}
+                            \addplot[teal] table [
+                            x=generation,
+                            y=avg_hidden_layer_size,
+                            col sep=comma,
+                            ] {\csvpath};
+                            \addlegendentry{Average hidden layer size}
                         \end{axis}
                     \end{tikzpicture}
                 \end{subfigure}
@@ -1154,7 +1204,8 @@ contents={%
     \end{figure}
     As we can see in the graphs, the performance didn't reach 100\% in any configuration and the NNs remained stuck in a local minimum with the best agents always winning 50\% against previous best agents.
     However, there is still something I can change.
-                \subsubsection{Stack 1--8, Configuration 6}
+
+    \subsubsection{Stack 1--8, Configuration 6}
     I run the simple configuration as in configuration 1, only that I changed the output encoding (explained in chapter~\ref{subsec:nim-implementation}) from one-hot to direct encoding:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_6/stats.csv} % Rename the macro
@@ -1205,7 +1256,8 @@ contents={%
     Yet NNs with large amount of hidden nodes are unlikely to develop with my ENNs since they don't show a competitive advantage instantly.
     \\\\
     Since this test worked fine, I will now a very large stack size.
-                \subsubsection{Stack: 1--1000, Configuration 1}
+
+    \subsubsection{Stack: 1--1000, Configuration 1}
     Now I will increase the maximal stack number to 1000:
     \renewcommand{\csvpath}{../data/simple_nim/stack_1000r/t_1/stats.csv} % Rename the macro
     \begin{center}
@@ -1247,9 +1299,11 @@ contents={%
     However, the NNs got stuck in a local minimum in the third run.
     This is why I also ran other test runs with different parameters but unfortunately, they showed similar consistency within their runs.
     Still, the NNs managed to learn the game most of time which means, I can finally start training the NNs on the main game.
-            \subsection{Nim}
+
+    \subsection{Nim}
     I now already have gained a lot of insight about the functioning of ENNs and are therefore ready for the normal version of Nim.
-                \subsubsection{Stacks: 2*2, Configuration 1}
+
+    \subsubsection{Stacks: 2*2, Configuration 1}
     I will start with a fairly simple problem where there are two stacks containing a maximum of 2 matches.
     There are eight possible game states for which the NNs need to find solutions.
     This shouldn't be a particularly hard task for the NNs so let's see how they do:
@@ -1290,7 +1344,8 @@ contents={%
         \end{tikzpicture}
     \end{center}
     As expected, the NNs had no problem with this task and in my tests, they reached full accuracy in 100 to 400 generations.
-                \subsubsection{Stacks: 2*4, Configuration 1}
+
+    \subsubsection{Stacks: 2*4, Configuration 1}
     Now I will double the maximal amount of matches per stack which leaves us with 24 possible game states.
     Let's see, how they do:
     \renewcommand{\csvpath}{../data/nim/stacks_2x4/t_1/stats.csv} % Rename the macro
@@ -1346,10 +1401,15 @@ contents={%
     \end{minted}
     It is hard to tell if this is a result of the NNs being in a local minimum or because of to little training so I will run the tests a bit longer to give the NNs more chances to develop.
     %Another thing that stands out is that the NNs tended to develop a lot of unnecessary topological complexity which is why I will decrease the chance for node growth again by a factor of 5.
-            %\section{Direct Comparisons}
-                \subsubsection{Stacks: 2*4, Configuration 2}
+    %\section{Direct Comparisons}
+
+    \subsubsection{Stacks: 2*4, Configuration 2}
     I will run the tests for 10'000 generations instead of 1000:
+
+
     \chapter{Wrapping Up}\label{ch:wrapping-up}
+
+
     \section{Conclusion}\label{sec:conclusion}
     I managed to train neural networks with 100\% accuracy in the simple Nim version, where there is only one stack, for stack sizes up to 1000.
     This success was mostly due to the realization that the output should be encoded directly instead of using one-hot encoding.
@@ -1364,7 +1424,9 @@ contents={%
     \\ \\
     This thesis also showed sometimes contradictory results within different tests of the same parameters.
     In an application, one might therefore train several populations to then choose the best performing one.
-        \section{Auto Review}\label{sec:auto-review}
+
+
+    \section{Auto Review}\label{sec:auto-review}
     This research was a large and sometimes painful journey for me to realize but finally resulted in a ENN framework that I proved to be able to learn some functions without human help.
     Still, there is a few things I would do differently.
     \\
@@ -1382,33 +1444,33 @@ contents={%
     \\
     However in general, my object oriented programming approach worked fine and my project structure made it easily understandable and editable throughout my research.
     Still, more consistent commenting and documentation would have further improved clarity of the code.
-        \section{Future Work}\label{sec:future-work}
+
+
+    \section{Future Work}\label{sec:future-work}
     As already mentioned, this thesis leaves much research to be conducted, which might also answer the question whether the Nim game can be played by NNs.
     In specific, future work might include the following:
-                \subsubsection{More Testing}
+
+    \subsubsection{More Testing}
     Because of the time constraints, this research only tested few configurations with little tests each.
     More test runs within a set of parameters might therefore increase statistical significance of the results and more tests with different sets of parameters might help find better solutions.
     One might also use evolutionary computation to optimize different parameters of the ENNs.
-                \subsubsection{Faster Computation}
+
+    \subsubsection{Faster Computation}
     To enable more tests, one could improve the computation performance of the ENN algorithm.
     This can be done by converting the NNs into a weight matrix and then compute its predictions with hardware accelerated vector matrix multiplications.
     However, the complex topologies of the NNs in this approach make it harder to do so than with other NNs.
     Also many small performance improvements can still be done in this project which might cumulatively make it drastically faster.
-                \subsubsection{Algorithm Design}
+
+    \subsubsection{Algorithm Design}
     There are also a lot of improvements to be made in the ENN algorithm, this thesis developed.
     For example, the NEAT algorithm, which served as initial inspiration, also uses genetic encoding, tracks genes using historical markings and protects innovation using speciation\footcite{Neat_02}.
     All of these and other approaches could improve the ENNs performance and therefore need to be studied.
-                %\subsubsection{Tests in different Applications}
+    %\subsubsection{Tests in different Applications}
     %To test the ENNs performance, one might also use this implementation for other applications to see if it holds up against different ENN algorithms.
-        \section{Acknowledgements}\label{sec:acknowledgements}
-    GitHub Copilot?
-    Phoenix GUI?
-    Crates?
-    \chapter{Appendix}
-        \section{Code}
-        \section{Data}
-        \section{Documentation}
-        \section{References}
-    \printbibliography
+    %\chapter{Appendix}
+    %    \section{Data}
+    %Possibly additional tests
+    %    \section{References}
+    \printbibliography[title=References]
 
 \end{document}

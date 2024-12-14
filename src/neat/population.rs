@@ -19,6 +19,7 @@ use std::sync::atomic::{AtomicU32, AtomicUsize, Ordering};
 pub type GameResLog = (Vec<u32>, Vec<(Vec<u32>, [isize; 2])>, Vec<u32>, Vec<u32>);
 
 pub const MOVE_FITNESS: bool = false;
+pub const OBJ_FITNESS: bool = true;
 
 pub const FITNESS_EXP: f64 = 1.;
 
@@ -151,13 +152,16 @@ impl<T: Send + Sync + 'static + Clone> Population<T> {
 
                 // Run the game and get the results
                 let agents_slice = vec![&agents[j[0]], &agents[j[1]]];
-                let game_res = run_game(&game, agents_slice, false, MOVE_FITNESS);
+                let game_res = run_game(&game, agents_slice, OBJ_FITNESS, MOVE_FITNESS || OBJ_FITNESS);
 
                 // Update fitness in a critical section
                 let mut fitness_lock = fitness_updates.lock().unwrap();
                 count.fetch_add(2, Ordering::SeqCst);
                 moves_sum.fetch_add(game_res.2.iter().sum::<u32>(), Ordering::SeqCst);
-                if self.comp_avg_moves >= 0. && MOVE_FITNESS {
+                if OBJ_FITNESS {
+                    fitness_lock[j[0]] += game_res.3[0] as f64 / (game_res.2[0].max(1) as f64);
+                    fitness_lock[j[1]] += game_res.3[1] as f64 / (game_res.2[1].max(1) as f64);
+                } else if self.comp_avg_moves > 0. && MOVE_FITNESS {
                     fitness_lock[j[0]] += game_res.0[0] as f64 + 1. / (game_res.2[0].max(1) as f64).powf(2.) * self.comp_avg_moves;
                     fitness_lock[j[1]] += game_res.0[1] as f64 + 1. / (game_res.2[1].max(1) as f64).powf(2.) * self.comp_avg_moves;
                 } else {
