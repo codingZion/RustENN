@@ -1,4 +1,4 @@
-use crate::nim::dp;
+use rust_enn::nim::dp;
 
 fn main() {
     let nim_heaps = vec![4;2];
