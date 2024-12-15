@@ -1,7 +1,7 @@
 use std::fs::OpenOptions;
 use std::io::Write;
 use std::fmt::Write as FmtWrite;
-use crate::neat::agent::{Agent, MUTATION_TYPES};
+use crate::enn::agent::{Agent, MUTATION_TYPES};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use indicatif::ProgressBar;

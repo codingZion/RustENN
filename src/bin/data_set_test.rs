@@ -1,4 +1,4 @@
-use rust_neat::nim::dp::*;
+use crate::nim::dp::*;
 
 fn main() {
     // Example usage:

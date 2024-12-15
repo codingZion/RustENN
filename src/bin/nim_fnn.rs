@@ -1,5 +1,5 @@
-use rust_neat::nim::dp::*;
-use rust_neat::fnn::model::ModelConfig;
+use crate::nim::dp::*;
+use crate::fnn::model::ModelConfig;
 use burn::backend::Wgpu;
 
 fn main() {

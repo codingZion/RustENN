@@ -1,5 +1,5 @@
-use crate::neat::agent::Agent;
-use crate::neat::population::GameResLog;
+use crate::enn::agent::Agent;
+use crate::enn::population::GameResLog;
 use crate::nim::dp;
 
 #[derive(Clone)]

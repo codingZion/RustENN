@@ -1,5 +1,5 @@
-use rust_neat::neat::population::Population;
-use rust_neat::nim::nim2::Nim;
+use crate::enn::population::Population;
+use crate::nim::nim2::Nim;
 use std::{fs, thread};
 use std::time::SystemTime;
 //mute println

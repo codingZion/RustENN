@@ -1,2 +1,2 @@
 pub mod nim;
-pub mod neat;
+pub mod enn;
