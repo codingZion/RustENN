@@ -1,5 +1,15 @@
 \documentclass[12pt]{report}
 %\usepackage[german]{babel}
+%General Layout
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    left=20mm,
+    right=20mm,
+    top=30mm,
+    bottom=30mm,
+%    total={6in, 8in}
+}
 
 %(Rust) Code Snippets
 \usepackage{minted}
@@ -25,6 +35,16 @@
 %chapter style
 \usepackage{titlesec}
 \titleformat{\chapter}{\normalfont\huge\textbf}{\thechapter.}{20pt}{\huge\textbf}
+
+% Chapter description on pages
+\begin{comment}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Clear default header and footer
+\fancyhf{}
+\end{comment}
+
 
 %References as a Chapter
 \usepackage[nottoc,numbib]{tocbibind}
@@ -133,16 +153,6 @@ align=center
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
-%General Layout
-\usepackage{geometry}
-\geometry{
-    a4paper,
-    left=20mm,
-    right=20mm,
-    top=30mm,
-    bottom=30mm,
-%    total={6in, 8in}
-}
 % To adjust figure placement
 \usepackage{adjustbox}
 
@@ -156,6 +166,7 @@ align=center
 \usepackage{holtxdoc}
 \usepackage{pgfregressiontest}
 \usepackage{hhline}
+\usepackage{comment}
 
 \hypersetup{
     colorlinks,
@@ -271,6 +282,13 @@ align=center
     \pagenumbering{arabic}
     \setcounter{page}{5}
     \tableofcontents
+
+\begin{comment}
+    \pagestyle{fancy}
+    \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+    \fancyhead[R]{}
+    \fancyhead[L]{\chaptername\ \thechapter\ --\ \leftmark}
+\end{comment}
 
 
     \chapter{Introduction}\label{ch:introduction}

@@ -33,7 +33,7 @@ fn main() {
     let mut population = if USE_BIN {
         Population::load_population(dir_name.to_owned() + "population.bin").unwrap()
     } else {
-        Population::new(100, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
+        Population::new(2500, nim_config.input_size, nim_config.output_size, nim_func, (0usize, 1usize))
         //Population::new(20, nim_config.input_size, nim_config.output_size, Nim::run_nim, (1usize, 5usize));
     }; 
     if USE_BIN {
@@ -47,7 +47,7 @@ fn main() {
 
     population.save_params_csv(dir_name.to_owned() + params_csv, func_str, comp_games, initial_state.clone());
 
-    for _ in 0..10000 {
+    for _ in 0..1000 {
         //let mut population = Population::load_population("population.bin").unwrap();
         //population.run_game = Nim::run_nim_strict;
         
