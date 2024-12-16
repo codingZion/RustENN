@@ -1,0 +1,85 @@
+\section{Conclusion}\label{sec:conclusion}
+This thesis managed to train neural networks with 100\% accuracy in the single stack version of Nim for stack sizes up to 1000.
+The success was mostly due to the realization that the output should be encoded directly instead of using one-hot output encoding.
+Although one-hot encoding keeps the output in a safe bound, it finally makes it harder for the NNs to find the correct structure and weights in the case of Nim.
+Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations, which demonstrated to be effective.
+\\ \\
+In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of ~90\% for two stacks with 4 matches each.
+The NNs couldn't adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where all NNs of a population only played a certain subset of all perfect moves.
+Since the 24 possible game states were already too much for the ENN algorithm to learn, it does not seem reasonable to train the algorithm on even more complex configurations.
+\\\\
+There are two explanations for the finding that the NNs were not able to become fully accurate the more complex configuration.
+Either, the Nim game is an unsuited game for NNs to solve as the algorithm to play Nim perfectly isn't easily translatable into neurons, or this implementation and or parameters of the ENN simply are not up to the task.
+To tell which of the two reasons apply, more research needs to be conducted in this field, which will be discussed further in the last section (\ref{sec:future-work}).
+\\ \\
+This thesis sometimes revealed contradictory results within different tests of the same parameter configuration.
+In an application, several populations might be trained on the same problem to then choose the best performing one.
+
+
+\section{Auto Review}\label{sec:auto-review}
+This research was a large and sometimes painful journey for me to realize but finally resulted in a ENN framework that I proved to be able to learn some functions without human help.
+Still, there are a few things I would do differently now:
+\\
+I planned to be done with a beta program many months before the thesis end to then have time to test and refine my program.
+However, I finished the program much later and found many bugs which forced me to repeat the whole testing.
+The final tests were therefore done in only a few days, which left me with little room to search for optimal parameters.
+Additionally, my implementation wasn't optimized for speed, which further increased the time problem.
+\\
+Another thing I realized is that a scientific approach helps a lot with finding a solution.
+I first had fixed ideas about certain features and parameters and only realized these ideas were flawed after starting with a simple solution and then testing different approaches one at a time.
+\\
+I would also do some things differently in terms of my implementation.
+Firstly, I had many confusions with parameters which I had defined all over the place in my project.
+I would create a struct that handles all parameters and implement automized testing so I could run all tests without my supervision.
+\\
+However in general, my object oriented programming approach worked fine and my project structure made it easily understandable and editable throughout my research.
+Still, more consistent commenting and documentation would have further improved clarity of the code.
+
+
+\section{Future Work}\label{sec:future-work}
+As already mentioned, this thesis leaves much research to be conducted, which might also answer the question whether the Nim game can be learned by ENN algorithms.
+In specific, future work might include the following:
+
+\subsubsection{More Testing}
+Because of the time constraints, this research only tested few configurations with little tests each.
+More test runs within a set of parameters will therefore increase statistical significance of the results and more tests with different sets of parameters might help finding better solutions.
+This thesis has already tested the effect of some modifications of the fitness exponent, new population composition, and population size parameters without finding consistent evidence for significant improvement of performance with any of these parameters.
+In-depth testing of the effect of these parameters would facilitate their fine-tuning and might finally improve the ENN learning process.
+In specific, following parameters might be particularly important to examine:
+\begin{itemize}
+    \item \textbf{Fitness exponent and new population composition:} These parameters influence what agents make up each population and are therefore critical to optimize to ensure the algorithms success.
+    \item \textbf{Population size:} The approach of this thesis was to have a relatively small population too keep the needed computation per generation low, enlarging the population however, might allow for more diversity within a population which might help new strategies to evolve.
+    \item \textbf{Mutation rate:} This thesis kept the rate of mutation minimal to ensure consistent development, however, increasing the rate of mutations might accelerate innovation of NNs.
+    \item \textbf{Mutation types:} During the testing process, the weight of the topology-increasing mutation were decreased, which resulted in significantly less unnecessary complexity of the NNs.
+    Tuning the weights of other mutations might help prioritize the important mutations and therefore increase the efficiency of the whole algorithm.
+\end{itemize}
+Evolutionary computation could also be employed to optimize different parameters of the ENN algorithm itself and therefore improve the ENN learning process.
+
+\subsubsection{Faster Computation}
+To enable more tests, the computation performance of the ENN algorithm needs to be optimized.
+This can be done by converting the NNs into a weight matrix and then compute its predictions with hardware accelerated vector matrix multiplications.
+However, the complex topologies of the NNs in this approach make it harder to do so than with other NNs.
+Also many small performance improvements can still be done in this project which might cumulatively make the whole algorithm drastically faster.
+
+\subsubsection{Algorithm Design}
+There are also a lot of improvements to be made in the ENN algorithm itself.
+For example, the NEAT algorithm, which served as initial inspiration, also uses genetic encoding, tracks genes using historical markings and protects innovation using speciation\footcite{Neat_02}.
+In their tests, the developers of the NEAT algorithm were able to prove these features to effectively improve the results of the learning process.
+These features might therefore also improve the performance of the ENN algorithm in the Nim game.
+\\ \\
+\vspace*{5cm}
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+        Ich, Lucien Kissling, erkläre hiermit, dass ich die vorliegende Arbeit «Evolutionary Neural Networks: Designing a NEAT-Inspired Algorithm for Strategic Game Learning» selbststaendig und ohne Benützung anderer als der angegebenen Quellen oder Hilfsmittel verfasst bzw. gestaltet habe.
+        \\
+        \vspace{1em}
+        Ort, Datum: \underline{\hspace{3cm}} \hfill Unterschrift: \underline{\hspace{3cm}}
+    }%
+}
+%}}
+
+
+\cleardoublepage % Ensures proper placement in book format
+\phantomsection % For hyperref and correct PDF bookmarks
+\addcontentsline{toc}{chapter}{References} % Adds to the Table of Contents
+\printbibliography[title=References]
