@@ -4,44 +4,49 @@ The success was mostly due to the realization that the output should be encoded 
 Although one-hot encoding keeps the output in a safe bound, it finally makes it harder for the NNs to find the correct structure and weights in the case of Nim.
 Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations, which demonstrated to be effective.
 \\ \\
-In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of ~90\% for two stacks with 4 matches each.
-The NNs couldn't adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where all NNs of a population only played a certain subset of all perfect moves.
-Since the 24 possible game states were already too much for the ENN algorithm to learn, it does not seem reasonable to train the algorithm on even more complex configurations.
+In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of ~75\% for two stacks with 4 matches each.
+The NNs couldn't adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where the NNs of a population didn't predict the perfect move for all 24 possible game states.
 \\\\
-There are two explanations for the finding that the NNs were not able to become fully accurate the more complex configuration.
-Either, the Nim game is an unsuited game for NNs to solve as the algorithm to play Nim perfectly isn't easily translatable into neurons, or this implementation and or parameters of the ENN simply are not up to the task.
-To tell which of the two reasons apply, more research needs to be conducted in this field, which will be discussed further in the last section (\ref{sec:future-work}).
+A plausible explanation for the finding that the NNs could not be trained to full accuracy in the more complex configuration might lie in the game which was used as benchmark for the algorithm.
+The Nim game might be a tough challenge for NNs to solve as the algorithm to play Nim perfectly is not easily translatable into neurons.
+If this is the case, this thesis demonstrates the ability of ENN algorithms to adapt to complex tasks to a significant extent nevertheless.
+That said, this implementation of ENNs leaves room for future development (detailed in~\ref{sec:future-work}), which might also increase the performance of the algorithm in the Nim game.
+%There are two explanations for the finding that the NNs did not become fully accurate in the more complex configuration.
+%Either, the Nim game is an unsuited problem for NNs to solve as the algorithm to play Nim perfectly is not easily translatable into neurons, or this implementation and or parameters of the ENN need refinement.
+%To tell which of the two reasons apply, more research needs to be conducted in this field, which will be discussed further in the last section (\ref{sec:future-work}).
 \\ \\
-This thesis sometimes revealed contradictory results within different tests of the same parameter configuration.
-In an application, several populations might be trained on the same problem to then choose the best performing one.
-
+This thesis sometimes dealt with varying results for tests within the same parameter configuration.
+In an application, it is therefore advisable to train several populations on the same problem to then choose the best performing one.
 
 \section{Auto Review}\label{sec:auto-review}
-This research was a large and sometimes painful journey for me to realize but finally resulted in a ENN framework that I proved to be able to learn some functions without human help.
-Still, there are a few things I would do differently now:
+This research was a large journey for me to realize, which finally resulted in a ENN framework that I proved to be able to learn functions without human supervision.
+The concept of Neural Networks evolving on their own and finally acquiring some sort of skill seemed very theoretical and difficult for me, which is why it is such a delight for me to actually have created a practical implementation of ENNs that is able to learn a game on its own.
+\\ \\
+When reflecting on the planing process, I definitely underestimated the amount of time needed for the development and particularly the testing process.
+Even though I tried to optimize the program with algorithm design choices and parallel processing, the learning process still demanded a lot of time.
+This limited the amount of tests this thesis was able to evaluate.
+%I also discovered a few bugs during the testing time, which forced me to redo the testing.
+%I planned to be done with a beta program many months before the thesis end to then have time to test and refine my program.
+%However, I finished the program much later and found many bugs which forced me to repeat the whole testing.
+%The final tests were therefore done in only a few days, which left me with little room to search for optimal parameters.
 \\
-I planned to be done with a beta program many months before the thesis end to then have time to test and refine my program.
-However, I finished the program much later and found many bugs which forced me to repeat the whole testing.
-The final tests were therefore done in only a few days, which left me with little room to search for optimal parameters.
-Additionally, my implementation wasn't optimized for speed, which further increased the time problem.
+Another thing I realized is that the scientific method of testing is essential.
+Mmy approach of starting with a simple solution and then testing different parameters and features one at a time proved to be very effective.
+It helped me find different, more effective configurations than the ones I had previously imagined to be plausible.
 \\
-Another thing I realized is that a scientific approach helps a lot with finding a solution.
-I first had fixed ideas about certain features and parameters and only realized these ideas were flawed after starting with a simple solution and then testing different approaches one at a time.
+In terms of implementation, I had some struggles with the parameters being defined all over the place in the project.
+I would therefore create a struct that handles all parameters and also implement automized testing which would allow me to run all tests without supervision.
 \\
-I would also do some things differently in terms of my implementation.
-Firstly, I had many confusions with parameters which I had defined all over the place in my project.
-I would create a struct that handles all parameters and implement automized testing, so I could run all tests without my supervision.
-\\
-However in general, my object-oriented programming approach worked fine and my project structure made it easily understandable and editable throughout my research.
-Still, more consistent commenting and documentation would have further improved clarity of the code.
+In general, my object-oriented programming approach worked fine and my project structure made the codebase easily understandable and editable throughout my research.
+%Still, more consistent commenting and documentation would have further improved clarity of the code.
 
 
 \section{Future Work}\label{sec:future-work}
-As already mentioned, this thesis leaves much research to be conducted, which might also answer whether the Nim game can be learned by ENN algorithms.
+As already mentioned, this thesis leaves many possibilities for future research, which might also answer whether the Nim game can be learned by ENN algorithms.
 In specific, future work might include the following:
 
 \subsubsection{More Testing}
-Because of the time constraints, this research only tested few configurations with little tests each.
+Because of the time constraints, this research tested a number of configurations with limited tests each.
 More test runs within a set of parameters will therefore increase statistical significance of the results and more tests with different sets of parameters might help finding better solutions.
 This thesis has already tested the effect of some modifications of the fitness exponent, new population composition, and population size parameters without finding consistent evidence for significant improvement of performance with any of these parameters.
 In-depth testing of the effect of these parameters would facilitate their fine-tuning and might finally improve the ENN learning process.
@@ -56,13 +61,13 @@ In specific, following parameters might be particularly important to examine:
 Evolutionary computation could also be employed to optimize different parameters of the ENN algorithm itself and therefore improve the ENN learning process.
 
 \subsubsection{Faster Computation}
-To enable more tests, the computation performance of the ENN algorithm needs to be optimized.
+To enable more tests, the computational performance of the ENN algorithm could to be optimized.
 This can be done by converting the NNs into a weight matrix and then compute its predictions with hardware accelerated vector matrix multiplications.
 However, the complex topologies of the NNs in this approach make it harder to do so than with other NNs.
 Also many small performance improvements can still be done in this project which might cumulatively make the whole algorithm drastically faster.
 
 \subsubsection{Algorithm Design}
-There are also a lot of improvements to be made in the ENN algorithm itself.
+There is a large variety of additional features that might improve the performance of the ENN algorithm.
 For example, the NEAT algorithm, which served as initial inspiration, also uses genetic encoding, tracks genes using historical markings and protects innovation using speciation\footcite{Neat_02}.
 In their tests, the developers of the NEAT algorithm were able to prove these features to effectively improve the results of the learning process.
 These features might therefore also improve the performance of the ENN algorithm in the Nim game.

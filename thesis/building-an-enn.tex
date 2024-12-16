@@ -371,7 +371,7 @@ There might evolve a population where all agents only subtract 7 matches, howeve
 This simplification turns out to be a hindrance and will therefore be dismissed in favor of a variable initial stack size.
 
 \subsubsection{Remark: Unnecessary Topology}
-When considering the topology metrics in the test results of the last configuration, it becomes apparent that the complexity of the NNs explodes without any visible improvement in performance:
+When considering the topology metrics in the test results of the last configuration, it becomes apparent that the complexity of the NNs explode without any visible improvement in performance:
 \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
 
 
@@ -582,11 +582,11 @@ A look at the games the best agents played reveals their exact capabilities:
 Across all tests, the NNs only show the ability to learn the moves where they subtract one to three matches, but none more.
 The accuracy of the NNs in different tests simply depends on how many moves the NNs learned.
 In any case, the NNs get stuck in a local minimum.
-Such local minima originate in an early generations where the agents aren't highly developed, which means they often only play one move.
+Such local minima originate in early generations where the agents aren't highly developed, which means they often only play one move.
 The agents that constantly subtract one match are therefore the most successful and reproduce the most.
-After reaching that local minimum, there does not remain any competitors that could assert themselves, either because of a flaw in the selection process or because none have been created in first place.
+After reaching that local minimum, there remain no more competitors that could assert themselves, either because of a flaw in the selection process or because none have been created in first place.
 It can also be observed how homogeneous the NNs across generations get by looking at the wins of the best agent against former best agents, which always settle at 50\%, revealing that they all use the same strategy.
-A possibly solution to this problem might be to modify some parameters to see if anything helps against the emergence of local minima.
+A possible solution to this problem might be to modify some parameters to see if anything helps against the emergence of local minima.
 
 \subsubsection{Stack 1--8, Configuration 2--5}
 To overcome local minima, following strategies are available:
@@ -594,7 +594,7 @@ To overcome local minima, following strategies are available:
     \item \textbf{Fitness Exponent:} Increasing the fitness exponent to \textit{ex.} 2 might help successful mutations reproduce better and therefore overcome a large population of similar NNs.
     \item \textbf{Population Composition:} Other kinds of agents can be added to the new population like best agents from older generations, randomly selected agents from the last generation, or newly generated random agents.
     This might help the development of new and possibly more complex strategies without the need for instant return in performance.
-    \item \textbf{Population Size:} A larger population means more agents with different strategies can exist, evolve and finally help overcoming local minima.
+    \item \textbf{Population Size:} A larger population means more agents that have different strategies can exist, evolve and finally help overcoming local minima.
 \end{itemize}
 The following configurations are tested to evaluate the impact of the mentioned strategies:
 \begin{enumerate}
