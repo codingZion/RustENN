@@ -66,20 +66,20 @@ There are also a lot of improvements to be made in the ENN algorithm itself.
 For example, the NEAT algorithm, which served as initial inspiration, also uses genetic encoding, tracks genes using historical markings and protects innovation using speciation\footcite{Neat_02}.
 In their tests, the developers of the NEAT algorithm were able to prove these features to effectively improve the results of the learning process.
 These features might therefore also improve the performance of the ENN algorithm in the Nim game.
-\\ \\
-\vspace*{5cm}
-\noindent\fbox{%
-    \parbox{\textwidth}{%
-        Ich, Lucien Kissling, erkläre hiermit, dass ich die vorliegende Arbeit «Evolutionary Neural Networks: Designing a NEAT-Inspired Algorithm for Strategic Game Learning» selbststaendig und ohne Benützung anderer als der angegebenen Quellen oder Hilfsmittel verfasst bzw. gestaltet habe.
-        \\
-        \vspace{1em}
-        Ort, Datum: \underline{\hspace{3cm}} \hfill Unterschrift: \underline{\hspace{3cm}}
-    }%
-}
-%}}
+
 
 
 \cleardoublepage % Ensures proper placement in book format
 \phantomsection % For hyperref and correct PDF bookmarks
 \addcontentsline{toc}{chapter}{References} % Adds to the Table of Contents
 \printbibliography[title=References]
+\\
+\vspace*{3em}
+\setlength{\fboxsep}{10pt} % Abstand zwischen Text und Rahmen (Standard ist 3pt)
+\noindent
+\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}
+{Ich, Lucien Kissling, 6e, erkläre hiermit, dass ich die vorliegende Arbeit «Evolutionary Neural Networks: Designing a NEAT-Inspired Algorithm for Strategic Game Learning» selbständig und ohne Benützung anderer als der angegebenen Quellen oder Hilfsmittel verfasst bzw. gestaltet habe.
+\vspace{1cm}
+\hspace{-0.3cm}
+\\\\
+Ort, Datum: \underline{\hspace{5cm}} \hfill Unterschrift: \underline{\hspace{5cm}}}}
