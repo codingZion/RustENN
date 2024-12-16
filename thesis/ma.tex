@@ -19,21 +19,56 @@
 \usepackage{titlesec}
 \titleformat{\chapter}{\normalfont\huge\textbf}{\thechapter.}{20pt}{\huge\textbf}
 
+%References as a Chapter
+\usepackage[nottoc,numbib]{tocbibind}
 
 %Graphs
 \usepackage{pgfplots}
 \usepackage{subcaption} % For subfigures
-\pgfplotsset{width=15cm,height=7.5cm,compat=1.9}
-\usepgfplotslibrary{external}
-\tikzexternalize
-\usetikzlibrary{external}
-\tikzexternalize % activate!
+\pgfplotsset{width=15cm,height=7.5cm,compat=1.18}
+\begin{comment}
+    \usepgfplotslibrary{external}
+
+    \usetikzlibrary{external}
+    \tikzexternalize[
+        failed ref warnings for={%
+        \ref,%
+        %\cite,% DISABLE THIS
+        \pageref},
+        shell escape=-shell-escape]
+    \tikzset{external/system call={
+        pdflatex -shell-escape -interaction=batchmode -jobname "\image" "\texsource"
+    }}
+
+
+
+    \tikzset{external/aux in dpth=false}
+
+
+
+
+    \tikzset{
+        png export/.style={
+            % First we call ImageMagick; change settings to requirements
+            external/system call/.add={}{& magick.exe -density 300 "\image.pdf" "\image.png"},
+            % Now we force the PNG figure to be used instead of the PDF
+            /pgf/images/external info,
+            /pgf/images/include external/.code={
+                \includegraphics[width=\pgfexternalwidth,height=\pgfexternalheight]{##1.png}
+            },
+        }
+    }
+\end{comment}
+
 
 %CSV files
 \usepackage{filecontents}
 
 % For adjusting margins locally
 \usepackage{changepage}
+
+% Adjust spaces locally
+\usepackage{setspace}
 
 %Definitions
 \usepackage{amsthm}
@@ -89,7 +124,7 @@
 
 %Liks of TOC
 \usepackage{hyperref}
-\usepackage{lstmisc}
+%\usepackage{lstmisc}
 \usepackage{holtxdoc}
 \usepackage{pgfregressiontest}
 \usepackage{hhline}
@@ -167,12 +202,44 @@
         \clearpage
         \restoregeometry
     \end{titlepage}
-    Danke an meine Eltern
-    Danke an meine Betreuer %TODO: Dankesagung
-    Danke an Jan
     \newpage
+    \hspace{10cm}
+    \newpage
+    \vspace*{5em}
+    \begin{doublespace}
+        \begin{center}
+            \textbf{Abstract.}
+        \end{center}
+        \\
+        This thesis explores the design and implementation of Evolutionary Neural Networks (ENNs) inspired by the NEAT algorithm.
+        ENNs optimize neural network weights, biases, and topologies using evolutionary computation.
+        The game Nim and a simplified version with only one instead of multiple stacks are used as a benchmark of the ENN algorithm to test the effect of different parameters and features on performance.
+        The research shows that ENNs can successfully learn to play simple games like Single-Stack Nim but struggle with more complex games like multi-stack Nim.
+        Challenges include overcoming local minima, tuning the ENN parameters correctly, and dealing with limited computations.
+        \\
+        \textbf{Results.}
+        The results show that ENNs achieve 100\% accuracy for simple Nim, a single-stacked version of the game, with stack sizes up to 1000 matches, revealing the importance of using correct output encoding.
+        In the multi-stacked Nim game, ENNs reach an accuracy of 90\% for the configuration with 2 stacks with 4 matches each, however, they could not find the perfect moves for all game states because of local minima.
+        \\
+        \textbf{Keywords.}
+        Evolutionary Neural Networks, NEAT Algorithm, Machine Learning, Game Learning, Nim Game, Evolutionary Computation.
+
+        \newpage
+        \vspace*{5em}
+        \begin{adjustwidth}{2cm}{2cm}
+            \textit{
+                I want to express my fullest gratitude to my parents for their support on my journey and especially during my thesis, where their help was crucial for the completion of this project.
+                \\ \\
+                I would also like to extend my sincerest thanks to my supervisor Timo Schenk for sharing his large expertise in the field of machine learning and his invaluable feedback, which were essential for this work.
+                \\ \\
+                Lastly, I want to express my deepest gratitude to Jan Wilhelm for introducing me to the fascinating world of computer science, which I have grown to love, and for assisting me with many technical challenges.
+            }
+        \end{adjustwidth}
+    \end{doublespace}
+    \newpage
+
     \pagenumbering{arabic}
-    \setcounter{page}{3}
+    \setcounter{page}{5}
     \tableofcontents
 
 
@@ -193,7 +260,7 @@
     Although the NN I developed two years ago already learned on its own, I still had to provide and label data for it to learn from.
     This meant that I had to manually scan the RGB values of the lego bricks and assign them the color they represented.
     In this case, this was the most efficient solution, however there are cases where you train a model where such data is unavailable or you simply want them to develop their own approach for a problem without predefined solutions.
-    That is how I got to my matura thesis, which aims to develop such ML models that learn without labeled data with and use those to learn board games.
+    That is how I got to my matura thesis, which aims to develop such ML models that learn without labeled data and use these models to learn games.
 
 
     \section{Thesis Statement}\label{sec:thesis-statement}
@@ -228,10 +295,10 @@
     With this web of neurons inside the brain, animals can process the information from nerve signals from the body and output them again as nerve signals instructing the body.
 
     \subsection{Feed Forward Neural Networks (FNNs)}\label{subsec:feed-forward-neural-networks-(fnns)}
-    So how can these ideas about neural networks learned from the biology of a brain applied to a program that runs on a computer?
+    So how can these ideas about neural networks learned from the biology of a brain be applied to a program that runs on a computer?
     The first step is to simplify the chaos of neurons in the brain and organize them into layers of neurons.
     These layers consist of an input layer, an output layer and optional so-called hidden layers in between.
-    As a next step, the neurons in each layer are connected to those in subsequent layers, typically limited to connections with the nearest layer.
+    As a next step, the neurons in each layer are connected to those in subsequent layers, typically limited to connections with the nearest layer.\footcite{Hardesty2017}
     \\
     Now, the structure of a neural network looks something like this:
     \begin{figure}[H]
@@ -240,9 +307,9 @@
         \label{fig:nn_simple_1}
     \end{figure}
 
-    The term topology is used to describe the structure of a NN\@.
+    To describe the specific structure of a NN, the term topology is used\@.
     \begin{mydef}{Neural Network Topology}
-        The topology of a neural network is its distinct arrangement of neurons, layers and the connections between the neurons.
+        The topology of a neural network is its distinct arrangement of neurons, layers and the connections between the neurons.\footcite{Miikkulainen2010}
         \label{definition:Topology}
     \end{mydef}
     For the neural network to perform functions, a weight needs to be assigned.
@@ -250,7 +317,7 @@
     \\
     In terms of computer science, this structure now resembles a directed, weighted graph, which is why the neurons are called nodes and their connections edges.
     \begin{mydef}{Nodes/Edges}
-        In a neural network, a node receives, computes and sends information, whereas an edge forms the connections between nodes to exchange information.
+        In a neural network, a node receives, computes and sends information, whereas an edge forms the connections between nodes to exchange information.\footcite{Sanchez-Lengeling2021}
         \label{definition:Nodes-Edges}
     \end{mydef}
     \\ \\
@@ -269,15 +336,15 @@
     Where:
     \textit{
         \begin{itemize}
-            \item N is the number of connected nodes
             \item $v_x$ is the value of the current node
+            \item N is the number of connected nodes
             \item $v_i$ is the value of the connected node i
             \item $w_i$ is the weight of the edge connecting the current node to node i
         \end{itemize}
     }
 
-    Additionally, some algorithms add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.
-    Finally, an activation function $\sigma(x)$ is applied to the value of the nodes to fit the value of the node inside a preferred range.
+    Additionally, some algorithms add a bias value $r_x$ ranging from -1 to 1 onto the value of the nodes.\footcite{IBMNeuralNetworks}
+    Finally, an activation function\footcite{Baheti2021} $\sigma(x)$ is applied to the value of the nodes to fit the value of the node inside a preferred range.
     This activation function can also be thought of as the threshold of stimulation for a neuron to fire.
     Two examples for activation functions are:
     \begin{itemize}
@@ -303,22 +370,31 @@
                 major grid style={line width=0.8pt,draw=gray!50},
                 minor grid style={line width=0.4pt,draw=gray!20},
                 xlabel = \(x\),
-                ylabel = {\(\sigma(x)\)}]
+                ylabel = {\(\sigma(x)\)}
+                ]
+                % First plot (Sigmoid)
                 \addplot[
                     domain=-10:10,
                     color=red,
-                    samples=1000.,
+                    samples=1000,
                 ]{1/(1 + e^-x)};
-                \addlegendentry{\(Sigmoid\)}
+
+                % Second plot (ReLU)
                 \addplot[
                     domain=-10:10,
                     color=blue,
-                    samples=1000.,
+                    samples=1000,
                 ]{max(0,x)};
-                \addlegendentry{\(ReLU\)}
+
+                % Define the legend after all plots have been added
+
+
+                \legend{Sigmoid, ReLU}
+
             \end{axis}
         \end{tikzpicture}
     \end{center}
+
     \\ \\
     The complete function for the value of one node is therefore:
     \begin{equation}
@@ -337,39 +413,39 @@
     This output is encoded in node values, as was done with the input, and therefore requires decoding to obtain the final result.
     In the example of a digit-detecting NN, 10 output nodes could be used, each representing one digit.
     The result could then be decoded by identifying the output node with the highest value as the result.
-    This kind of output encoding, where all possible results are assigned their own node, is referred to as one-hot encoding.
+    This kind of output encoding, where all possible results are assigned their own node, is referred to as one-hot output encoding\footcite{Brownlee2020}.
     With one-hot output encoding, the values of the output nodes can be interpreted as a the neural networks certainty for a specific result to be correct.
 
     \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
     Having established how a neural network operates, it is important to understand why this type of algorithm is considered revolutionary in the field of computer science.
     \\ \\
     An algorithm processes an input with a set of functions applied in a certain order to calculate an output.
-    Traditionally, a computer algorithm gets programmed with the help of mathematical operations, logic functions, loops, system functions and data structures, which are then converted into binary code for the processor.
-    Of course, this also applies in the context of NNs, however, there is also a third layer of abstraction on top, which simulates the functioning of a brain with neurons.
-    Since the traditional algorithm only enables the neurons of a NN, the third neuron-based layer is what computes the actual function of the NN\@.
-    Therefore, NNs resemble more the functioning of a brain than a traditional algorithm.
+    Traditionally, a computer algorithm gets programmed with the help of mathematical operations, logic functions, loops, system functions, and data structures, which are then converted into binary code for the processor.
+    Of course, this also applies in the context of NNs.
+    However, there is also a third layer of abstraction on top, which simulates the functioning of a brain with neurons.
+    Since the traditional algorithm only enables the neurons of a NN, the third neuron-based layer is what computes the actual function of the NN. Therefore, NNs resemble more the functioning of a brain than a traditional algorithm.
     \\ \\
-    This difference has implications for the functioning of an NN:
-    Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
-    With NNs, the algorithm is based on different parameters for nodes and edges, which make it an unpredictable blackbox.
+    This difference has implications for the functioning of an NN: Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
+    With NNs, the algorithm is based on different parameters for nodes and edges, which make it an unpredictable black box.
     In the top layer of abstraction, there are no concrete functions but only neuron activation that approximates a function instead.
-    This means it is hard to prove a neural network to always be accurate and is also the reason why the result of NNs is often called its prediction.
+    This means it is hard to prove a neural network to always be accurate and is also the reason why the result of NNs is often called its prediction. \footcite{springer_blackbox}%nature_blackbox,
+
     \begin{mydef}{NN Prediction}
-        The output of a neural network is referred to as its prediction for a given input.
+        The output of a neural network is referred to as its prediction for a given input.\footcite{Warudkar2020}
     \end{mydef}
 
     \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
-    It is already established how a neural network with specific parameters generates a prediction for a given input.
-    The raises the question: how can parameters encoding the structure, weights, and biases of the neural network be determined?
+    It has already been established how a neural network with specific parameters generates a prediction for a given input.
+    This however raises the question: how can parameters encoding the structure, weights, and biases of the neural network be determined?
     The solution lies in using machine learning, which trains the model to perform a specific task using training data.
     \begin{mydef}{Machine Learning}
-        Machine learning (ML) is a branch of artificial intelligence that focuses on optimizing artificially intelligent models to solve a given problem.
+        Machine learning (ML) is a branch of artificial intelligence that focuses on optimizing artificially intelligent models to solve a given problem.\footcite{IBM_Machine_Learning}
     \end{mydef}
-    One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient methods to train a NN.\@
-    Backpropagation works using a training and test set containing unlabeled data for a problem.
+    One machine learning algorithm for NNs is called backpropagation, which is one of the simplest and most efficient methods to train a NN.\footcite{Al-Masri2024}
+    Backpropagation works using a training and test set containing labeled data for a problem.
     \begin{mydef}{(Un)labeled Data}
         Labeled data for a machine learning problem is a set of data with sample problems and the respective solutions.
-        Unlabeled data instead only contains the sample problems.
+        Unlabeled data instead only contains the sample problems.\footcite{IBM_Data_Labeling}
     \end{mydef}
     The machine learning process of backpropagation begins with a neural network that has a fixed topology and random weights and biases.
     First, the NN is given the training problems for which it will generate random predictions.
@@ -386,7 +462,7 @@
     The focus now shifts to the machine learning technique this thesis focuses on.
     Once again, nature serves as inspiration:
     \begin{mydef}{Evolutionary Computation}
-        Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.
+        Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.\footcite{virtusa2024}
     \end{mydef}
     Evolutionary computation (EC) is often employed in situations where the optimal parameters for a function cannot be directly calculated, but the performance of a given parameter set can be evaluated.
     One example scenario involves a large dataset of points representing an unknown polynomial function with added noise and outliers.
@@ -394,18 +470,18 @@
     The following shows how EC achieves this optimization.
     \\ \\
     The process starts with an initial population of agents with random parameter sets.
-    EC then repeats following steps, forming a new generation of the population in each iteration:
+    EC then repeats following steps, forming a new generation of the population in each iteration\footcite{Sathyabama20}:
     \begin{itemize}
         \item \textbf{Fitness evaluation:} First, EC assesses the performance of each agent, defined by its parameters, in the given problem.
         This performance is referred to as the agent's fitness, which can be evaluated either objectively through a cost function or relatively with a competition between agents.
         In the given example, the cost function might check the prediction of the NN for the given data points, calculate the absolute differences between the prediction and the values of the data points, and use the total sum of these differences as the cost.
         \item \textbf{Selection:} As a next step, the agents that performed well are selected to be part of the next generation.
         \item \textbf{Reproduction:} The selected agents are then replicated by directly copying their parameters (non-mating) or by merging parameters from different agents (crossover).
-        \item \textbf{Mutation:} In each new generation, th parameters of the agents are mutated, either by completely replacing certain parameters with new random parameters or by shifting the existing parameters by a random value.
+        \item \textbf{Mutation:} In each new generation, the parameters of the agents are mutated, either by completely replacing certain parameters with new random parameters or by shifting the existing parameters by a random value.
     \end{itemize}
     After a certain number of generations, the EC algorithm will have found best performing set of parameters for a given problem.
 
-    \subsection{Gradient Descent \& Local Minima}\label{subsec:gradient-descent}
+    \subsection{Gradient Descent}\label{subsec:gradient-descent}
     As established in the previous section, EC begins with an initial population of agents with a random set of parameters.
     The fitness of these agents is determined using a cost function.
     Agents with relatively low cost (or high fitness) survive the round and are replicated, mutated and again selected by cost.
@@ -415,10 +491,11 @@
     Applying this analogy to EC, the parameters for a function can be imagined as the horizontal coordinates for the ball meanwhile the cost of these parameters correspond to the height at that location.
     Mutations produce parameter sets that are close to the original, resembling neighboring points on the terrain.
     As the ball rolls down to the lowest neighboring point in any step, EC again chooses the set of parameters with the lowest cost every cycle.
-    This is why the machine learning process is referred to as gradient descent, as the algorithm evaluates all neighboring points and then follows the direction with the lowest cost and therefore steepest gradient.
-    \\ \\
+    This is why the machine learning process is referred to as gradient descent, as the algorithm evaluates all neighboring points and then follows the direction with the lowest cost and therefore steepest gradient\footcite{ibm2024}.
+
+    \subsection{Initial Position \& Local Minima}\label{subsec:initial-position-&-local-minima}
     The ball analogy provides insights into the functioning of the EC learning process, which can be understood by visualizing a hill with each a shallow and a deep valley next to it.
-    Depending on which side of the hill you place the ball in the beginning, it will roll in a different direction and end up in either of the two valleys, which have different heights.
+    Depending on which side of the hill the ball is placed in the beginning, it will roll in a different direction and end up in either of the two valleys, which have different heights.
     Therefore, following things can be derived:
     \begin{itemize}
         \item (Minor) differences in the starting position can result in large differences in the end position and the respective cost.
@@ -426,16 +503,16 @@
         Such points are called local minima.
     \end{itemize}
     \begin{mydef}{Local Minimum}
-        A local minimum is a point with minimal cost compared to its neighboring area and is therefore a halting point for gradient descent.
+        A local minimum is a point with minimal cost compared to its neighboring area and is therefore a halting point for gradient descent.\footcite{ayoosh2024}
     \end{mydef}
     The impact of starting position and local minima often pose a large problem for EC applications.
-    Strategies to reduce the impact of such are therefore essential for the algorithms success.
+    Strategies to reduce the impact of such are therefore crucial for the algorithms success.
 
 
     \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
     After having covered all the basics about neural networks and evolutionary computation, the two concepts are finally combined to create the algorithm this thesis focuses on.
     \begin{mydef}{Evolutionary Neural Networks}
-        Evolutionary neural networks (ENNs) are neural networks that use evolutionary computation to optimize for its parameters for the NNs weights/biases and its topology.
+        Evolutionary neural networks (ENNs) are neural networks that use an evolutionary algorithm called neuroevolution to optimize for its parameters for the NNs weights/biases and its topology.\footcite{enn22, neuroevolution19}
     \end{mydef}
     ENNs are useful for complex machine learning problems and also work for unlabeled training data as long as there is a fitness function.
     In the context of neural networks, evolutionary computation can be applied as follows:
@@ -469,12 +546,12 @@
     \subsection{Simple Nim}\label{subsec:simple-nim}
     This game is a simplified version of Nim, where two players take turns removing an arbitrary amount of matches from a single stack with some number of matches.
     The player who removes the last match loses.
-    Therefore, the winning strategy simply is to remove all matches from the stack but one, which forces the opponent to remove the last match, which makes them lose.
+    Therefore, the winning strategy simply is to remove all matches from the stack but one, forcing the opponent to remove the last match and therefore making them lose.
 
     \subsection{Nim}\label{subsec:nim}
     This game works similarly to Simple Nim with the difference that there are multiple stacks with matches.
     Now, the player who removes the last match from the last unemptied stack loses.
-    The winning strategy for Nim is much more complex, which forces the ENNs to learn a more complex strategy.\footcite{nim_23} %TODO: No wikipedia
+    The winning strategy for Nim involves a binary representation of the game state\footcite{rosenbloom2003} and is therefore mathematically much more complex, which forces the ENNs to learn more sophisticated strategies.
 
 
     \section{Related Work}\label{sec:related-work}
@@ -528,11 +605,11 @@
     Although the amount of fitness evaluations is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations isn't indicated and cannot be derived.
 
 
-    \chapter{Building my ENN}\label{ch:building-my-enn}
+    \chapter{Building an ENN}\label{ch:designing-an-enn}
 
 
     \section{Algorithm Design}\label{sec:algorithm-design}
-    This chapter details how to use the concepts described in the last chapter(\ref{ch:introduction}) to build an evolutionary neural network that plays Nim.
+    This section details how to use the concepts described in the last chapter(\ref{ch:background}) to build an evolutionary neural network that plays Nim.
 
     \subsection{Overview}\label{subsec:overview}
     As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language\footcite{rust23}.
@@ -611,7 +688,7 @@
     \begin{itemize}
         \item When inserting a new node in between of two connected nodes (mutation 4.), the inserted node will be added to a random layer in between of the previously connected nodes.
         If the previously connected nodes are in neighboring layers, a new layer is created in between for the new node.
-        \item The shift mutation adds to the initial value a random float in the range 0.0 to 1.0 squared with a random sign.
+        \item The shift mutation adds to the initial value a random float in the ra nge 0.0 to 1.0 squared with a random sign.
         This gives us following function: \\
         $v_{new} = shift(v_{old}) = v_{old} + rand(-1, 1) * rand_{float}(0..1)^2$
         \item The amount of mutations performed per NN is randomly selected in a range defined by adjustable parameters (see section~\ref{subsec:enn-parameters}).
@@ -733,8 +810,8 @@
     If it can find such a move, the position is winning, but if all moves lead to winning position for the opponent, the algorithm returns the position with the maximal moves needed for the opponent to win.
     It also stores the result for each already computed state, so that all other paths that lead to that position can use the precomputed result.
     \\ \\
-    Now that it is known for all positions if they're winning, this data can used to grade the moves of agents with a score that is calculated as follows:
-    For each move, an agent gets one point if
+    Now that it is known for all positions if they're winning, this data can be used to grade the moves of agents with a score that is calculated as follows:
+    For each move, the algorithm evaluates if the agent plays perfectly, which means
     \begin{itemize}
         \item the agent had a winning state and made a move that got the opponent into a losing state,
     \end{itemize}
@@ -742,7 +819,7 @@
     \begin{itemize}
         \item the agent had a losing state and made a move that required the maximal amount of moves for the opponent to win.
     \end{itemize}
-    The sum of all points an agent has collected is then divided by the amount of moves it has made to get the final performance score.
+    To calculate the final performance score of an agent, the amount of perfect moves played by the agent is divided by the total amount of moves it has played.
 
 
     \section{Findings}\label{sec:first-findings}
@@ -768,25 +845,43 @@
     The first test shows following results:
     \\
     \newcommand{\csvpath}{../data/simple_nim/stack_2/t_1/stats.csv} % Rename the macro
+
+% Define colors
+    \definecolor{myblue}{RGB}{55,126,184}
+    \definecolor{myred}{RGB}{228,26,28}
+
+% Legend above the figure
+    \begin{center}
+        \pgfplotslegendfromname{legend-above}
+    \end{center}
+
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=50,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=50,
+                ymin=0, ymax=100,
+                restrict x to domain = 0:51,
+                restrict y to domain = 0:101,
                 no markers,
-                xtick distance = 10,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 10, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_1_t_1}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -794,7 +889,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -804,7 +899,7 @@
         \end{tikzpicture}
     \end{center}
 
-    The best agent already plays the game perfectly after one generation.
+    The accuracy value reaches 100\% after one generation which means the best agent already plays the game perfectly.
     This can be verified with the saved games, where it can be seen that the best agent correctly plays the move [0, 1] (first value is the stack, second value the number of matches removed):
     \begin{minted}{}
     Generation: 1
@@ -817,28 +912,34 @@
     The best agent wins percentage in the plot above is a steady 50\% since all games are played both ways and the first agent always wins the game.
 
     \subsubsection{Stack: 8, Configuration 1}
-    Since the stack size with 2 has already worked fine, I will now try the same configuration with an increased initial stack size of 8 matches:
+    Since the stack size with 2 has already worked fine, the same configuration will be run with an increased initial stack size of 8 matches:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=1000,
+                ymin=0, ymax=100,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 200, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8_t_1}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -846,7 +947,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -854,8 +955,17 @@
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
-    The accuracy of the runs got up to around 30\% and if I look at the games recorded in generation 982, one can see why it didn't get to 100\%.
+    In this case the accuracy doesn't reach 100\% but stays around 25\% instead.
+    Also, the accuracy graph shows irregular development and jitters in a window of many percentage points.
+    Such drastic fluctuations between the accuracy values happen when different species within the population have similar fitness, which results in a frequent change of the best agents original species.
+    Depending on which species the best agent comes from, the objective performance varies, as the relative performance evaluated by the fitness function does not necessarily correlate with objective performance.
+    Similarly, the wins against older generations of the best agent vary, since the performance against older generations does not necessarily correlate with the relative performance within a population either.
+    \\ \\
+    The games the best agents played reveals the reason for their low accuracy:
     \begin{minted}{}
     Agent 998 vs Agent 999:
     Turn: 0: state: [8], agent_move: [0, 2]
@@ -864,79 +974,101 @@
     Turn: 3: state: [2], agent_move: [0, 1]
     Turn: 4: state: [1], agent_move: [0, 3]
     \end{minted}
-    The best agent only learned to play the moves where it subtracts one or two matches.
-    This seems quite bad since seemingly all the NNs have to do is to play [0, 7] instantly.
-    So why couldn't it learn this one move, when it could do it with stack size 2?
-    The problem is that if the starting player subtracts less than 7 matches, the other player would get in winning position where it has to adapt and play subtract N - 1 matches.
+    The best agent only learns to play the moves where it subtracts one or two matches, even though all the NNs seemingly have to do is to play [0, 7] instantly.
+    This result seems inconsistent to the result of the previous configuration, where the NNs were able to learn the single correct move instantly.
+    The problem however is that if the starting player subtracts less than 7 matches, the other player would get in winning position where it has to adapt and play subtract N - 1 matches.
     There might evolve a population where all agents only subtract 7 matches, however this seems more like a local minimum and my final goal is to develop NNs that can play the whole game.
-    This simplification turns out to be a hindrance, so I will change the stack to have a variable amount of matches.
+    This simplification turns out to be a hindrance and will therefore be dismissed in favor of a variable initial stack size.
 
     \subsubsection{Remark: Unnecessary Topology}
-    If I look at the topology metrics of one of the tests, I realize that complexity of the NNs exploded without any visible improvement in performance:
+    When considering the topology metrics in the test results of the last configuration, it becomes apparent that the complexity of the NNs explodes without any visible improvement in performance:
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1/stats.csv} % Rename the macro
+
+
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis}[
-                title=\textbf{Topology},
+            \begin{axis} [
                 grid=both,
+                grid style={dashed, gray!30},
                 xmin=0, xmax=1000,
-                ymin=0, ymax=50,
+                ymin=0, ymax=40,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 10,
-                legend pos=north west,
-                xlabel={Generation},
-                ylabel={Complexity},
+                xtick distance = 200, ytick distance = 10,
+                xlabel={Generation}, ylabel={Complexity},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
             ]
-                \addplot[violet] table [
+
+                % First plot
+                \addplot [thick, color=violet] table [
                 x=generation,
                 y=avg_layers,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{Average layers}
-                \addplot[teal] table [
+                \addlegendentry{\( \text{Average layers} \)}
+
+                % Second plot
+                \addplot [thick, color=teal] table [
                 x=generation,
                 y=avg_hidden_layer_size,
                 col sep=comma,
                 ] {\csvpath};
-                \addlegendentry{Average hidden layer size}
+                \addlegendentry{\( \text{Average hidden layer size} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
-    I get an average amount of over 20 hidden layers with on average 2 nodes.
+    The NNs develop an average amount of over 20 hidden layers with on average 2 nodes.
     It doesn't make sense for the NNs to have such complexity for such a simple problem as it only increases the needed computations.
-    I will therefore reduce the chance for a new nodes and edges to form by a factor of 20 each.
-    Let's see if this change impacted the performance and topology of the NNs:
+    The chance for new nodes and edges to form will be reduced by a factor of 20 each:
     \\
+    \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
     \begin{figure}[H]
-
         \centering
-        \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
+        \pgfplotsset{width=8.5cm,height=5cm,compat=1.18}
         % First graph
-        \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
+        \begin{adjustbox}{valign=c,margin=-5mm 0pt 0pt 0pt} % Shift content left by 2cm
             \begin{minipage}{1.1\textwidth}
                 \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
                     \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
-                        \begin{axis}[
+                        \begin{axis}
+                            [
                             title=\textbf{Performance},
                             grid=both,
+                            grid style={dashed, gray!30},
                             xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
+                            ymin=0, ymax=100,
                             no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
+                            xtick distance = 200, ytick distance = 25,
+                            xlabel={Generation}, ylabel={Performance (\%)},
+                            xlabel style={align=center, yshift=-5pt},
+                            ylabel style={align=center, xshift=5pt},
+                            legend to name=legend-above,
+                            legend style={
+                                draw=none, font=\small,
+                            },
+                            legend image post style={mark=none}, % Ensures line styles match
+                            tick label style={font=\small},
+                            ]
+                            % First plot
+                            \addplot [thick, color=myblue] table [
                             x=generation,
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
+                            \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
+
+                            % Second plot
+                            \addplot [thick, color=myred] table [
                             x=generation,
                             y=best_agent_wins_percentage,
                             col sep=comma,
@@ -944,72 +1076,90 @@
                             \addlegendentry{\( \text{Best agent wins \%} \)}
                         \end{axis}
                     \end{tikzpicture}
+                    \begin{center}
+                        \pgfplotslegendfromname{legend-above}
+                    \end{center}
                 \end{subfigure}
-                \hfill
+                \hspace{1cm}
                 % Second graph
                 \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
                     \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
-                        \begin{axis}[
+                        \begin{axis} [
                             title=\textbf{Topology},
                             grid=both,
+                            grid style={dashed, gray!30},
                             xmin=0, xmax=1000,
-                            ymin=0, ymax=50,
+                            ymin=0, ymax=40,
                             no markers,
-                            xtick distance = 200,
-                            ytick distance = 10,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Complexity},
+                            xtick distance = 200, ytick distance = 10,
+                            xlabel={Generation}, ylabel={Complexity},
+                            xlabel style={align=center, yshift=-5pt},
+                            ylabel style={align=center, xshift=5pt},
+                            legend to name=legend-above,
+                            legend style={
+                                draw=none, font=\small,
+                            },
+                            legend image post style={mark=none}, % Ensures line styles match
+                            tick label style={font=\small},
                         ]
-                            \addplot[violet] table [
+
+                            % First plot
+                            \addplot [thick, color=violet] table [
                             x=generation,
                             y=avg_layers,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Average layers}
-                            \addplot[teal] table [
+                            \addlegendentry{\( \text{Average layers} \)}
+
+                            % Second plot
+                            \addplot [thick, color=teal] table [
                             x=generation,
                             y=avg_hidden_layer_size,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Average hidden layer size}
+                            \addlegendentry{\( \text{Average hidden layer size} \)}
                         \end{axis}
                     \end{tikzpicture}
+                    \begin{center}
+                        \pgfplotslegendfromname{legend-above}
+                    \end{center}
                 \end{subfigure}
 
             \end{minipage}
         \end{adjustbox}
-        \caption{Performance metrics over generations in a 2x2 grid.}
         \label{fig:performances-1}
     \end{figure}
     \\
-    My modifications didn't impact the performance of the NN, but definitely helped keeping the topological complexity in a reasonable bound.
-    I will keep these modifications moving on.
+    The modifications didn't impact the performance of the NN, but helped keeping the topological complexity in a reasonable bound which is why they will be kept moving on.
 
     \subsubsection{Stack 1--8, Configuration 1}
-    I will repeat the previous test but with a variable amount of matches between 1 and 8:
+    The previous configuration is repeated except for the initial amount of matches on the stack which now varies randomly between one and eight.
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_1.2/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=1000,
+                ymin=0, ymax=100,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 200, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8r_t_1.1}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -1017,7 +1167,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -1025,32 +1175,38 @@
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
-    In my tests, the best agent perfect play performance always reaches a value ranging from 40\% to 75\% where it remained stable.
-    The NNs were only able to learn the moves where they subtract 1, 2 and 3 matches but no others.
+    Across the tests of this configuration, the accuracy always finally reaches a value ranging from 40\% to 75\% where it remains.
+    In the test whose graph is shown above, the accuracy first settles at around 58\% and makes a final jump to 75\% before generation 400.
+    Such a jump indicates that a new species with enhanced capabilities has emerged within the population.
+    A look at the games the best agents played reveals their exact capabilities:
     \begin{minted}{}
     Agent 998 vs Agent 999:
     Turn: 0: state: [6], agent_move: [0, 3]
     Turn: 1: state: [3], agent_move: [0, 2]
     Turn: 2: state: [1], agent_move: [0, 1]
     \end{minted}
-    The performance of NNs in different tests just depended on how many moves the NNs learned.
-    In any case however, the NNs have got stuck in a local minimum.
+    Across all tests, the NNs only show the ability to learn the moves where they subtract one to three matches, but none more.
+    The accuracy of the NNs in different tests simply depends on how many moves the NNs learned.
+    In any case, the NNs get stuck in a local minimum.
     Such local minima originate in an early generations where the agents aren't highly developed, which means they often only play one move.
-    The agents that only subtracted one match were therefore the most successful and reproduced the most.
-    After reaching that local minimum, there wasn't a competitor that could assert itself, either because of a flaw in the selection process or because none were created in first place.
-    One can also see how homogeneous the NNs across generations have become by looking at the wins of the best agent against former best agents, which always settles at 50\%, revealing that they all use the same strategy.
-    I will therefore try to modify some parameters to see if anything helps against such local minima.
+    The agents that constantly subtract one match are therefore the most successful and reproduce the most.
+    After reaching that local minimum, there does not remain any competitors that could assert themselves, either because of a flaw in the selection process or because none have been created in first place.
+    It can also be observed how homogeneous the NNs across generations get by looking at the wins of the best agent against former best agents, which always settle at 50\%, revealing that they all use the same strategy.
+    A possibly solution to this problem might be to modify some parameters to see if anything helps against the emergence of local minima.
 
     \subsubsection{Stack 1--8, Configuration 2--5}
-    To overcome local minima, I can use following strategies:
+    To overcome local minima, following strategies are available:
     \begin{itemize}
         \item \textbf{Fitness Exponent:} Increasing the fitness exponent to \textit{ex.} 2 might help successful mutations reproduce better and therefore overcome a large population of similar NNs.
-        \item \textbf{Population Composition:} I can add other kinds of agents to the new population like best agents from older generations, randomly selected agents from the last generation, or newly generated random agents.
+        \item \textbf{Population Composition:} Other kinds of agents can be added to the new population like best agents from older generations, randomly selected agents from the last generation, or newly generated random agents.
         This might help the development of new and possibly more complex strategies without the need for instant return in performance.
         \item \textbf{Population Size:} A larger population means more agents with different strategies can exist, evolve and finally help overcoming local minima.
     \end{itemize}
-    I now test the effect of these parameters with following 4 configurations:
+    The following configurations are tested to evaluate the impact of the mentioned strategies:
     \begin{enumerate}
         \item Fitness exponent set to 2
         \item Old best agents, random agents, and new agents each make up 15\% of the population
@@ -1060,33 +1216,42 @@
     \begin{figure}[H]
 
         \centering
-        \pgfplotsset{width=9.5cm,height=6cm,compat=1.18}
+        \pgfplotsset{width=8.5cm,height=5cm,compat=1.18}
         % First graph
-        \begin{adjustbox}{valign=c,margin=-2cm 0pt 0pt 0pt} % Shift content left by 2cm
+        \begin{adjustbox}{valign=c,margin=-5mm 0pt 0pt 0pt} % Shift content left by 2cm
             \begin{minipage}{1.1\textwidth}
                 \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
+                    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_2.1/stats.csv} % Rename the macro
                     \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_2/stats.csv} % Rename the macro
-                        \begin{axis}[
+                        \begin{axis}
+                            [
                             title=\textbf{Fitness exponent: 2},
                             grid=both,
+                            grid style={dashed, gray!30},
                             xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
+                            ymin=0, ymax=100,
                             no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
+                            xtick distance = 200, ytick distance = 25,
+                            xlabel={Generation}, ylabel={Performance (\%)},
+                            xlabel style={align=center, yshift=-5pt},
+                            ylabel style={align=center, xshift=5pt},
+                            legend to name=legend-above,
+                            legend style={
+                                draw=none, font=\small,
+                            },
+                            legend image post style={mark=none}, % Ensures line styles match
+                            tick label style={font=\small},
+                            ]
+                            % First plot
+                            \addplot [thick, color=myblue] table [
                             x=generation,
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
+                            \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
+
+                            % Second plot
+                            \addplot [thick, color=myred] table [
                             x=generation,
                             y=best_agent_wins_percentage,
                             col sep=comma,
@@ -1094,33 +1259,44 @@
                             \addlegendentry{\( \text{Best agent wins \%} \)}
                         \end{axis}
                     \end{tikzpicture}
+                    \begin{center}
+                        \pgfplotslegendfromname{legend-above}
+                    \end{center}
                 \end{subfigure}
-                \hfill
+                \hspace{1cm}
                 % Second graph
                 \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
                     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_3/stats.csv} % Rename the macro
-
                     \begin{tikzpicture}
-                        \begin{axis}[
+                        \begin{axis}
+                            [
                             title=\textbf{New population composition (each 15\%)},
                             grid=both,
+                            grid style={dashed, gray!30},
                             xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
+                            ymin=0, ymax=100,
                             no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
+                            xtick distance = 200, ytick distance = 25,
+                            xlabel={Generation}, ylabel={Performance (\%)},
+                            xlabel style={align=center, yshift=-5pt},
+                            ylabel style={align=center, xshift=5pt},
+                            legend to name=legend-above,
+                            legend style={
+                                draw=none, font=\small,
+                            },
+                            legend image post style={mark=none}, % Ensures line styles match
+                            tick label style={font=\small},
+                            ]
+                            % First plot
+                            \addplot [thick, color=myblue] table [
                             x=generation,
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
+                            \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
+
+                            % Second plot
+                            \addplot [thick, color=myred] table [
                             x=generation,
                             y=best_agent_wins_percentage,
                             col sep=comma,
@@ -1128,35 +1304,46 @@
                             \addlegendentry{\( \text{Best agent wins \%} \)}
                         \end{axis}
                     \end{tikzpicture}
+                    \begin{center}
+                        \pgfplotslegendfromname{legend-above}
+                    \end{center}
                 \end{subfigure}
 
                 \vspace{1em}
 
                 % Third graph
                 \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
+                    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_4/stats.csv} % Rename the macro
                     \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_4/stats.csv} % Rename the macro
-
-                        \begin{axis}[
+                        \begin{axis}
+                            [
                             title=\textbf{Population size: 2500},
                             grid=both,
+                            grid style={dashed, gray!30},
                             xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
+                            ymin=0, ymax=100,
                             no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
+                            xtick distance = 200, ytick distance = 25,
+                            xlabel={Generation}, ylabel={Performance (\%)},
+                            xlabel style={align=center, yshift=-5pt},
+                            ylabel style={align=center, xshift=5pt},
+                            legend to name=legend-above,
+                            legend style={
+                                draw=none, font=\small,
+                            },
+                            legend image post style={mark=none}, % Ensures line styles match
+                            tick label style={font=\small},
+                            ]
+                            % First plot
+                            \addplot [thick, color=myblue] table [
                             x=generation,
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
+                            \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
+
+                            % Second plot
+                            \addplot [thick, color=myred] table [
                             x=generation,
                             y=best_agent_wins_percentage,
                             col sep=comma,
@@ -1164,33 +1351,45 @@
                             \addlegendentry{\( \text{Best agent wins \%} \)}
                         \end{axis}
                     \end{tikzpicture}
+                    \begin{center}
+                        \pgfplotslegendfromname{legend-above}
+                    \end{center}
+
                 \end{subfigure}
-                \hfill
+                \hspace{1cm}
                 % Fourth graph
                 \begin{subfigure}[b]{0.45\textwidth}
-                    \centering
+                    \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_5/stats.csv} % Rename the macro
                     \begin{tikzpicture}
-                        \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_5/stats.csv} % Rename the macro
-
-                        \begin{axis}[
+                        \begin{axis}
+                            [
                             title=\textbf{All combined},
                             grid=both,
+                            grid style={dashed, gray!30},
                             xmin=0, xmax=1000,
-                            ymin=0, ymax=150,
+                            ymin=0, ymax=100,
                             no markers,
-                            xtick distance = 200,
-                            ytick distance = 25,
-                            legend pos=north west,
-                            xlabel={Generation},
-                            ylabel={Performance},
-                        ]
-                            \addplot table [
+                            xtick distance = 200, ytick distance = 25,
+                            xlabel={Generation}, ylabel={Performance (\%)},
+                            xlabel style={align=center, yshift=-5pt},
+                            ylabel style={align=center, xshift=5pt},
+                            legend to name=legend-above,
+                            legend style={
+                                draw=none, font=\small,
+                            },
+                            legend image post style={mark=none}, % Ensures line styles match
+                            tick label style={font=\small},
+                            ]
+                            % First plot
+                            \addplot [thick, color=myblue] table [
                             x=generation,
                             y=best_agent_avg_performance,
                             col sep=comma,
                             ] {\csvpath};
-                            \addlegendentry{Best agent perfect play \% (accuracy)}
-                            \addplot table [
+                            \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
+
+                            % Second plot
+                            \addplot [thick, color=myred] table [
                             x=generation,
                             y=best_agent_wins_percentage,
                             col sep=comma,
@@ -1198,42 +1397,65 @@
                             \addlegendentry{\( \text{Best agent wins \%} \)}
                         \end{axis}
                     \end{tikzpicture}
+                    \begin{center}
+                        \pgfplotslegendfromname{legend-above}
+                    \end{center}
+
                 \end{subfigure}
 
 
             \end{minipage}
         \end{adjustbox}
-        \caption{Performance metrics over generations in a 2x2 grid.}
         \label{fig:performances-2}
-
-
     \end{figure}
-    As we can see in the graphs, the performance didn't reach 100\% in any configuration and the NNs remained stuck in a local minimum with the best agents always winning 50\% against previous best agents.
-    However, there is still something I can change.
+    It can be observed in the graphs that the performance does not reach 100\% in any configuration.
+    The configuration with larger population size performs the best with the accuracy reaching a value of ~90\%.
+    When examining the moves played by the best agent in a test of said configuration, it becomes apparent why the agent didn't achieve full accuracy:
+    \begin{minted}{}
+    Agent 999 vs Agent 998:
+    Turn: 0: state: [8], agent_move: [0, 7]
+    Turn: 1: state: [1], agent_move: [0, 1]
+    Game result: [1, 0]
+    Agent 998 vs Agent 999:
+    Turn: 0: state: [6], agent_move: [0, 4]
+    Turn: 1: state: [2], agent_move: [0, 1]
+    Turn: 2: state: [1], agent_move: [0, 1]
+    Game result: [0, 1]
+    \end{minted}
+    The best agents play the optimal move with eight matches on the stack but struggles with six matches.
+    In none of the tests did the agents manage to develop perfect moves for all eight states, despite the training time of 1000 generations, which is sufficiently large for this type of task.
+    Instead the agents of all populations remain stuck in a local minimum with the winning rate against older generations settling at 50\%, indicating no further improvement over previous generations.
+    However, there are still other features to change.
 
     \subsubsection{Stack 1--8, Configuration 6}
-    I run the simple configuration as in configuration 1, only that I changed the output encoding (explained in chapter~\ref{subsec:nim-implementation}) from one-hot to direct encoding:
+    All ENN parameters are reset to the ones from Stack: 1--8, Configuration 1 except for the output encoding of the NNs (explained in chapter~\ref{subsec:nim-implementation}), which is changed from one-hot to direct encoding:
     \\
     \renewcommand{\csvpath}{../data/simple_nim/stack_8r/t_6/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=1000,
+                ymin=0, ymax=100,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 200, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_8r_t_2}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -1241,7 +1463,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -1249,42 +1471,51 @@
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
-    Now finally got it working!
-    The best agent's performance reaches 100\% after 13 generations.
-    \\
-    So why did the change of output encoding affect the result that heavily?
+    The accuracy of the best agent reaches 100\% after 13 generations, which signifies a successful learning process.
+    The wins against previous generations gradually settles at 50\% as innovation halts for an optimized population.
     \\ \\
-    If I look at the NN structure I had a single output neuron for each possible amount of matches I can subtract in one-hot encoding.
-    During the evolution process, the connections to the neurons for output 1 and 2 got stronger than the other ones since it lead to a competitive advantage.
-    This unfortunately also meant, that the NN was practically unable to adapt to activate the other output neurons.
-    In fact, this behavimy would have been entirely predictable, since there is no mathematical way to model an NN that solves this problem with one-hot encoding except for NNs with large amount of hidden nodes.
-    Yet NNs with large amount of hidden nodes are unlikely to develop with my ENNs since they don't show a competitive advantage instantly.
+    To understand the drastic impact of the change of output encoding, the NNs have to be examined by their structure.
+    In one-hot output encoding, a single output neuron is created for each possible amount of matches that can be subtracted.
+    During the evolution process, the connections to the neurons for output 1 and 2 get stronger because of their competitive advantage.
+    This unfortunately also means, that the NNs of a population are practically unable to adapt to activate the other output neurons.
+    In fact, this behavior could have been entirely anticipated, as a mathematical approach to model a NN with one-hot encoding for this task would require large topological complexity.
+    Such NNs with large complexity are unlikely to develop since they require many perfectly applied mutations at once before they show a competitive advantage.
+    Direct encoding, however, only requires minimal complexity for this task, which drastically increases the likelihood for the ENN algorithm to succeed.
     \\\\
-    Since this test worked fine, I will now a very large stack size.
+    Because of the previous success, the stack size will be highly increased for the last test.
 
     \subsubsection{Stack: 1--1000, Configuration 1}
-    Now I will increase the maximal stack number to 1000:
+    In this test, the initial stack size ranges from 1 to 1000:
     \renewcommand{\csvpath}{../data/simple_nim/stack_1000r/t_1/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=1000,
+                ymin=0, ymax=100,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 200, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_1000r_t_1}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -1292,7 +1523,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -1300,39 +1531,48 @@
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
     The NNs reached full accuracy in less than 30 generations in both the first and second test run.
     However, the NNs got stuck in a local minimum in the third run.
-    This is why I also ran other test runs with different parameters but unfortunately, they showed similar consistency within their runs.
-    Still, the NNs managed to learn the game most of time which means, I can finally start training the NNs on the main game.
+    This is why additional test runs were conducted with different parameter configurations.
+    Unfortunately, all alternative configurations proved to be similarly inconsistent.
+    Nevertheless, the neural networks successfully learned the game in most cases, demonstrating that the ENN algorithm is capable of solving the simple Nim game.
 
     \subsection{Nim}
-    I now already have gained a lot of insight about the functioning of ENNs and are therefore ready for the normal version of Nim.
+    After already having gained a lot of insight about the functioning of ENNs with a simplified version of the game, the algorithm will now be tested for the full version of Nim.
 
     \subsubsection{Stacks: 2*2, Configuration 1}
-    I will start with a fairly simple problem where there are two stacks containing a maximum of 2 matches.
-    There are eight possible game states for which the NNs need to find solutions.
-    This shouldn't be a particularly hard task for the NNs so let's see how they do:
-    \renewcommand{\csvpath}{../data/nim/stacks_2x2/t_1.2/stats.csv} % Rename the macro
+    The first configuration tests a fairly simple problem where there are two stacks containing a maximum of 2 matches.
+    There are eight possible game states for which the NNs need to find solutions, which seems possible to achieve for the ENN algorithm:
+    \renewcommand{\csvpath}{../data/nim/stacks_2x2/t_1/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=1000,
+                ymin=0, ymax=100,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 200, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_2x2_t_1}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -1340,7 +1580,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -1348,32 +1588,40 @@
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
-    As expected, the NNs had no problem with this task and in my tests, they reached full accuracy in 100 to 400 generations.
+    As expected, the NNs have no problem with this task and across all tests, they reach full accuracy in around 50 to 400 generations.
 
     \subsubsection{Stacks: 2*4, Configuration 1}
-    Now I will double the maximal amount of matches per stack which leaves us with 24 possible game states.
-    Let's see, how they do:
+    Subsequently, the maximal amount of matches per stack will be doubled which allows for 24 possible game states:
     \renewcommand{\csvpath}{../data/nim/stacks_2x4/t_1/stats.csv} % Rename the macro
     \begin{center}
         \begin{tikzpicture}
-            \begin{axis} [
+            \begin{axis}
+                [
                 grid=both,
-                xmin=0,
-                xmax=1000,
-                ymin=0,
-                ymax=150,
+                grid style={dashed, gray!30},
+                xmin=0, xmax=1000,
+                ymin=0, ymax=100,
                 no markers,
-                xtick distance = 200,
-                ytick distance = 25,
-                legend pos=north west, % Adjust legend position
-                xlabel={Generation},
-                ylabel={Performance},
-            ]
+                xtick distance = 200, ytick distance = 25,
+                xlabel={Generation}, ylabel={Performance (\%)},
+                xlabel style={align=center, yshift=-5pt},
+                ylabel style={align=center, xshift=5pt},
+                legend to name=legend-above,
+                legend style={
+                    draw=none, font=\small, /tikz/every even column/.append style={column sep=5pt},
+                },
+                legend columns=2, % Two columns for the legend
+                legend image post style={mark=none}, % Ensures line styles match
+                tick label style={font=\small},
+                ]
                 \caption{Performance of the best agent over generations.}
-                \label{fig:sn_stack_2x4_t_1}
+
                 % First plot
-                \addplot table [
+                \addplot [thick, color=myblue] table [
                 x=generation,
                 y=best_agent_avg_performance,
                 col sep=comma,
@@ -1381,7 +1629,7 @@
                 \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                 % Second plot
-                \addplot table [
+                \addplot [thick, color=myred] table [
                 x=generation,
                 y=best_agent_wins_percentage,
                 col sep=comma,
@@ -1389,52 +1637,58 @@
                 \addlegendentry{\( \text{Best agent wins \%} \)}
             \end{axis}
         \end{tikzpicture}
+        \begin{center}
+            \pgfplotslegendfromname{legend-above}
+        \end{center}
     \end{center}
-    In all tests did the NNs settle at an accuracy of around 57\% and if I look at the sample games, the NNs demonstrate a clear lack of simple strategy:
+
+    In all tests did the NNs settle at an accuracy of around 57\%.
+    When reviewing the sample games, the NNs demonstrate a clear lack of basic strategy:
     \begin{minted}{}
     Agent 994 vs Agent 995:
     Turn: 0: state: [2, 4], agent_move: [1, 4]
     Turn: 1: state: [2, 0], agent_move: [0, 1]
     Turn: 2: state: [1, 0], agent_move: [0, 1]
     \end{minted}
-    The best agent from generation 994 would have had the possibility to force its opponent into a losing position by subtracting two matches from the second stack.
+    The best agent from generation 994 has the possibility to force its opponent into a losing position by subtracting two matches from the second stack.
     Instead, it empties the whole stack which leaves the opponent to take all but one matches from that stack.
     \\
-    In another game however, the best agent from generation 999 just makes a move that would never be legal in this test:
+    In another game however, the best agent from generation 999 just makes a move that would never even be legal in this test:
     \begin{minted}{}
     Agent 999 vs Agent 239:
     Turn: 0: state: [4, 3], agent_move: [1, 5]
     \end{minted}
-    It is hard to tell if this is a result of the NNs being in a local minimum or because of to little training so I will run the tests a bit longer to give the NNs more chances to develop.
-    %Another thing that stands out is that the NNs tended to develop a lot of unnecessary topological complexity which is why I will decrease the chance for node growth again by a factor of 5.
-    %\section{Direct Comparisons}
+    The NNs did not succeed in this task, however, modifying the ENN parameters might help the learning process.
+%Another thing that stands out is that the NNs tended to develop a lot of unnecessary topological complexity which is why I will decrease the chance for node growth again by a factor of 5.
+%\section{Direct Comparisons}
 
-    \subsubsection{Stacks: 2*4, Configuration 2}
-    I will run the tests for 10'000 generations instead of 1000:
-
+    \subsubsection{Stacks: 2*4, Configuration 2--5}
+    In the subsequent tests, the same ENN parameter modifications as in Stack: 1--8, Configuration 2--5 will be tested:
 
     \chapter{Wrapping Up}\label{ch:wrapping-up}
 
 
     \section{Conclusion}\label{sec:conclusion}
-    I managed to train neural networks with 100\% accuracy in the simple Nim version, where there is only one stack, for stack sizes up to 1000.
-    This success was mostly due to the realization that the output should be encoded directly instead of using one-hot encoding.
+    This thesis managed to train neural networks with 100\% accuracy in the single stack version of Nim for stack sizes up to 1000.
+    The success was mostly due to the realization that the output should be encoded directly instead of using one-hot output encoding.
     Although one-hot encoding keeps the output in a safe bound, it finally makes it harder for the NNs to find the correct structure and weights in the case of Nim.
-    Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations which showed to be effective.
-    In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each but only reached an accuracy of ~60\% for two stacks with 4 matches each.
-    Since the NNs already weren't able to understand this problem, it didn't make sense to train them on even more complex configurations.
-    \\\\
-    There are two possible explanations for the failure to develop accurate NNs in the Nim game.
-    Either, the Nim game is a bad game for NNs to solve since the algorithm to play Nim perfectly isn't easily translatable into neurons, or my implementation and or parameters of the ENN simply wasn't up to the task.
-    To tell which of the two reasons apply, there needs to be done more research in this field, which will be discussed in the last section (\ref{sec:future-work}).
+    Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations, which demonstrated to be effective.
     \\ \\
-    This thesis also showed sometimes contradictory results within different tests of the same parameters.
-    In an application, one might therefore train several populations to then choose the best performing one.
+    In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of ~90\% for two stacks with 4 matches each.
+    The NNs couldn't adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where all NNs of a population only played a certain subset of all perfect moves.
+    Since the 24 possible game states were already too much for the ENN algorithm to learn, it does not seem reasonable to train the algorithm on even more complex configurations.
+    \\\\
+    There are two explanations for the finding that the NNs were not able to become fully accurate the more complex configuration.
+    Either, the Nim game is an unsuited game for NNs to solve as the algorithm to play Nim perfectly isn't easily translatable into neurons, or this implementation and or parameters of the ENN simply are not up to the task.
+    To tell which of the two reasons apply, more research needs to be conducted in this field, which will be discussed further in the last section (\ref{sec:future-work}).
+    \\ \\
+    This thesis sometimes revealed contradictory results within different tests of the same parameter configuration.
+    In an application, several populations might be trained on the same problem to then choose the best performing one.
 
 
     \section{Auto Review}\label{sec:auto-review}
     This research was a large and sometimes painful journey for me to realize but finally resulted in a ENN framework that I proved to be able to learn some functions without human help.
-    Still, there is a few things I would do differently.
+    Still, there are a few things I would do differently now:
     \\
     I planned to be done with a beta program many months before the thesis end to then have time to test and refine my program.
     However, I finished the program much later and found many bugs which forced me to repeat the whole testing.
@@ -1453,30 +1707,47 @@
 
 
     \section{Future Work}\label{sec:future-work}
-    As already mentioned, this thesis leaves much research to be conducted, which might also answer the question whether the Nim game can be played by NNs.
+    As already mentioned, this thesis leaves much research to be conducted, which might also answer the question whether the Nim game can be learned by ENN algorithms.
     In specific, future work might include the following:
 
     \subsubsection{More Testing}
     Because of the time constraints, this research only tested few configurations with little tests each.
-    More test runs within a set of parameters might therefore increase statistical significance of the results and more tests with different sets of parameters might help find better solutions.
-    One might also use evolutionary computation to optimize different parameters of the ENNs.
+    More test runs within a set of parameters will therefore increase statistical significance of the results and more tests with different sets of parameters might help finding better solutions.
+    This thesis has already tested the effect of some modifications of the fitness exponent, new population composition, and population size parameters without finding consistent evidence for significant improvement of performance with any of these parameters.
+    In-depth testing of the effect of these parameters would facilitate their fine-tuning and might finally improve the ENN learning process.
+    In specific, following parameters might be particularly important to examine:
+    \begin{itemize}
+        \item \textbf{Fitness exponent and new population composition:} These parameters influence what agents make up each population and are therefore critical to optimize to ensure the algorithms success.
+        \item \textbf{Population size:} The approach of this thesis was to have a relatively small population too keep the needed computation per generation low, enlarging the population however, might allow for more diversity within a population which might help new strategies to evolve.
+        \item \textbf{Mutation rate:} This thesis kept the rate of mutation minimal to ensure consistent development, however, increasing the rate of mutations might accelerate innovation of NNs.
+        \item \textbf{Mutation types:} During the testing process, the weight of the topology-increasing mutation were decreased, which resulted in significantly less unnecessary complexity of the NNs.
+        Tuning the weights of other mutations might help prioritize the important mutations and therefore increase the efficiency of the whole algorithm.
+    \end{itemize}
+    Evolutionary computation could also be employed to optimize different parameters of the ENN algorithm itself and therefore improve the ENN learning process.
 
     \subsubsection{Faster Computation}
-    To enable more tests, one could improve the computation performance of the ENN algorithm.
+    To enable more tests, the computation performance of the ENN algorithm needs to be optimized.
     This can be done by converting the NNs into a weight matrix and then compute its predictions with hardware accelerated vector matrix multiplications.
     However, the complex topologies of the NNs in this approach make it harder to do so than with other NNs.
-    Also many small performance improvements can still be done in this project which might cumulatively make it drastically faster.
+    Also many small performance improvements can still be done in this project which might cumulatively make the whole algorithm drastically faster.
 
     \subsubsection{Algorithm Design}
-    There are also a lot of improvements to be made in the ENN algorithm, this thesis developed.
+    There are also a lot of improvements to be made in the ENN algorithm itself.
     For example, the NEAT algorithm, which served as initial inspiration, also uses genetic encoding, tracks genes using historical markings and protects innovation using speciation\footcite{Neat_02}.
-    All of these and other approaches could improve the ENNs performance and therefore need to be studied.
-    %\subsubsection{Tests in different Applications}
-    %To test the ENNs performance, one might also use this implementation for other applications to see if it holds up against different ENN algorithms.
-    %\chapter{Appendix}
-    %    \section{Data}
-    %Possibly additional tests
-    %    \section{References}
+    In their tests, the developers of the NEAT algorithm were able to prove these features to effectively improve the results of the learning process.
+    These features might therefore also improve the performance of the ENN algorithm in the Nim game.
+%\subsubsection{Tests in different Applications}
+%To test the ENNs performance, one might also use this implementation for other applications to see if it holds up against different ENN algorithms.
+%\chapter{Appendix}
+%    \section{Data}
+%Possibly additional tests
+%    \section{References}
+
+
+    \cleardoublepage % Ensures proper placement in book format
+    \phantomsection % For hyperref and correct PDF bookmarks
+    \addcontentsline{toc}{chapter}{References} % Adds to the Table of Contents
     \printbibliography[title=References]
+
 
 \end{document}
