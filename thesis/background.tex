@@ -18,7 +18,8 @@ As a next step, the neurons in each layer are connected to those in subsequent l
 \\
 Now, the structure of a neural network looks something like this:
 \begin{figure}[H]
-    \caption{A simple Feed Forward Neural Network (FNN) with four layers: Input, Hidden 1, Hidden 2 and Output.
+    \centering
+    \includegraphics[width=0.25\textwidth]{nn_simple_1}~\caption{A simple Feed Forward Neural Network (FNN) with three layers: Input, Hidden and Output.\cite{nn_simple_img_1}}
     \label{fig:nn_simple_1}
 \end{figure}
 
@@ -315,6 +316,7 @@ Therefore, following things can be derived:
             \node[teal,right] at (axis cs:-0.5,-2.7) {global minimum};
 
         \end{axis}
+
     \end{tikzpicture}
     \caption{The effect of the starting position on the final cost of the parameters with gradient descent.}
     \label{fig:gradient_descent}
