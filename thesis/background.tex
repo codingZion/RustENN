@@ -341,10 +341,10 @@ This is why the machine learning process is referred to as gradient descent, as 
 \subsection{Initial Position \& Local Minima}\label{subsec:initial-position-&-local-minima}
 The ball analogy provides insights into the functioning of the EC learning process, which can be understood by visualizing a hill with each a shallow and a deep valley next to it.
 Depending on which side of the hill the ball is placed in the beginning, it will roll in a different direction and end up in either of the two valleys, which have different heights.
-Therefore, following things can be derived:
+When applying this to EC, following things can be derived:
 \begin{itemize}
-    \item (Minor) differences in the starting position can result in large differences in the end position and the respective cost.
-    \item Once a point with no downwards gradient is reached, innovation halts for that agent, even if there is a point with lower cost somewhere else.
+    \item (Minor) differences in the initial paramters can result in large differences in the end position and the respective cost.
+    \item Once a point with no downwards gradient is reached, innovation halts for that agent, even if the global minimum lies elsewhere.
     Such points are called local minima.
 \end{itemize}
 
@@ -378,7 +378,7 @@ Therefore, following things can be derived:
 % Adjust arrow start and label position so they are not cut off.
             \draw[->,red,thick] (axis cs:-0,2.8) -- (starting1);
             \draw[->,red,thick] (axis cs:-0,2.8) -- (starting2);
-            \node[red,above] at (axis cs:-0,2.8) {close starting points with different outcomes};
+            \node[red,above] at (axis cs:-0,2.8) {close initial parameters with different outcomes};
 
 % Local minimum (right)
             \draw[->,blue,thick] (axis cs:1.8,-1) -- (MinRight);
@@ -397,14 +397,14 @@ Therefore, following things can be derived:
 \begin{mydef}{Local Minimum}
     A local minimum is a point with minimal cost compared to its neighboring area and is therefore a halting point for gradient descent.\cite{ayoosh2024}
 \end{mydef}
-The impact of starting position and local minima often pose a large problem for EC applications.
+The impact of starting positions and local minima often pose a large problem for EC applications.
 Strategies to reduce the impact of such are therefore crucial for the algorithms success.
 
 
 \section{Evolutionary Neural Networks (ENNs)}\label{sec:evolutionary-neural-networks-(enns)}
 After having covered all the basics about neural networks and evolutionary computation, the two concepts are finally combined to create the algorithm this thesis focuses on.
 \begin{mydef}{Evolutionary Neural Networks}
-    Evolutionary neural networks (ENNs) are neural networks that use an evolutionary algorithm called neuroevolution to optimize for its parameters for the NNs weights/biases and its topology.\cite{enn22, neuroevolution19}
+    Evolutionary neural networks (ENNs) are neural networks that use an evolutionary algorithm called neuroevolution to optimize for its parameters encoding for the NNs weights, biases and its topology.\cite{enn22, neuroevolution19}
 \end{mydef}
 ENNs are useful for complex machine learning problems and also work for unlabeled training data as long as there is a fitness function.
 In the context of neural networks, evolutionary computation can be applied as follows:
@@ -417,19 +417,20 @@ The selected NNs are replicated (with crossover or non-mating) and finally mutat
     \item \textbf{Change weights/biases:} A new random value is set for the weight or bias of a random existing edge or node.
     \item \textbf{Shift weights/biases:} The value for an existing weight or bias of a random existing edge or node is altered by a random change but is kept close to the old value.
     \item \textbf{Add edges:} A new edge is added between two random, previously unconnected nodes.
-    \item \textbf{Add nodes:} A new node is added in between of a random existing edge.
-    The old edge is removed and two new edges with random weights are added between the new node and the two other nodes each.
-    \item \textbf{Remove nodes/edges:} A random node or edge is removed in a way that does not cut off the input from the output layer.
-\end{{enumerate}}
+    \item \textbf{Add nodes:} A new node is added in between of a random existing edge. The old edge is removed and two new edges with random weights are added between the new node and the two other nodes each.
+    \item \textbf{Remove nodes/edges:} A random node or edge is removed in a way that does not disconnect the input from the output layer.
+\end{enumerate}
 
 
 \section{The NEAT-Approach}\label{sec:the-neat-approach}
-As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies is an ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\cite[p.105-106]{Neat_02}.
+As already stated in the thesis statement(\ref{sec:thesis-statement}), neuroevolution of augmenting topologies (NEAT) is an ENN machine learning algorithm developed by Kenneth O. Stanley and Risto Miikkulainen in 2002\cite[p.105-106]{Neat_02}.
 NEAT evolves the topology, weights and biases of NNs at the same time, which makes it particularly suitable for tasks where the optimal network architecture is not yet known.
+\\ \\
 One of its key innovations is that the initial population begins with NNs of lowest complexity and the NNs only increase topological complexity as it is useful for the problem.
 In specific, the NEAT algorithm starts with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
 This design aims to produce more efficient neural networks by only increasing complexity when it leads to improved performance.
-The NEAT algorithm therefore only needs the mutations 1. to 4. shown in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and does not need to remove complexity (mutation 5.) as it is already minimal.
+\\
+The NEAT algorithm only needs the mutations 1. to 4. shown in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and does not need to remove complexity (mutation 5.) as it is already minimal.
 
 
 \section{Games}\label{sec:games}
@@ -441,7 +442,7 @@ The player who removes the last match loses.
 Therefore, the winning strategy simply is to remove all matches from the stack but one, forcing the opponent to remove the last match and therefore making them lose.
 
 \subsection{Nim}\label{subsec:nim}
-This game works similarly to Simple Nim with the difference that there are multiple stacks with matches.
+This game works similarly to simple Nim with the difference that there are multiple stacks with matches.
 Now, the player who removes the last match from the last unemptied stack loses.
 The winning strategy for Nim involves a binary representation of the game state\cite{rosenbloom2003} and is therefore mathematically much more complex, which forces the ENNs to learn more sophisticated strategies.
 
@@ -494,4 +495,4 @@ The following table provides some examples of ENN models that have been tested o
 \end{center}
 \normalsize
 Note:
-Although the amount of fitness evaluations is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations is not indicated and cannot be derived.
+Although the amount of fitness evaluations is a more accurate representation of computational load than the amount of generations, in many cases the amount of fitness evaluations is not indicated and cannot be derived.
