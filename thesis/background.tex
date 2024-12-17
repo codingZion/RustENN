@@ -19,7 +19,79 @@ As a next step, the neurons in each layer are connected to those in subsequent l
 Now, the structure of a neural network looks something like this:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.25\textwidth]{nn_simple_1}~\caption{A simple Feed Forward Neural Network (FNN) with three layers: Input, Hidden and Output.\cite{nn_simple_img_1}}
+    \centering
+    \begin{tikzpicture}[>=stealth,shorten >=1pt,auto,node distance=1.5cm, semithick]
+
+% Node styles
+        \tikzstyle{input neuron}=[circle,fill=red!50,draw,minimum size=15pt,inner sep=0pt]
+        \tikzstyle{hidden neuron}=[circle,fill=blue!50,draw,minimum size=15pt,inner sep=0pt]
+        \tikzstyle{output neuron}=[circle,fill=green!50,draw,minimum size=15pt,inner sep=0pt]
+
+% Adjusted layer positions for more spacing
+        \def\xinput{0}
+        \def\xhiddenone{3}
+        \def\xhiddentwo{6}
+        \def\xoutput{9}
+
+% Vertical spacing for nodes
+% Input layer (3 nodes): positions at y=1,0,-1
+        \def\yinputs{1,0,-1}
+
+% Hidden layers (4 nodes): positions at y=1.5,0.5,-0.5,-1.5
+        \def\yhidden{1.5,0.5,-0.5,-1.5}
+
+% Output layer (2 nodes): positions at y=0.5,-0.5
+        \def\youtputs{0.5,-0.5}
+
+% Layer labels
+        \node at (\xinput,2.5) {\normalsize \textbf{Input}};
+        \node at (\xhiddenone,2.5) {\normalsize \textbf{Hidden 1}};
+        \node at (\xhiddentwo,2.5) {\normalsize \textbf{Hidden 2}};
+        \node at (\xoutput,2.5) {\normalsize \textbf{Output}};
+
+% Input layer nodes
+        \foreach [count=\i] \ypos in \yinputs {
+            \node[input neuron] (I\i) at (\xinput,\ypos) {};
+        }
+
+% Hidden layer 1 nodes
+        \foreach [count=\i] \ypos in \yhidden {
+            \node[hidden neuron] (H1\i) at (\xhiddenone,\ypos) {};
+        }
+
+% Hidden layer 2 nodes
+        \foreach [count=\i] \ypos in \yhidden {
+            \node[hidden neuron] (H2\i) at (\xhiddentwo,\ypos) {};
+        }
+
+% Output layer nodes
+        \foreach [count=\i] \ypos in \youtputs {
+            \node[output neuron] (O\i) at (\xoutput,\ypos) {};
+        }
+
+% Draw edges: Input to Hidden (1)
+        \foreach \inputNode in {I1,I2,I3} {
+            \foreach \hiddenNode in {H11,H12,H13,H14} {
+                \draw[->] (\inputNode) -- (\hiddenNode);
+            }
+        }
+
+% Hidden (1) to Hidden (2)
+        \foreach \hiddenOneNode in {H11,H12,H13,H14} {
+            \foreach \hiddenTwoNode in {H21,H22,H23,H24} {
+                \draw[->] (\hiddenOneNode) -- (\hiddenTwoNode);
+            }
+        }
+
+% Hidden (2) to Output
+        \foreach \hiddenTwoNode in {H21,H22,H23,H24} {
+            \foreach \outputNode in {O1,O2} {
+                \draw[->] (\hiddenTwoNode) -- (\outputNode);
+            }
+        }
+
+    \end{tikzpicture}
+    \caption{A simple Feed Forward Neural Network (FNN) with four layers: Input, Hidden 1, Hidden 2 and Output.}
     \label{fig:nn_simple_1}
 \end{figure}
 
@@ -303,9 +375,9 @@ Therefore, following things can be derived:
 
 % Starting points (in the displayed range, the highest stationary point)
 % Adjust arrow start and label position so they are not cut off.
-            \draw[->,red,thick] (axis cs:-1,2.8) -- (starting1);
-            \draw[->,red,thick] (axis cs:-1,2.8) -- (starting2);
-            \node[red,above] at (axis cs:-1,2.8) {starting points};
+            \draw[->,red,thick] (axis cs:-0,2.8) -- (starting1);
+            \draw[->,red,thick] (axis cs:-0,2.8) -- (starting2);
+            \node[red,above] at (axis cs:-0,2.8) {close starting points with different outcomes};
 
 % Local minimum (right)
             \draw[->,blue,thick] (axis cs:1.8,-1) -- (MinRight);
