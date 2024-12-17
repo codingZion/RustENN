@@ -2,16 +2,16 @@
 This section details how to use the concepts described in the last chapter(\ref{ch:background}) to build an evolutionary neural network that plays Nim.
 
 \subsection{Overview}\label{subsec:overview}
-As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language\footcite{rust, rust23}.
-The source code and all test data can be found on this thesis' GitHub page\footcite{RustENN}.
+As already mentioned in the thesis statement(\ref{sec:thesis-statement}), this project is written in the Rust programming language\cite{rust, rust23}.
+The source code and all test data can be found on this thesis' GitHub page\cite{RustENN}.
 This project utilizes following Rust libraries:
-`rand` (version 0.9.0-alpha.2)\footcite{rand2024},
-`indicatif` (version 0.17.8)\footcite{indicatif2023},
-`csv` (version 1.3.0)\footcite{csv2023},
-`bincode` (version 1.3.3)\footcite{bincode2021},
-`serde` (version 1.0.209)\footcite{serde2024},
-and `rayon` (version 1.10.0)\footcite{rayon2023}.
-The code has been partially written by the AI code completion assistant GitHub Copilot\footcite{github_copilot2021}.
+`rand` (version 0.9.0-alpha.2)\cite{rand2024},
+`indicatif` (version 0.17.8)\cite{indicatif2023},
+`csv` (version 1.3.0)\cite{csv2023},
+`bincode` (version 1.3.3)\cite{bincode2021},
+`serde` (version 1.0.209)\cite{serde2024},
+and `rayon` (version 1.10.0)\cite{rayon2023}.
+The code has been partially written by the AI code completion assistant GitHub Copilot\cite{github_copilot2021}.
 Every instance of artificially generated code has been thoroughly reviewed.
 \\ \\
 The codebase is divided into different modules as well as a bin folder containing main files.
@@ -217,7 +217,7 @@ Now this implementation of ENNs will be tested with different parameters using t
 The general approach is to start by training the ENNs on easy problems whilst observing the effect of different parameters on the result.
 Each test is repeated at least three times to try to reduce the impact of randomness on the results.
 As this thesis outlines the different testing configurations, one test will be discussed for each configuration as long as all three tests showed similar results.
-However, the full testing data can be inspected on this thesis' GitHub\footcite{RustENN}.
+However, the full testing data can be inspected on this thesis' GitHub\cite{RustENN}.
 
 \subsection{Simple Nim}\label{subsec:simple-nim-results}
 For the Simple Nim game, each test is run for 1000 generations, as the ENNs should be able to solve such simple games rather quickly.

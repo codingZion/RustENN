@@ -38,11 +38,11 @@
 
 % Chapter description on pages
 \begin{comment}
-\usepackage{fancyhdr}
-\pagestyle{fancy}
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
 
 % Clear default header and footer
-\fancyhf{}
+    \fancyhf{}
 \end{comment}
 
 
@@ -106,9 +106,6 @@ align=center
 ]
 
 
-\usepackage{float}
-
-
 %CSV files
 \usepackage{filecontents}
 
@@ -140,7 +137,19 @@ align=center
 
 
 %Citations
-\usepackage[style=authoryear, backend=bibtex, urldate=long, sorting=alphabetic, defernumbers=true,autocite=superscript]{biblatex}
+\usepackage[style=numeric, backend=bibtex, urldate=long, sorting=none, defernumbers=true,autocite=superscript]{biblatex}
+
+% Customize citation to automatically include brackets
+\DeclareFieldFormat{postnote}{\mkbibbrackets{#1}}
+\renewcommand*{\mkbibbrackets}[1]{[#1]}
+
+% Automatically add brackets for \cite
+\renewbibmacro*{cite}{%
+    \printtext[bibhyperref]{%
+        \printfield{labelnumber}%
+    }%
+}
+
 \addbibresource{refs.bib}
 \usepackage{csquotes}
 
@@ -244,7 +253,17 @@ align=center
         \restoregeometry
     \end{titlepage}
     \newpage
-    \hspace{10cm}
+    \vspace*{3em}
+    \setlength{\fboxsep}{10pt} % Abstand zwischen Text und Rahmen (Standard ist 3pt)
+    \noindent
+    \fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule}
+    {Ich, Lucien Kissling, 6e, erkläre hiermit, dass ich die vorliegende Arbeit «Evolutionary Neural Networks: Designing a NEAT-Inspired Algorithm for Strategic Game Learning» selbständig und ohne Benützung anderer als der angegebenen Quellen oder Hilfsmittel verfasst bzw. gestaltet habe.
+    \vspace{1cm}
+    \hspace{-0.3cm}
+    \\\\
+    Ort, Datum: \underline{\hspace{5cm}} \hfill Unterschrift: \underline{\hspace{5cm}
+    }}}
+
     \newpage
     \vspace*{5em}
     \begin{doublespace}
@@ -283,12 +302,12 @@ align=center
     \setcounter{page}{5}
     \tableofcontents
 
-\begin{comment}
-    \pagestyle{fancy}
-    \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
-    \fancyhead[R]{}
-    \fancyhead[L]{\chaptername\ \thechapter\ --\ \leftmark}
-\end{comment}
+    \begin{comment}
+        \pagestyle{fancy}
+        \renewcommand{\chaptermark}[1]{\markboth{#1}{#1}}
+        \fancyhead[R]{}
+        \fancyhead[L]{\chaptername\ \thechapter\ --\ \leftmark}
+    \end{comment}
 
 
     \chapter{Introduction}\label{ch:introduction}
@@ -317,7 +336,7 @@ align=center
     \\ \\
     In this thesis, a simplified implementation of ENNs is developed and trained on board games.
     The research investigates the effects of varying parameters and features on the learning process and evaluates the algorithm’s performance in comparison to other machine learning approaches.
-    This project draws inspiration from the NEAT Algorithm, introduced by Kenneth O. Stanley and Risto Miikkulainen in 2002, which uses a minimal initial structure that evolves complexity over time.\footcite[p.105-106]{Neat_02}
+    This project draws inspiration from the NEAT Algorithm, introduced by Kenneth O. Stanley and Risto Miikkulainen in 2002, which uses a minimal initial structure that evolves complexity over time.\cite[p.105-106]{Neat_02}
     As a benchmark, the ENNs are trained to play the game Nim, where players alternately remove matches from stacks, and the winner is the one who avoids taking the last match.
     \\ \\
     In specific, this Thesis addresses following questions:
