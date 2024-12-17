@@ -245,8 +245,8 @@ Because of this, NNs resemble more the functioning of a brain than a traditional
         \begin{tikzpicture}[node distance=2cm]
             % Right pile (Neural Network - 3 layers)
             \node (nn_top) [level, fill=red!40] {
-                Neuron Activation\\
-                \small{(Simulated neurons, brain-like structure)}
+                Neural Network\\
+                \small{(Simulated neurons, brain-like functioning)}
             };
             \node (nn_middle) [level, below of=nn_top] {
                 Deterministic Algorithm\\
@@ -266,14 +266,14 @@ Because of this, NNs resemble more the functioning of a brain than a traditional
         \end{tikzpicture}
         \caption{Neural Network (3 layers)}
     \end{subfigure}
-    \caption{The Neural Network algorithm replaces the function of data-processing (colored in red) that is traditionally done by a deterministic algorithm.}\label{fig:figure}
+    \caption{The neural network algorithm replaces the function of data-processing (colored in red) that is traditionally done by a deterministic algorithm.}\label{fig:figure}
 \end{figure}
 
 \\
-This difference has implications for the functioning of an NN: Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
-With NNs, the algorithm is based on different parameters for nodes and edges, which make it an unpredictable black box.
+Traditional algorithms represent actual mathematical calculations and are therefore deterministic.
+With NNs, the algorithm is based on different parameters for nodes and edges, which essentially make it an unpredictable black box.
 In the top layer of abstraction, there are no concrete functions but only neuron activation that approximates a function instead.
-This means it is hard to prove a neural network to always be accurate and is also the reason why the result of NNs is often called its prediction. \cite{springer_blackbox}%nature_blackbox,
+This means it is hard to prove a neural network to always be accurate and this is also the reason why the result of NNs is often called its prediction. \cite{springer_blackbox}%nature_blackbox,
 
 \begin{mydef}{NN Prediction}
     The output of a neural network is referred to as its prediction for a given input.\cite{Warudkar2020}
@@ -281,7 +281,7 @@ This means it is hard to prove a neural network to always be accurate and is als
 
 \subsection{An Example of NN learning: Backpropagation}\label{subsec:an-example-of-nn-learning:-backpropagation}
 It has already been established how a neural network with specific parameters generates a prediction for a given input.
-This however raises the question: how can parameters encoding the structure, weights, and biases of the neural network be determined?
+This however raises the question: how can parameters encoding for the structure, weights, and biases of the neural network be determined?
 The solution lies in using machine learning, which trains the model to perform a specific task using training data.
 \begin{mydef}{Machine Learning}
     Machine learning (ML) is a branch of artificial intelligence that focuses on optimizing artificially intelligent models to solve a given problem.\cite{IBM_Machine_Learning}
@@ -299,7 +299,7 @@ This is done by looping back through the NN from the output layer to the input l
 However, the NN should not be adapted only to a single problem but make accurate predictions for the whole training set and unknown problems.
 To therefore prevent overcorrecting a NN for single problems, a learning rate significantly smaller than 1 is applied to the corrections.
 \\ \\
-The NN is trained on the whole training set for many generations, until the NN starts to make accurate predictions for all problems.
+The NN is trained on the whole training set for many generations until the NN starts to make accurate predictions for all problems.
 To evaluate the performance on unknown problems, a separate test set, which the NN has not been trained on, can be used.
 
 
@@ -307,7 +307,7 @@ To evaluate the performance on unknown problems, a separate test set, which the 
 The focus now shifts to the machine learning technique this thesis focuses on.
 Once again, nature serves as inspiration:
 \begin{mydef}{Evolutionary Computation}
-    Evolutionary Computation (EC) is an Algorithm that optimizes a set of parameters for a problem with the help of natural selection.\cite{virtusa2024}
+    Evolutionary computation (EC) is an algorithm that optimizes a set of parameters for a problem with the help of natural selection.\cite{virtusa2024}
 \end{mydef}
 Evolutionary computation (EC) is often employed in situations where the optimal parameters for a function cannot be directly calculated, but the performance of a given parameter set can be evaluated.
 One example scenario involves a large dataset of points representing an unknown polynomial function with added noise and outliers.
@@ -317,14 +317,14 @@ The following shows how EC achieves this optimization.
 The process starts with an initial population of agents with random parameter sets.
 EC then repeats following steps, forming a new generation of the population in each iteration\cite{Sathyabama20}:
 \begin{itemize}
-    \item \textbf{Fitness evaluation:} First, EC assesses the performance of each agent, defined by its parameters, in the given problem.
+    \item \textbf{Fitness evaluation:} First, EC assesses the performance of each agent with its parameters in the given problem.
     This performance is referred to as the agent's fitness, which can be evaluated either objectively through a cost function or relatively with a competition between agents.
     In the given example, the cost function might check the prediction of the NN for the given data points, calculate the absolute differences between the prediction and the values of the data points, and use the total sum of these differences as the cost.
     \item \textbf{Selection:} As a next step, the agents that performed well are selected to be part of the next generation.
     \item \textbf{Reproduction:} The selected agents are then replicated by directly copying their parameters (non-mating) or by merging parameters from different agents (crossover).
     \item \textbf{Mutation:} In each new generation, the parameters of the agents are mutated, either by completely replacing certain parameters with new random parameters or by shifting the existing parameters by a random value.
 \end{itemize}
-After a certain number of generations, the EC algorithm will have found best performing set of parameters for a given problem.
+This cycle is repeated until it has found a well-performing set of parameters for a given problem.
 
 \subsection{Gradient Descent}\label{subsec:gradient-descent}
 As established in the previous section, EC begins with an initial population of agents with a random set of parameters.
