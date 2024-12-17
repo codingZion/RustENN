@@ -1,6 +1,6 @@
 \section{Neural Networks (NNs)}\label{sec:neural-networks-(nns)}
 
-As previously mentioned in the Preface, an artificial neural network (ANN or NN) is a mathematical model for data processing, initially inspired by the structure of the brain.
+As previously mentioned in the preface, an artificial neural network (ANN or NN) is a mathematical model for data processing, initially inspired by the structure of the brain.
 Therefore, a brief overview of how a brain functions is presented next.
 
 \subsection{Neurons in the Brain}\label{subsec:neurons-in-the-brain}
@@ -97,7 +97,7 @@ Now, the structure of a neural network looks something like this:
 
 To describe the specific structure of a NN, the term topology is used\@.
 \begin{mydef}{Neural Network Topology}
-    The topology of a neural network is its distinct arrangement of neurons, layers and the connections between the neurons.\cite{Miikkulainen2010}
+    The topology of a neural network is its distinct arrangement of neurons on layers and the connections between the neurons.\cite{Miikkulainen2010}
     \label{definition:Topology}
 \end{mydef}
 For the neural network to perform functions, a weight needs to be assigned.
@@ -114,10 +114,10 @@ As a first step, the input is encoded into values that correspond to the nodes o
 In the example of a computer vision NN, the brightness values of the single pixels might directly represent the nodes of the input layer.
 \\
 Then, the algorithm iterates through all input nodes to identify its connected edges.
-For each of these edges it multiplies its weight by the value of the input node and adds the result to the node on the receiving end.
+For each of these edges, it multiplies its weight by the value of the input node and adds the result to the node on the receiving end.
 \\
 After iterating through all the nodes of one layer, it moves to the next layer.
-At this point, the value of the nodes in the current layer is the sum accumulated by the values of all connected nodes multiplied by the weight of that connection:
+At this point, the value of a node in the current layer is the sum accumulated by the values of all connected nodes from previous layers multiplied by the weight of that connection:
 \begin{equation}
     v_x = \sum_{i=0}^{N}v_i * w_i\label{eq:sum_connected_nodes}
 \end{equation}
@@ -125,7 +125,7 @@ Where:
 \textit{
     \begin{itemize}
         \item $v_x$ is the value of the current node
-        \item N is the number of connected nodes
+        \item N is the number of connected nodes from previous layers
         \item $v_i$ is the value of the connected node i
         \item $w_i$ is the weight of the edge connecting the current node to node i
     \end{itemize}
@@ -184,7 +184,7 @@ Plot of the activation functions:
 \end{center}
 
 ~\\
-The complete function for the value of one node is therefore:
+The complete function for the value of a node is therefore:
 \begin{equation}
     v_x = \sigma\left(\sum_{i=0}^{N}v_i * w_i + r_x\right)\label{eq:value_node}
 \end{equation}
@@ -196,21 +196,21 @@ Where (additionally to equation~\ref{eq:sum_connected_nodes}):
     \end{itemize}
 }
 
-Now this value $v_x$ is again sent through its connections to nodes in the upcoming layers.
-After iterating through all the nodes and layers of the neural network (NN), the process reaches the final layer of the NN, where the computed output can be read out.
+Now, that value $v_x$ is again sent through its connections to nodes in the upcoming layers.
+After iterating through all the nodes and layers of the NN, the process reaches the final layer of the NN, where the computed output can be read out.
 This output is encoded in node values, as was done with the input, and therefore requires decoding to obtain the final result.
 In the example of a digit-detecting NN, 10 output nodes could be used, each representing one digit.
 The result could then be decoded by identifying the output node with the highest value as the result.
 This kind of output encoding, where all possible results are assigned their own node, is referred to as one-hot output encoding.\cite{Brownlee2020}
-With one-hot output encoding, the values of the output nodes can be interpreted as a the neural networks certainty for a specific result to be correct.
+With one-hot output encoding, the values of the output nodes can be interpreted as the certainty of a NN for a specific result to be correct.
 
 \subsection{Remark: Functioning of NNs}\label{subsec:remark-about-the-funtioning-of-nns}
 Having established how a neural network operates, it is important to understand why this type of algorithm is considered revolutionary in the field of computer science.
 \\ \\
-An algorithm processes an input with a set of functions applied in a certain order to calculate an output.
+An algorithm processes some input data with a set of functions applied in a certain order to calculate an output.
 Traditionally, a computer algorithm gets programmed with the help of mathematical operations, logic functions, loops, system functions, and data structures, which are then converted into binary code for the processor.
 Of course, this also applies in the context of NNs.
-However, there is also a third layer of abstraction on top, which simulates the functioning of a brain with neurons.
+With NNs however, there is also a third layer of abstraction on top, which simulates the functioning of a brain with neurons.
 Since the traditional algorithm only enables the neurons of a NN, the third neuron-based layer is what computes the actual function of the NN. Therefore, NNs resemble more the functioning of a brain than a traditional algorithm.
 \\
 \begin{figure}[H]
@@ -295,11 +295,11 @@ The machine learning process of backpropagation begins with a neural network tha
 First, the NN is given the training problems for which it will generate random predictions.
 These random predictions are then refined using the sample solutions.
 This is done by looping back through the NN from the output layer to the input layer, always adjusting the weights and biases in a way that the NN would finally make the right prediction for this problem.
-However, the NN shouldn't be adapted only to a single problem but make accurate predictions for the whole training set and unknown problems.
+However, the NN should not be adapted only to a single problem but make accurate predictions for the whole training set and unknown problems.
 To therefore prevent overcorrecting a NN for single problems, a learning rate significantly smaller than 1 is applied to the corrections.
 \\ \\
 The NN is trained on the whole training set for many generations, until the NN starts to make accurate predictions for all problems.
-To evaluate the performance on unknown problems, a separate test set, which the NN hasn't been trained on, can be used.
+To evaluate the performance on unknown problems, a separate test set, which the NN has not been trained on, can be used.
 
 
 \section{Evolutionary Computation (EC)}\label{sec:evolutionary-computation-(ec)-&-genetic-algorithms-(gas)}
@@ -418,7 +418,7 @@ The selected NNs are replicated (with crossover or non-mating) and finally mutat
     \item \textbf{Add edges:} A new edge is added between two random, previously unconnected nodes.
     \item \textbf{Add nodes:} A new node is added in between of a random existing edge.
     The old edge is removed and two new edges with random weights are added between the new node and the two other nodes each.
-    \item \textbf{Remove nodes/edges:} A random node or edge is removed in a way that doesn't cut off the input from the output layer.
+    \item \textbf{Remove nodes/edges:} A random node or edge is removed in a way that does not cut off the input from the output layer.
 \end{{enumerate}}
 
 
@@ -428,7 +428,7 @@ NEAT evolves the topology, weights and biases of NNs at the same time, which mak
 One of its key innovations is that the initial population begins with NNs of lowest complexity and the NNs only increase topological complexity as it is useful for the problem.
 In specific, the NEAT algorithm starts with NNs that only have the nodes of the input layer connected to the nodes of the output layer.
 This design aims to produce more efficient neural networks by only increasing complexity when it leads to improved performance.
-The NEAT algorithm therefore only needs the mutations 1. to 4. shown in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and doesn't need to remove complexity (mutation 5.) as it is already minimal.
+The NEAT algorithm therefore only needs the mutations 1. to 4. shown in the last section(\ref{sec:evolutionary-neural-networks-(enns)}) and does not need to remove complexity (mutation 5.) as it is already minimal.
 
 
 \section{Games}\label{sec:games}
@@ -493,4 +493,4 @@ The following table provides some examples of ENN models that have been tested o
 \end{center}
 \normalsize
 Note:
-Although the amount of fitness evaluations is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations isn't indicated and cannot be derived.
+Although the amount of fitness evaluations is a more accurate representation of computation load than the amount of generations, in many cases the amount of fitness evaluations is not indicated and cannot be derived.

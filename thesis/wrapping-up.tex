@@ -5,7 +5,7 @@ Although one-hot encoding keeps the output in a safe bound, it finally makes it 
 Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations, which demonstrated to be effective.
 \\ \\
 In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of ~75\% for two stacks with 4 matches each.
-The NNs couldn't adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where the NNs of a population didn't predict the perfect move for all 24 possible game states.
+The NNs could not adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where the NNs of a population did not predict the perfect move for all 24 possible game states.
 \\\\
 A plausible explanation for the finding that the NNs could not be trained to full accuracy in the more complex configuration might lie in the game which was used as benchmark for the algorithm.
 The Nim game might be a tough challenge for NNs to solve as the algorithm to play Nim perfectly is not easily translatable into neurons.

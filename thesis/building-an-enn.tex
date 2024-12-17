@@ -224,7 +224,7 @@ For the Simple Nim game, each test is run for 1000 generations, as the ENNs shou
 
 \subsubsection{Stack: 2, Configuration 1}
 In the first configuration, the ENNs need to find the correct move for the initial Nim state with one stack containing 2 matches.
-This is the easiest problem that can still be considered a game - with one match on the stack there is only one legal move, so it doesn't involve any decision-making.
+This is the easiest problem that can still be considered a game - with one match on the stack there is only one legal move, so it does not involve any decision-making.
 The winning strategy is to only take one match and leave the opponent with the last match on the stack.
 The first test starts with a relatively small population of 100 agents and completely simplified parameters:
 \\
@@ -349,7 +349,7 @@ Since the stack size with 2 has already worked fine, the same configuration will
         \pgfplotslegendfromname{legend-above}
     \end{center}
 \end{center}
-In this case the accuracy doesn't reach 100\% but stays around 25\% instead.
+In this case the accuracy does not reach 100\% but stays around 25\% instead.
 Also, the accuracy graph shows irregular development and jitters in a window of many percentage points.
 Such drastic fluctuations between the accuracy values happen when different species within the population have similar fitness, which results in a frequent change of the best agents original species.
 Depending on which species the best agent comes from, the objective performance varies, as the relative performance evaluated by the fitness function does not necessarily correlate with objective performance.
@@ -418,7 +418,7 @@ When considering the topology metrics in the test results of the last configurat
     \end{center}
 \end{center}
 The NNs develop an average amount of over 20 hidden layers with on average 2 nodes.
-It doesn't make sense for the NNs to have such complexity for such a simple problem as it only increases the needed computations.
+It does not make sense for the NNs to have such complexity for such a simple problem as it only increases the needed computations.
 The chance for new nodes and edges to form will be reduced by a factor of 20 each:
 \\
 \renewcommand{\csvpath}{../data/simple_nim/stack_8/t_1x/stats.csv} % Rename the macro
@@ -520,7 +520,7 @@ The chance for new nodes and edges to form will be reduced by a factor of 20 eac
     \label{fig:performances-1}
 \end{figure}
 \\
-The modifications didn't impact the performance of the NN, but helped keeping the topological complexity in a reasonable bound which is why they will be kept moving on.
+The modifications did not impact the performance of the NN, but helped keeping the topological complexity in a reasonable bound which is why they will be kept moving on.
 
 \subsubsection{Stack 1--8, Configuration 1}
 The previous configuration is repeated except for the initial amount of matches on the stack which now varies randomly between one and eight.
@@ -582,7 +582,7 @@ A look at the games the best agents played reveals their exact capabilities:
 Across all tests, the NNs only show the ability to learn the moves where they subtract one to three matches, but none more.
 The accuracy of the NNs in different tests simply depends on how many moves the NNs learned.
 In any case, the NNs get stuck in a local minimum.
-Such local minima originate in early generations where the agents aren't highly developed, which means they often only play one move.
+Such local minima originate in early generations where the agents are not highly developed, which means they often only play one move.
 The agents that constantly subtract one match are therefore the most successful and reproduce the most.
 After reaching that local minimum, there remain no more competitors that could assert themselves, either because of a flaw in the selection process or because none have been created in first place.
 It can also be observed how homogeneous the NNs across generations get by looking at the wins of the best agent against former best agents, which always settle at 50\%, revealing that they all use the same strategy.
@@ -797,7 +797,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
 \end{figure}
 It can be observed in the graphs that the performance does not reach 100\% in any configuration.
 The configuration with larger population size performs the best with the accuracy reaching a value of ~90\%.
-When examining the moves played by the best agent in a test of said configuration, it becomes apparent why the agent didn't achieve full accuracy:
+When examining the moves played by the best agent in a test of said configuration, it becomes apparent why the agent did not achieve full accuracy:
 \begin{minted}{}
     Agent 999 vs Agent 998:
     Turn: 0: state: [8], agent_move: [0, 7]

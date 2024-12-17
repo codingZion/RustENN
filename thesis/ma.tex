@@ -274,15 +274,16 @@ align=center
             \textbf{Abstract.}
         \end{center}
         \\
-        This thesis explores the design and implementation of Evolutionary Neural Networks (ENNs) inspired by the NEAT algorithm.
+        This thesis explores the design and implementation of evolutionary neural networks (ENNs) inspired by the NEAT algorithm.
         ENNs optimize neural network weights, biases, and topologies using evolutionary computation.
         The game Nim and a simplified version with only one instead of multiple stacks are used as a benchmark of the ENN algorithm to test the effect of different parameters and features on performance.
-        The research shows that ENNs can successfully learn to play simple games like Single-Stack Nim but struggle with more complex games like multi-stack Nim.
+        The research shows that ENNs can successfully learn to play simple games like single-stack Nim but struggle with more complex games like multi-stack Nim.
         Challenges include overcoming local minima, tuning the ENN parameters correctly, and dealing with limited computations.
         \\
         \textbf{Results.}
-        The results show that ENNs achieve 100\% accuracy for simple Nim, a single-stacked version of the game, with stack sizes up to 1000 matches, revealing the importance of using correct output encoding.
-        In the multi-stacked Nim game, ENNs reach an accuracy of 75\% for the configuration with 2 stacks with 4 matches each, however, they could not find the perfect moves for all game states because of local minima.
+        The results show that ENNs achieve 100\% accuracy for the single-stacked version of the game, with stack sizes up to 1000 matches, revealing the importance of using correct output encoding.
+        In the multi-stacked Nim game, the ENNs reach an accuracy of 100\% for the configuration with 2 stacks containing 2 matches each and 75\% for the configuration with 2 stacks containing 4 matches each.
+        In the latter configuration, the NNs could not predict the perfect moves for all game states because of local minima.
         \\
         \textbf{Keywords.}
         Evolutionary Neural Networks, NEAT Algorithm, Machine Learning, Game Learning, Nim Game, Evolutionary Computation.
@@ -324,21 +325,21 @@ align=center
     This field called machine learning immediately got my excitement and two years ago a friend of mine and I had our first practical experience with it.
     We developed a simple neural network, which helped us predict the color of a lego brick in front of a color sensor based on the RGB values in various lighting conditions.
     \\ \\
-    A neural network (NN) forms the basis of most machine learning models and I will therefore explain it in much detail in the following chapters.
+    A neural network (NN) forms the basis of most machine learning models and will therefore be explained in much detail in the following chapters.
     In simple terms however, a NN is a strongly simplified artificial model of the human brain consisting of an interconnected web of neurons through which information flows and gets computed.
     \\ \\
-    Although the NN I developed two years ago already learned on its own, I still had to provide and label data for it to learn from.
-    This meant that I had to manually scan the RGB values of the lego bricks and assign them the color they represented.
-    In this case, this was the most efficient solution, however there are cases where you train a model where such data is unavailable or you simply want them to develop their own approach for a problem without predefined solutions.
-    That is how I got to my matura thesis, which aims to develop such ML models that learn without labeled data and use these models to learn games.
+    Although the NN I developed with my friend two years ago already learned on its own, we still had to provide and label data for it to learn from.
+    This meant that we had to manually scan the RGB values of the lego bricks and assign them the color they represented.
+    In this case, this was the most efficient solution, however there are cases where a model needs to be trained where such data is unavailable or the goal simply is for them to develop their own approach for a problem without predefined solutions.
+    That is how I got to my matura thesis, which aims to develop such ML models that learn without labeled data and use these models to learn to play games.
 
 
     \section{Thesis Statement}\label{sec:thesis-statement}
     This thesis explores the field of neural networks (NNs) capable of learning without human-provided data, known as unsupervised learning.
     The focus is on evolutionary neural networks (ENNs), which combine neural networks with evolutionary computation.
     \\ \\
-    In this thesis, a simplified implementation of ENNs is developed and trained on board games.
-    The research investigates the effects of varying parameters and features on the learning process and evaluates the algorithm’s performance in comparison to other machine learning approaches.
+    In this thesis, a simple implementation of ENNs is developed and trained on board games.
+    The research investigates the effects of varying parameters and features on the learning process and the performance in the games.
     This project draws inspiration from the NEAT Algorithm, introduced by Kenneth O. Stanley and Risto Miikkulainen in 2002, which uses a minimal initial structure that evolves complexity over time.\cite[p.105-106]{Neat_02}
     As a benchmark, the ENNs are trained to play the game Nim, where players alternately remove matches from stacks, and the winner is the one who avoids taking the last match.
     \\ \\
