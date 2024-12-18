@@ -2,13 +2,13 @@
 This thesis managed to train neural networks with 100\% accuracy in the single stack version of Nim for stack sizes up to 1000.
 The success was mostly due to the realization that the output should be encoded directly instead of using one-hot output encoding.
 Although one-hot encoding keeps the output in a safe bound, it finally makes it harder for the NNs to find the correct structure and weights in the case of Nim.
-Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations, which demonstrated to be effective.
+Other parameter configurations were explored, however, most of them showed to be similarly effective as the initial configuration, except for the weight reduction of topology increasing mutations, which demonstrated high effectiveness.
 \\ \\
-In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of ~75\% for two stacks with 4 matches each.
-The NNs could not adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum where the NNs of a population did not predict the perfect move for all 24 possible game states.
+In the full Nim game, the NNs were able to reach an accuracy of 100\% for two stacks with two matches each and reached an accuracy of around 75\% for two stacks with 4 matches each.
+The NNs could not adapt to playing the perfect move for all 24 possible game states in the latter game and got stuck in local minimum.
 \\\\
-A plausible explanation for the finding that the NNs could not be trained to full accuracy in the more complex configuration might lie in the game which was used as benchmark for the algorithm.
-The Nim game might be a tough challenge for NNs to solve as the algorithm to play Nim perfectly is not easily translatable into neurons.
+A plausible explanation for the finding that the NNs could not be trained to full accuracy in the latter configuration might lie in the game used as benchmark for the algorithm.
+The Nim game might be a tough challenge for NNs to solve, as the algorithm to play Nim perfectly is not easily translatable into NNs.
 If this is the case, this thesis demonstrates the ability of ENN algorithms to adapt to complex tasks to a significant extent nevertheless.
 That said, this implementation of ENNs leaves room for future development (detailed in~\ref{sec:future-work}), which might also increase the performance of the algorithm in the Nim game.
 %There are two explanations for the finding that the NNs did not become fully accurate in the more complex configuration.
@@ -19,23 +19,23 @@ This thesis sometimes dealt with varying results for tests within the same param
 In an application, it is therefore advisable to train several populations on the same problem to then choose the best performing one.
 
 \section{Auto Review}\label{sec:auto-review}
-This research was a large journey for me to realize, which finally resulted in a ENN framework that I proved to be able to learn functions without human supervision.
-The concept of Neural Networks evolving on their own and finally acquiring some sort of skill seemed very theoretical and difficult for me, which is why it is such a delight for me to actually have created a practical implementation of ENNs that is able to learn a game on its own.
+This research was a large journey for me to realize, which finally resulted in an ENN framework that I proved to be able to learn functions without human supervision.
+The concept of neural networks evolving on their own and finally acquiring some sort of skill seemed theoretical and challenging, which is why it is such a delight for me to actually have created a practical implementation of ENNs that is able to learn a game on its own.
 \\ \\
-When reflecting on the planing process, I definitely underestimated the amount of time needed for the development and particularly the testing process.
+When reflecting on the planning process, the amount of time needed for the development and particularly the testing process was underestimated.
 Even though I tried to optimize the program with algorithm design choices and parallel processing, the learning process still demanded a lot of time.
 This limited the amount of tests this thesis was able to evaluate.
 %I also discovered a few bugs during the testing time, which forced me to redo the testing.
 %I planned to be done with a beta program many months before the thesis end to then have time to test and refine my program.
 %However, I finished the program much later and found many bugs which forced me to repeat the whole testing.
 %The final tests were therefore done in only a few days, which left me with little room to search for optimal parameters.
-\\
+\\ \\
 Another thing I realized is that the scientific method of testing is essential.
-Mmy approach of starting with a simple solution and then testing different parameters and features one at a time proved to be very effective.
+My approach of starting with a simple solution and then testing different parameters and features one at a time proved to be very successful.
 It helped me find different, more effective configurations than the ones I had previously imagined to be plausible.
-\\
-In terms of implementation, I had some struggles with the parameters being defined all over the place in the project.
-I would therefore create a struct that handles all parameters and also implement automized testing which would allow me to run all tests without supervision.
+\\ \\
+In terms of implementation, I had some challenges with the parameters being defined all over the place in the project.
+To develop this further, I would therefore create a struct that handles all parameters and also implement automized testing which would allow me to run all tests without supervision.
 \\
 In general, my object-oriented programming approach worked fine and my project structure made the codebase easily understandable and editable throughout my research.
 %Still, more consistent commenting and documentation would have further improved clarity of the code.
@@ -47,24 +47,27 @@ In specific, future work might include the following:
 
 \subsubsection{More Testing}
 Because of the time constraints, this research tested a number of configurations with limited tests each.
-More test runs within a set of parameters will therefore increase statistical significance of the results and more tests with different sets of parameters might help finding better solutions.
+More test runs within a set of parameters would therefore increase statistical significance of the results and more tests with different sets of parameters might help finding better solutions.
 This thesis has already tested the effect of some modifications of the fitness exponent, new population composition, and population size parameters without finding consistent evidence for significant improvement of performance with any of these parameters.
 In-depth testing of the effect of these parameters would facilitate their fine-tuning and might finally improve the ENN learning process.
-In specific, following parameters might be particularly important to examine:
+In specific, following aspects might be particularly important to examine:
 \begin{itemize}
-    \item \textbf{Fitness exponent and new population composition:} These parameters influence what agents make up each population and are therefore critical to optimize to ensure the algorithms success.
-    \item \textbf{Population size:} The approach of this thesis was to have a relatively small population too keep the needed computation per generation low, enlarging the population however, might allow for more diversity within a population which might help new strategies to evolve.
+    \item \textbf{Number of generations:} The number of generations in the tests was limited to 1000 because of time constraints.
+    Longer tests runs however, might allow the NNs to evolve further and therefore achieve better results.
+    \item \textbf{Fitness exponent and new population composition:} These parameters influence what agents make up each population and are therefore critical to optimize to ensure the success of the algorithm.
+    \item \textbf{Population size:} The approach of this thesis was to have a relatively small population to keep the needed computational load per generation low.
+    Enlarging the population however, might allow for more diversity within a population, which might help new strategies to evolve.
     \item \textbf{Mutation rate:} This thesis kept the rate of mutation minimal to ensure consistent development, however, increasing the rate of mutations might accelerate innovation of NNs.
     \item \textbf{Mutation types:} During the testing process, the weight of the topology-increasing mutation were decreased, which resulted in significantly less unnecessary complexity of the NNs.
     Tuning the weights of other mutations might help prioritize the important mutations and therefore increase the efficiency of the whole algorithm.
 \end{itemize}
-Evolutionary computation could also be employed to optimize different parameters of the ENN algorithm itself and therefore improve the ENN learning process.
+An evolutionary computation algorithm could also be employed to optimize different parameters of the ENN algorithm itself and therefore improve the learning process.
 
 \subsubsection{Faster Computation}
-To enable more tests, the computational performance of the ENN algorithm could to be optimized.
-This can be done by converting the NNs into a weight matrix and then compute its predictions with hardware accelerated vector matrix multiplications.
-However, the complex topologies of the NNs in this approach make it harder to do so than with other NNs.
-Also many small performance improvements can still be done in this project which might cumulatively make the whole algorithm drastically faster.
+To enable more tests, the computational performance of the ENN algorithm could be optimized.
+This can be done by converting the NNs into a weight matrix and then compute its predictions with hardware accelerated vector-matrix multiplications.
+However, the complex topologies of the NNs in this approach make it harder to implement than with other NN types.
+Many other small performance improvements can still be done in this project which might cumulatively seriously improve the performance of the algorithm.
 
 \subsubsection{Algorithm Design}
 There is a large variety of additional features that might improve the performance of the ENN algorithm.
