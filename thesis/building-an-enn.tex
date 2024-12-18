@@ -240,6 +240,8 @@ The first test shows following results:
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=50,
@@ -262,7 +264,7 @@ The first test shows following results:
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -270,7 +272,7 @@ The first test shows following results:
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -300,6 +302,8 @@ Since the stack size with 2 has already worked fine, the same configuration is r
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -320,7 +324,7 @@ Since the stack size with 2 has already worked fine, the same configuration is r
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -328,7 +332,7 @@ Since the stack size with 2 has already worked fine, the same configuration is r
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -369,6 +373,8 @@ When considering the topology metrics in the test results of the last configurat
 \begin{center}
     \begin{tikzpicture}
         \begin{axis} [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -424,6 +430,8 @@ The same configuration as before is run with the new parameter adjustments:
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{Performance},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -442,7 +450,7 @@ The same configuration as before is run with the new parameter adjustments:
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -450,7 +458,7 @@ The same configuration as before is run with the new parameter adjustments:
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -467,6 +475,8 @@ The same configuration as before is run with the new parameter adjustments:
             \begin{subfigure}[b]{0.45\textwidth}
                 \begin{tikzpicture}
                     \begin{axis} [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{Topology},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -521,6 +531,8 @@ The previous configuration is repeated except for the initial amount of matches 
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -541,7 +553,7 @@ The previous configuration is repeated except for the initial amount of matches 
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -549,7 +561,7 @@ The previous configuration is repeated except for the initial amount of matches 
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -607,6 +619,8 @@ The following configurations are tested to evaluate the impact of the mentioned 
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{Fitness exponent: 2},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -625,7 +639,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -633,7 +647,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -652,6 +666,8 @@ The following configurations are tested to evaluate the impact of the mentioned 
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{New population composition (each 15\%)},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -670,7 +686,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -678,7 +694,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -699,6 +715,8 @@ The following configurations are tested to evaluate the impact of the mentioned 
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{Population size: 2500},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -717,7 +735,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -725,7 +743,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -745,6 +763,8 @@ The following configurations are tested to evaluate the impact of the mentioned 
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{All combined},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -763,7 +783,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -771,7 +791,7 @@ The following configurations are tested to evaluate the impact of the mentioned 
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -814,6 +834,8 @@ All ENN parameters are reset to the ones from Stack: 1--8, Configuration 1 excep
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -834,7 +856,7 @@ All ENN parameters are reset to the ones from Stack: 1--8, Configuration 1 excep
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -842,7 +864,7 @@ All ENN parameters are reset to the ones from Stack: 1--8, Configuration 1 excep
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -874,6 +896,8 @@ In this test, the initial stack size ranges from 1 to 1000:
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -894,7 +918,7 @@ In this test, the initial stack size ranges from 1 to 1000:
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -902,7 +926,7 @@ In this test, the initial stack size ranges from 1 to 1000:
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -931,6 +955,8 @@ There are eight possible game states for which the NNs need to find solutions, w
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -951,7 +977,7 @@ There are eight possible game states for which the NNs need to find solutions, w
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -959,7 +985,7 @@ There are eight possible game states for which the NNs need to find solutions, w
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -980,6 +1006,8 @@ Subsequently, the maximal amount of matches per stack is doubled which allows fo
     \begin{tikzpicture}
         \begin{axis}
             [
+            axis x line=bottom,
+            axis y line=left,
             grid=both,
             grid style={dashed, gray!30},
             xmin=0, xmax=1000,
@@ -1000,7 +1028,7 @@ Subsequently, the maximal amount of matches per stack is doubled which allows fo
             \caption{Performance of the best agent over generations.}
 
             % First plot
-            \addplot [thick, color=myred] table [
+            \addplot [thick, color=myblue] table [
             x=generation,
             y=best_agent_avg_performance,
             col sep=comma,
@@ -1008,7 +1036,7 @@ Subsequently, the maximal amount of matches per stack is doubled which allows fo
             \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
             % Second plot
-            \addplot [thick, color=myblue] table [
+            \addplot [thick, color=myred] table [
             x=generation,
             y=best_agent_wins_percentage,
             col sep=comma,
@@ -1054,6 +1082,8 @@ In the following tests, the same ENN parameter modifications as in the configura
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{Fitness exponent: 2},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -1072,7 +1102,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -1080,7 +1110,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -1099,6 +1129,8 @@ In the following tests, the same ENN parameter modifications as in the configura
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{New population composition (each 15\%)},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -1117,7 +1149,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -1125,7 +1157,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -1146,6 +1178,8 @@ In the following tests, the same ENN parameter modifications as in the configura
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{Population size: 2500},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -1164,7 +1198,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -1172,7 +1206,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
@@ -1192,6 +1226,8 @@ In the following tests, the same ENN parameter modifications as in the configura
                 \begin{tikzpicture}
                     \begin{axis}
                         [
+                        axis x line=bottom,
+                        axis y line=left,
                         title=\textbf{All combined},
                         grid=both,
                         grid style={dashed, gray!30},
@@ -1210,7 +1246,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         tick label style={font=\small},
                         ]
                         % First plot
-                        \addplot [thick, color=myred] table [
+                        \addplot [thick, color=myblue] table [
                         x=generation,
                         y=best_agent_avg_performance,
                         col sep=comma,
@@ -1218,7 +1254,7 @@ In the following tests, the same ENN parameter modifications as in the configura
                         \addlegendentry{\( \text{Best agent perfect play \% (accuracy)} \)}
 
                         % Second plot
-                        \addplot [thick, color=myblue] table [
+                        \addplot [thick, color=myred] table [
                         x=generation,
                         y=best_agent_wins_percentage,
                         col sep=comma,
