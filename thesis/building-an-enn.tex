@@ -20,15 +20,15 @@ The implementation uses Rust's structs, which are similar to classes in other pr
 
 \subsection{Neural Network}\label{subsec:neural-network}
 The struct \textit{NeurualNetwork} (defined in agents.rs) most importantly contains a two-dimensional vector of nodes, which encodes all the information of the NN\@:
-\begin{minted}{rust}
+\begin{minted}{}
     pub struct NeuralNetwork {
         [...] // redundant side data about the NN
         pub nodes: Vec<Vec<Node>>,
     }
 \end{minted}
-The vector inside (\mintinline{rust}{Vec<Node>}) represents a layer of the NN and the outside vector (\mintinline{rust}{Vec<Vec<Node>>}) contains all layers of the NN\@.
+The vector inside (\mintinline{}{Vec<Node>}) represents a layer of the NN and the outside vector (\mintinline{}{Vec<Vec<Node>>}) contains all layers of the NN\@.
 A \textit{Node} contains its bias and a vector for the incoming and outgoing edges:
-\begin{minted}{rust}
+\begin{minted}{}
     pub struct Node {
         pub bias: f64,
         //edges stored in an adjacency list
@@ -37,7 +37,7 @@ A \textit{Node} contains its bias and a vector for the incoming and outgoing edg
     }
 \end{minted}
 An \textit{Edge} contains the weight of the edge and its input/output node:
-\begin{minted}{rust}
+\begin{minted}{}
     pub struct Edge {
         input: [usize; 2],
         out: [usize; 2],
@@ -46,9 +46,9 @@ An \textit{Edge} contains the weight of the edge and its input/output node:
 \end{minted}
 The most important functions of the \textit{NeuralNetwork} struct are:
 \begin{itemize}
-    \item \mintinline{rust}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which initializes the NN with all input and output nodes connected to each other with random weights and biases.
-    \item \mintinline{rust}{predict(&self, input: Vec<f64>) -> Vec<f64>}, which computes the output of the NN for a given input with the forward propagation algorithm described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
-    \item \mintinline{rust}{activation_function(x: f64) -> f64}, which computes the neuron activations described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
+    \item \mintinline{}{new(input_nodes: usize, output_nodes: usize) -> Self {}}, which initializes the NN with all input and output nodes connected to each other with random weights and biases.
+    \item \mintinline{}{predict(&self, input: Vec<f64>) -> Vec<f64>}, which computes the output of the NN for a given input with the forward propagation algorithm described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
+    \item \mintinline{}{activation_function(x: f64) -> f64}, which computes the neuron activations described in~\ref{subsec:feed-forward-neural-networks-(fnns)}.
     This implementation uses a variant of the \textit{ReLU} function.
     The linearity for inputs greater than zero in the \textit{ReLU} function allows for more variety of neuron activations, enhancing the flexibility and efficiency of the neural network.
     The chosen variant is the \textit{ELU} function, which addresses the issue of dead neurons encountered in \textit{ReLU} by permitting negative output values.
@@ -56,14 +56,14 @@ The most important functions of the \textit{NeuralNetwork} struct are:
 
 \subsection{Mutation}\label{subsec:mutation}
 The mutation of the NNs is handled in the \textit{Agent} struct (defined in agent.rs), which includes a NN, its fitness, and its rank:
-\begin{minted}{rust}
+\begin{minted}{}
     pub struct Agent {
         pub nn: NeuralNetwork,
         pub fitness: f64,
         pub rank: isize,
     }
 \end{minted}
-The function \mintinline{rust}{mutate(&mut self, mutations: usize) -> Self {} } has a number of mutations as a parameter which it applies to the NN of the agent.
+The function \mintinline{}{mutate(&mut self, mutations: usize) -> Self {} } has a number of mutations as a parameter which it applies to the NN of the agent.
 For each mutation, it randomly selects one of the following mutations: Change weights/biases, Shift weights/biases, Add edges, Add nodes.
 All of these mutations have already been described in the last chapter(\ref{sec:evolutionary-neural-networks-(enns)}), although there are some implementation details to mention:
 \begin{itemize}
@@ -78,7 +78,7 @@ All of these mutations have already been described in the last chapter(\ref{sec:
 \end{itemize}
 
 \subsection{Evolutionary Computation \& Inspiration by NEAT}\label{subsec:evolutionary-computation-&-inspiration-by-neat}
-The EC process (in population.rs) starts with an initial population of new agents with NNs created by the \mintinline{rust}{NeuralNetwork::new()} function (described in~\ref{subsec:neural-network}).
+The EC process (in population.rs) starts with an initial population of new agents with NNs created by the \mintinline{}{NeuralNetwork::new()} function (described in~\ref{subsec:neural-network}).
 As per the NEAT algorithm's approach, the new NNs have minimal structure, where all input nodes are directly connected to all output nodes with no hidden layers.
 Random values are assigned for the weights and biases of the initial NNs.
 Subsequently, the steps of performance evaluation, selection and mutation are repeated every generation.
