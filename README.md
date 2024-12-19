@@ -5,7 +5,7 @@ Simple implementation of Evolutionary Neural Networks (ENNs) inspired by the NEA
 You can find the newest pdf version of the thesis [here](/thesis/ma.pdf).
 
 
-**Abstract.**  
+### Abstract.
 This thesis explores the design and implementation of evolutionary
 neural networks (ENNs) inspired by the NEAT algorithm. ENNs optimize
 neural network weights, biases, and topologies using evolutionary
@@ -27,7 +27,7 @@ states because of local minima.
 **Keywords.** Evolutionary Neural Networks, NEAT Algorithm, Machine
 Learning, Game Learning, Nim Game, Evolutionary Computation.
 
-**Tools used during Research**\
+### Tools used during Research
 To complete this research, following tools were used:
 
 -   [**Rust**](https://www.rust-lang.org/) as the programming language.
